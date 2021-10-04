@@ -1,0 +1,50 @@
+version: '3'
+services:
+  blockine-node:
+    container_name: blockine-node
+    build: './api'
+    env_file: .env
+    volumes:
+      - ./api:/home/node/app
+    depends_on:
+      - blockine-db
+    networks:
+      - app-connect
+    ports:
+      - '${PORT}:${PORT}'
+
+  blockine-db:
+    container_name: blockine-db
+    image: postgres:12.8
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+      POSTGRES_DB: ${DB_NAME}
+    networks:
+      - app-connect
+    volumes:
+      - blockine-db:/data/postgres
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  blockine-pgadmin:
+    container_name: blockine-pgadmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: ${DB_PASS}
+    ports:
+      - "5050:80"
+    networks:
+      - app-connect
+    volumes:
+      - blockine-pgadmin:/var/lib/pgadmin
+
+volumes:
+    blockine-db:
+    blockine-pgadmin:
+
+networks:
+  app-connect:
+    driver: bridge
