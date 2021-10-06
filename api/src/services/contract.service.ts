@@ -87,7 +87,7 @@ export class ContractProvider {
     }
   }
 
-  async getAccount(): Promise<ethers.Wallet> {
+  getAccount(): ethers.Wallet {
     let seed: string | undefined = '';
     if (ContractProvider.isMainNet()) {
       seed = process.env.MAINNET_SEED;
@@ -95,7 +95,7 @@ export class ContractProvider {
       seed = process.env.TESTNET_SEED;
     }
     if (!seed) throw new Error('SEED not found');
-    return await ethers.Wallet.fromMnemonic(seed);
+    return ethers.Wallet.fromMnemonic(seed);
   }
 
   async balanceBNB(address: string): Promise<string> {

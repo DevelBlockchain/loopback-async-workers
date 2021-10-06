@@ -1821,261 +1821,6 @@
         "signature": "4399c2b2ec8004633d4c5a6aca0d491f461af2631ba9157ea54a6b7b2993d0a6",
         "affectsGlobalScope": false
       },
-      "./src/tasks/create-sql.task.ts": {
-        "version": "59f5faccd4cec66d658c2f40a105c5fc7f0cbaccb3063d1ba51aa0e0f2d668b1",
-        "signature": "8aceb4afe13c9ff6db28e049844a971ddee90950d5623d4c10cf140ae3bcfe63",
-        "affectsGlobalScope": false
-      },
-      "./src/tasks/index.ts": {
-        "version": "1e48685f0c44f3fe855dd0fd0cf53f66c5efde6864ff6d56de8cf755aaf05fad",
-        "signature": "41d3ed7848d9efec5264e9789de35b9623f7d6e5b49a279049abcebe5a3e0ef7",
-        "affectsGlobalScope": false
-      },
-      "./src/application.ts": {
-        "version": "36b7d407e31ed4db140666514eeb9ad0d878cf8637c5d27acac602e66b7528e5",
-        "signature": "8bc3e3eb34d55db8e255fb18283b7626c038f10c7cb2532821a5ba4dc3eab8da",
-        "affectsGlobalScope": false
-      },
-      "./src/index.ts": {
-        "version": "fba5f7ef73991d6bf3bbba4e01af143fd428a75ab1efdb6c1db2d7dd8f545f9c",
-        "signature": "cea31907992a2f6c447e22de2d13573d4708d4113eeaf29ef8214e70f6dd439e",
-        "affectsGlobalScope": false
-      },
-      "./src/migrate.ts": {
-        "version": "708b70a9c2ed53bb32203c07c0934046a8e80d1f4c8e4e0191f649fb04783a78",
-        "signature": "d289609b56df6411204c89f5197dc2d4d19910336a10c86cd9b3af21b22e344d",
-        "affectsGlobalScope": false
-      },
-      "./src/openapi-spec.ts": {
-        "version": "8bb2602357f2bc7caa994d0da03dd1e09d8ffdd26987cc1a437b14540a9cdc2a",
-        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/cookiejar/index.d.ts": {
-        "version": "8d48b8f8a377ade8dd1f000625bc276eea067f2529cc9cafdf082d17142107d6",
-        "signature": "8d48b8f8a377ade8dd1f000625bc276eea067f2529cc9cafdf082d17142107d6",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/superagent/index.d.ts": {
-        "version": "c52625d45193c6c0165798cd2be330b9b2c22cab457232a27f990e95b000b6a4",
-        "signature": "c52625d45193c6c0165798cd2be330b9b2c22cab457232a27f990e95b000b6a4",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/supertest/index.d.ts": {
-        "version": "e57360b3f53ec41ed30cfb0eaed6e689be92bf311d7c25175a4e127f46158079",
-        "signature": "e57360b3f53ec41ed30cfb0eaed6e689be92bf311d7c25175a4e127f46158079",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/client.d.ts": {
-        "version": "d33fe7df13cb34fa58fcd9fc11c052dd905c05172185a3a5a31b736501c2a629",
-        "signature": "d33fe7df13cb34fa58fcd9fc11c052dd905c05172185a3a5a31b736501c2a629",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/should-as-function.d.ts": {
-        "version": "e0bcc7ecaf53e76bf21f3660a85db7eedeb36ceeb58969801858095658d1428d",
-        "signature": "e0bcc7ecaf53e76bf21f3660a85db7eedeb36ceeb58969801858095658d1428d",
-        "affectsGlobalScope": true
-      },
-      "./node_modules/@loopback/testlab/dist/expect.d.ts": {
-        "version": "5791b63ac312a792f888401243acd5084f27c2c76792d436fa68e9581a74bd6d",
-        "signature": "5791b63ac312a792f888401243acd5084f27c2c76792d436fa68e9581a74bd6d",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/http-error-logger.d.ts": {
-        "version": "1d965675096492c8b8634e95d2ba80df0937100c1ca1a4be0aa521f2fcf4e679",
-        "signature": "1d965675096492c8b8634e95d2ba80df0937100c1ca1a4be0aa521f2fcf4e679",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/http-server-config.d.ts": {
-        "version": "915ad988fcef8653bc578f63739303346d761aa6d462d4bc4ef8579ad7df6766",
-        "signature": "915ad988fcef8653bc578f63739303346d761aa6d462d4bc4ef8579ad7df6766",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/request.d.ts": {
-        "version": "87c409fe1f923e4449a75e4c07dd939436e9c8f76b834fb44a6937147867813d",
-        "signature": "87c409fe1f923e4449a75e4c07dd939436e9c8f76b834fb44a6937147867813d",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/shot/index.d.ts": {
-        "version": "c55bbca1b587fc0a0c725c600abbee2c4bbdbae7e4291719fd7e6f0f68bdf3b8",
-        "signature": "c55bbca1b587fc0a0c725c600abbee2c4bbdbae7e4291719fd7e6f0f68bdf3b8",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/shot.d.ts": {
-        "version": "c35b3b6ef644c4144c767d0ef2573b32b79cd989d84e266a73f0c8966dc0ef97",
-        "signature": "c35b3b6ef644c4144c767d0ef2573b32b79cd989d84e266a73f0c8966dc0ef97",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@sinonjs/fake-timers/types/fake-timers-src.d.ts": {
-        "version": "6b40029289530423f407a22755c85b81740f9acfd88d2b53564f8c1657c26660",
-        "signature": "6b40029289530423f407a22755c85b81740f9acfd88d2b53564f8c1657c26660",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/sinon/index.d.ts": {
-        "version": "15b043358a9bac56ee6a567d61adf545b3a09e2f2ead9c3ef3cc617ed3522e71",
-        "signature": "15b043358a9bac56ee6a567d61adf545b3a09e2f2ead9c3ef3cc617ed3522e71",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/sinon.d.ts": {
-        "version": "451d3238632a48b1d487785be7ad51904238a63a593884d1b9cb4cefd51c31d0",
-        "signature": "451d3238632a48b1d487785be7ad51904238a63a593884d1b9cb4cefd51c31d0",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/skip.d.ts": {
-        "version": "049893f64a1b25accec1fdb7d40dc8d8d8c08d6db07d321092c4124373c9e381",
-        "signature": "049893f64a1b25accec1fdb7d40dc8d8d8c08d6db07d321092c4124373c9e381",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/test-sandbox.d.ts": {
-        "version": "c09d3d8964ff66481d085b2702fb5295a94756dce4739beda789b11b89c3aaca",
-        "signature": "c09d3d8964ff66481d085b2702fb5295a94756dce4739beda789b11b89c3aaca",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/to-json.d.ts": {
-        "version": "d22280c29a0d4d6acba8968091ed9b772946c78e36d4b0cb7eca1803b8b8c2f0",
-        "signature": "d22280c29a0d4d6acba8968091ed9b772946c78e36d4b0cb7eca1803b8b8c2f0",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/validate-api-spec.d.ts": {
-        "version": "8730131999f563de6b559e35f6253007cd311e676e9d17999c9287dd3e11e618",
-        "signature": "8730131999f563de6b559e35f6253007cd311e676e9d17999c9287dd3e11e618",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/testlab/dist/index.d.ts": {
-        "version": "38992be86825669bca9d84dfa17319e89c30969e05ba85d9c7f99dbc9c2eb83f",
-        "signature": "38992be86825669bca9d84dfa17319e89c30969e05ba85d9c7f99dbc9c2eb83f",
-        "affectsGlobalScope": false
-      },
-      "./src/__tests__/acceptance/test-helper.ts": {
-        "version": "c9433e33370c51eff99e6d23887d0ba9d1b530d501b3d0cbe68234afd9d94066",
-        "signature": "49ff2663e028079c0b59752f8cde842a03eb58f5c2b2e9d940b810e1d4de9bfc",
-        "affectsGlobalScope": false
-      },
-      "./src/__tests__/acceptance/home-page.acceptance.ts": {
-        "version": "5c15c945108fb34f614e9ed4db6cc3b00bfb9e9327169304001956d1a9ddd273",
-        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
-        "affectsGlobalScope": false
-      },
-      "./src/__tests__/acceptance/ping.controller.acceptance.ts": {
-        "version": "c6e91d549ea5bc598fc8ddce8a45dd89bc0193903eb8a6924413ba6354257694",
-        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
-        "affectsGlobalScope": false
-      },
-      "./src/models/transactions.model.ts": {
-        "version": "20931b97967bee5cfad0a0e7bd6a76548df77094698186eebca629d0e11f12b1",
-        "signature": "3c3f98a6ec6f9cc5eddf8561df75c32df881bd1449743dbed4dbd62ae270e67b",
-        "affectsGlobalScope": false
-      },
-      "./src/models/slices.model.ts": {
-        "version": "c97348b5f6ea180a90666d505ec84b269f929e03a4533eaae2d2d64ecc51772b",
-        "signature": "7893c7bf7c6350b61141fdc2d72c057c2acfc055b9826472a297b6478936f1cf",
-        "affectsGlobalScope": false
-      },
-      "./src/models/blocks.model.ts": {
-        "version": "b5e00358e7eb0418db7bd5c2e3ea73be79e6348268af1afe5186252617e7d3d8",
-        "signature": "6e91cfff6e107a3304f9bca3ef30c0746483f664ee483936753b9f7446e93ad2",
-        "affectsGlobalScope": false
-      },
-      "./src/models/wallets.model.ts": {
-        "version": "055efa106ba149aa466f8895f59fc5851423d78c5109d1ac78548307f826344e",
-        "signature": "2d6c4e2dde164ef46f5af6b70feb577481dfcd578d906cc4bfb3c80d4ed326d0",
-        "affectsGlobalScope": false
-      },
-      "./src/models/companies.model.ts": {
-        "version": "c0c4e1a0ac72c9621688124d3b2f4d01df87552dc670ba54a1d9ba52d57c48d1",
-        "signature": "b81ce503de15527c8c62c6ae051d2c6c33ba37f95010df6d6d2739bef07a76ad",
-        "affectsGlobalScope": false
-      },
-      "./src/models/employees.model.ts": {
-        "version": "e9b4d13e87728f5502b107da59657419cf402e2e7844a58377b6c3b80bf9ca60",
-        "signature": "6255f6ee73917c398d475dd30e96664e214deed3ed9a3ce9d6fbdb2eef3e14ab",
-        "affectsGlobalScope": false
-      },
-      "./src/models/index.ts": {
-        "version": "86b26e6474bc4c899b7c2601f0197c3762478a193784838f72cb1a7beba122b5",
-        "signature": "86b26e6474bc4c899b7c2601f0197c3762478a193784838f72cb1a7beba122b5",
-        "affectsGlobalScope": false
-      },
-      "./src/datasources/blockchain.datasource.ts": {
-        "version": "8964f14d5c3982a716738ae448488b79c013325417aa437dc29006ad373f67b5",
-        "signature": "51f745b789435d0ecd9aaad14760a63d951cfe80c20062f15e0074a83748d1c1",
-        "affectsGlobalScope": false
-      },
-      "./src/datasources/index.ts": {
-        "version": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
-        "signature": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/transactions.repository.ts": {
-        "version": "32846fa8113e2e2114fc17f7bed528162b7b427c309070b16440c415d72d9de4",
-        "signature": "2d95895729eb5d4ec0637d5c8ea7466c2dbb141734f4f60bb914f5fd0d7e95d5",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/slices.repository.ts": {
-        "version": "159ea83d51edfcd3c3641f46caf0d9289daa3baef43621afd75de926e16308a0",
-        "signature": "1f7548b0745baaa40f1b2a14d53aad8b924ff3fa2e899fd2372243665832ee1b",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/blocks.repository.ts": {
-        "version": "cd7edc8425b372dfa49401d70dc3b2cab9e92e9b79630bc31c7dff89872211c2",
-        "signature": "5d2639bc20ea681185b433881939dc72b590bd592d48d671402b6e922a5965d2",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/wallets.repository.ts": {
-        "version": "545b83e224fe97cba22391eef6e9d25b4a79a9136dd7ecc4aa97edc9a9b847c0",
-        "signature": "a3ba784e6611677a500e5624a0f944fa52e1c26940ed92268ecb3c240a0edbdc",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/companies.repository.ts": {
-        "version": "9edb112311fa68a0bf7a1500dfd550fae035ee137fe6281c85d10911e126f1f5",
-        "signature": "71d27051d54db26a3ec7192c4e79374219ceea92ba3e3ae554e6224d2e06b7cd",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/employees.repository.ts": {
-        "version": "6b121b3a54f0c402af7483a88ecf2e3be999b0994f9bb296a7424b616ee0cd18",
-        "signature": "aeff49111898ede09f37e164be2b8041fca8be52fb7ee7290bf9b588b67c8997",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/index.ts": {
-        "version": "32df67647b56564adb625df1b2981367ead5d24654c83787313510d566a586c1",
-        "signature": "32df67647b56564adb625df1b2981367ead5d24654c83787313510d566a586c1",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/blocks-slices.controller.ts": {
-        "version": "f7f856697d279328e964ca3c90e3fe4df958349e2e7d298d103d1530c71655e7",
-        "signature": "29586feff4c11862b012e98be5c8e26c1d757466729c1580fc72535b92cdd198",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/blocks.controller.ts": {
-        "version": "a92554680ae5505b4ca2681e39b9ff75177b61d7a53f01ed98ddc54dfef43c15",
-        "signature": "17793cf051ac95a639b872346d806426d86451e8f63ed06cc2c5455161459857",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/companies-wallets.controller.ts": {
-        "version": "53a4d2c2419b6abfe501a0c98a6150d9d806d0d8639bc93c07683eb316623e2e",
-        "signature": "bbb8541fef10d4475f45d699c4ade4a77fdb330f9157ca8ea684ab7858ef571c",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/companies.controller.ts": {
-        "version": "9a37ddbb0048b0614455c4326b3243468102c6b660ab50dd54409eee13af17f0",
-        "signature": "f07682db6c2461b5263acfc4910eff3cad297cb6c9a903250b9d0595bce9056f",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/employees-companies.controller.ts": {
-        "version": "9c2660c7f8d095c1e546f5ce32eddc97e28672d7ce472b039984eb51db936428",
-        "signature": "8eaf6854db274e6a2258e1677d548c2cea58d6d46b044d24d746e6edd3002efb",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/employees-wallets.controller.ts": {
-        "version": "692d2870aa9b475810e404f0c915facbd5cff946eeae9ba80c58556fc8000e24",
-        "signature": "62c32e636ab65a49e2f2f1fd03dc17b144293eeddb390dc7f5b80417f7864bd4",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/employees.controller.ts": {
-        "version": "a71515d7427530d5dd209b639d770585b5451a1a056b8782fd43d2dd365aed25",
-        "signature": "a6bd4dd985bd7724c7d77a7223788bee69f837fc858ce259479c1137f30f4a60",
-        "affectsGlobalScope": false
-      },
       "./node_modules/event-target-shim/index.d.ts": {
         "version": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
         "signature": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
@@ -2567,8 +2312,8 @@
         "affectsGlobalScope": false
       },
       "./src/services/contract.service.ts": {
-        "version": "dd63be7abf8f44551af90cf4fc425b08b7d11c132ecc66da510d4f2e96ffbcec",
-        "signature": "58e936cada59a0fc9a995ac548fe87a30265164e565d21cce86c1750d1f53a0c",
+        "version": "ad345965c59d2ce0c0d0a28b9a7521270dd054b87a31a9e61f2c328bbfbe5414",
+        "signature": "2084098df73b5effb2db0e2ddd636c797ea52e02536f564ba2e1efa29b4db4b1",
         "affectsGlobalScope": false
       },
       "./src/services/bscscan.service.ts": {
@@ -2577,7 +2322,7 @@
         "affectsGlobalScope": false
       },
       "./src/services/nodes-service.service.ts": {
-        "version": "bde2f89e3360e03cd011fc43b8cabb862405a969c614477952602d0aa62b8ddf",
+        "version": "2d698ddcc7240003783c0f8f31cce923f2061ed813f55c641677ca337f734d53",
         "signature": "a193929c7ebd1ef66003ea7778177025108a48a5e77bdb20c118e03f9b82e3ad",
         "affectsGlobalScope": false
       },
@@ -2616,19 +2361,279 @@
         "signature": "3d858edce04b692913cc04f955422f902071deee2d29fc57ae54efc8885e385c",
         "affectsGlobalScope": false
       },
+      "./src/models/transactions.model.ts": {
+        "version": "20931b97967bee5cfad0a0e7bd6a76548df77094698186eebca629d0e11f12b1",
+        "signature": "3c3f98a6ec6f9cc5eddf8561df75c32df881bd1449743dbed4dbd62ae270e67b",
+        "affectsGlobalScope": false
+      },
+      "./src/models/slices.model.ts": {
+        "version": "12e0ccf22ca33a8dca650197d2cf24778aa090e565256053626801d1614ebc28",
+        "signature": "f645e882f42c53cb90ffbd8b7478216bb66217f0a96f0d17237b2cd94c1f8e5c",
+        "affectsGlobalScope": false
+      },
+      "./src/models/blocks.model.ts": {
+        "version": "ce794fbcf89a8c73941f839e6aea180820e057d199c80bee437bc9c6de5e90ec",
+        "signature": "6f01490bd9db0156e38665d84bf13b9ca1fec6458671ee3ffc878d9a1639edf1",
+        "affectsGlobalScope": false
+      },
+      "./src/models/wallets.model.ts": {
+        "version": "055efa106ba149aa466f8895f59fc5851423d78c5109d1ac78548307f826344e",
+        "signature": "2d6c4e2dde164ef46f5af6b70feb577481dfcd578d906cc4bfb3c80d4ed326d0",
+        "affectsGlobalScope": false
+      },
+      "./src/models/companies.model.ts": {
+        "version": "c0c4e1a0ac72c9621688124d3b2f4d01df87552dc670ba54a1d9ba52d57c48d1",
+        "signature": "b81ce503de15527c8c62c6ae051d2c6c33ba37f95010df6d6d2739bef07a76ad",
+        "affectsGlobalScope": false
+      },
+      "./src/models/employees.model.ts": {
+        "version": "e9b4d13e87728f5502b107da59657419cf402e2e7844a58377b6c3b80bf9ca60",
+        "signature": "6255f6ee73917c398d475dd30e96664e214deed3ed9a3ce9d6fbdb2eef3e14ab",
+        "affectsGlobalScope": false
+      },
+      "./src/models/index.ts": {
+        "version": "86b26e6474bc4c899b7c2601f0197c3762478a193784838f72cb1a7beba122b5",
+        "signature": "86b26e6474bc4c899b7c2601f0197c3762478a193784838f72cb1a7beba122b5",
+        "affectsGlobalScope": false
+      },
+      "./src/datasources/blockchain.datasource.ts": {
+        "version": "8964f14d5c3982a716738ae448488b79c013325417aa437dc29006ad373f67b5",
+        "signature": "51f745b789435d0ecd9aaad14760a63d951cfe80c20062f15e0074a83748d1c1",
+        "affectsGlobalScope": false
+      },
+      "./src/datasources/index.ts": {
+        "version": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
+        "signature": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/slices.repository.ts": {
+        "version": "becb430327cb35b2e1b6acb5cbf5b2fa7b9d045ea6c5a69ddae4ecddb93a5293",
+        "signature": "3cf879e215e9a6e5c7f5f90b90cfefe52122cccd6486e9156562d6a74a7474bc",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/blocks.repository.ts": {
+        "version": "cd7edc8425b372dfa49401d70dc3b2cab9e92e9b79630bc31c7dff89872211c2",
+        "signature": "5d2639bc20ea681185b433881939dc72b590bd592d48d671402b6e922a5965d2",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/wallets.repository.ts": {
+        "version": "545b83e224fe97cba22391eef6e9d25b4a79a9136dd7ecc4aa97edc9a9b847c0",
+        "signature": "a3ba784e6611677a500e5624a0f944fa52e1c26940ed92268ecb3c240a0edbdc",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/companies.repository.ts": {
+        "version": "9edb112311fa68a0bf7a1500dfd550fae035ee137fe6281c85d10911e126f1f5",
+        "signature": "71d27051d54db26a3ec7192c4e79374219ceea92ba3e3ae554e6224d2e06b7cd",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/employees.repository.ts": {
+        "version": "6b121b3a54f0c402af7483a88ecf2e3be999b0994f9bb296a7424b616ee0cd18",
+        "signature": "aeff49111898ede09f37e164be2b8041fca8be52fb7ee7290bf9b588b67c8997",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/transactions.repository.ts": {
+        "version": "32846fa8113e2e2114fc17f7bed528162b7b427c309070b16440c415d72d9de4",
+        "signature": "2d95895729eb5d4ec0637d5c8ea7466c2dbb141734f4f60bb914f5fd0d7e95d5",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/index.ts": {
+        "version": "32df67647b56564adb625df1b2981367ead5d24654c83787313510d566a586c1",
+        "signature": "32df67647b56564adb625df1b2981367ead5d24654c83787313510d566a586c1",
+        "affectsGlobalScope": false
+      },
       "./src/types/transactions.type.ts": {
         "version": "a364c00d0577e49bc09136462aba704cd869942c251c025e7f2e1c0d616e4d68",
         "signature": "424b5eeefc8f1eb55d3d7e783e797970fa4d5b1db18c1d78dee8292a387c9242",
         "affectsGlobalScope": false
       },
       "./src/services/wallet.service.ts": {
-        "version": "8537aa81eceef80a8ba710c06bf77cf417b6b88f4204dd92925ded64adddfe18",
+        "version": "183289a615ba25d416206073c06da632f53da73a8599ca95355ce6d9e72f68e6",
         "signature": "22f0282323b7a4dab4c04715aa6c5fc517ced6549094962c43a2eca794ddc63c",
         "affectsGlobalScope": false
       },
+      "./src/services/blockchain.service.ts": {
+        "version": "fdaafdab19d252c85b0476cafb32b0282e4d60f18bcbe9328484ab015c729947",
+        "signature": "f703dc39f2b6841d28e60b15bfe935cd5212e55918cab004b36775eab3ea4112",
+        "affectsGlobalScope": false
+      },
       "./src/services/index.ts": {
-        "version": "88297dfa2efd4cd27082d233c7ef2ae30fc614f292be36b18bb1fa6890ec25ad",
-        "signature": "063c6943bc8a9933a5a2926126906c6291f66bd0044643d2f189b60f8b30de29",
+        "version": "df59a265eecacbc45f11bb8942fb06e5053946c4424cb105e41cc872c97f87a1",
+        "signature": "df59a265eecacbc45f11bb8942fb06e5053946c4424cb105e41cc872c97f87a1",
+        "affectsGlobalScope": false
+      },
+      "./src/tasks/create-blocks.task.ts": {
+        "version": "39da403e8d64df98c971912fe4acf23b88b07d63861be0b620912070655b8eb4",
+        "signature": "18a835444b9abea927670766a0f7ed16aa7aeca841671df8a32db703f6e295c4",
+        "affectsGlobalScope": false
+      },
+      "./src/tasks/index.ts": {
+        "version": "aa187893ec1574a77d484072bf54784382368c09f440a80768d766ddc96cc6e8",
+        "signature": "7d091d195ac17fcac08e585e738d342e57d6c2c598128920eee6cfa09540b617",
+        "affectsGlobalScope": false
+      },
+      "./src/application.ts": {
+        "version": "36b7d407e31ed4db140666514eeb9ad0d878cf8637c5d27acac602e66b7528e5",
+        "signature": "8bc3e3eb34d55db8e255fb18283b7626c038f10c7cb2532821a5ba4dc3eab8da",
+        "affectsGlobalScope": false
+      },
+      "./src/index.ts": {
+        "version": "fba5f7ef73991d6bf3bbba4e01af143fd428a75ab1efdb6c1db2d7dd8f545f9c",
+        "signature": "cea31907992a2f6c447e22de2d13573d4708d4113eeaf29ef8214e70f6dd439e",
+        "affectsGlobalScope": false
+      },
+      "./src/migrate.ts": {
+        "version": "708b70a9c2ed53bb32203c07c0934046a8e80d1f4c8e4e0191f649fb04783a78",
+        "signature": "d289609b56df6411204c89f5197dc2d4d19910336a10c86cd9b3af21b22e344d",
+        "affectsGlobalScope": false
+      },
+      "./src/openapi-spec.ts": {
+        "version": "8bb2602357f2bc7caa994d0da03dd1e09d8ffdd26987cc1a437b14540a9cdc2a",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/cookiejar/index.d.ts": {
+        "version": "8d48b8f8a377ade8dd1f000625bc276eea067f2529cc9cafdf082d17142107d6",
+        "signature": "8d48b8f8a377ade8dd1f000625bc276eea067f2529cc9cafdf082d17142107d6",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/superagent/index.d.ts": {
+        "version": "c52625d45193c6c0165798cd2be330b9b2c22cab457232a27f990e95b000b6a4",
+        "signature": "c52625d45193c6c0165798cd2be330b9b2c22cab457232a27f990e95b000b6a4",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/supertest/index.d.ts": {
+        "version": "e57360b3f53ec41ed30cfb0eaed6e689be92bf311d7c25175a4e127f46158079",
+        "signature": "e57360b3f53ec41ed30cfb0eaed6e689be92bf311d7c25175a4e127f46158079",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/client.d.ts": {
+        "version": "d33fe7df13cb34fa58fcd9fc11c052dd905c05172185a3a5a31b736501c2a629",
+        "signature": "d33fe7df13cb34fa58fcd9fc11c052dd905c05172185a3a5a31b736501c2a629",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/should-as-function.d.ts": {
+        "version": "e0bcc7ecaf53e76bf21f3660a85db7eedeb36ceeb58969801858095658d1428d",
+        "signature": "e0bcc7ecaf53e76bf21f3660a85db7eedeb36ceeb58969801858095658d1428d",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/@loopback/testlab/dist/expect.d.ts": {
+        "version": "5791b63ac312a792f888401243acd5084f27c2c76792d436fa68e9581a74bd6d",
+        "signature": "5791b63ac312a792f888401243acd5084f27c2c76792d436fa68e9581a74bd6d",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/http-error-logger.d.ts": {
+        "version": "1d965675096492c8b8634e95d2ba80df0937100c1ca1a4be0aa521f2fcf4e679",
+        "signature": "1d965675096492c8b8634e95d2ba80df0937100c1ca1a4be0aa521f2fcf4e679",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/http-server-config.d.ts": {
+        "version": "915ad988fcef8653bc578f63739303346d761aa6d462d4bc4ef8579ad7df6766",
+        "signature": "915ad988fcef8653bc578f63739303346d761aa6d462d4bc4ef8579ad7df6766",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/request.d.ts": {
+        "version": "87c409fe1f923e4449a75e4c07dd939436e9c8f76b834fb44a6937147867813d",
+        "signature": "87c409fe1f923e4449a75e4c07dd939436e9c8f76b834fb44a6937147867813d",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/shot/index.d.ts": {
+        "version": "c55bbca1b587fc0a0c725c600abbee2c4bbdbae7e4291719fd7e6f0f68bdf3b8",
+        "signature": "c55bbca1b587fc0a0c725c600abbee2c4bbdbae7e4291719fd7e6f0f68bdf3b8",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/shot.d.ts": {
+        "version": "c35b3b6ef644c4144c767d0ef2573b32b79cd989d84e266a73f0c8966dc0ef97",
+        "signature": "c35b3b6ef644c4144c767d0ef2573b32b79cd989d84e266a73f0c8966dc0ef97",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@sinonjs/fake-timers/types/fake-timers-src.d.ts": {
+        "version": "6b40029289530423f407a22755c85b81740f9acfd88d2b53564f8c1657c26660",
+        "signature": "6b40029289530423f407a22755c85b81740f9acfd88d2b53564f8c1657c26660",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/sinon/index.d.ts": {
+        "version": "15b043358a9bac56ee6a567d61adf545b3a09e2f2ead9c3ef3cc617ed3522e71",
+        "signature": "15b043358a9bac56ee6a567d61adf545b3a09e2f2ead9c3ef3cc617ed3522e71",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/sinon.d.ts": {
+        "version": "451d3238632a48b1d487785be7ad51904238a63a593884d1b9cb4cefd51c31d0",
+        "signature": "451d3238632a48b1d487785be7ad51904238a63a593884d1b9cb4cefd51c31d0",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/skip.d.ts": {
+        "version": "049893f64a1b25accec1fdb7d40dc8d8d8c08d6db07d321092c4124373c9e381",
+        "signature": "049893f64a1b25accec1fdb7d40dc8d8d8c08d6db07d321092c4124373c9e381",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/test-sandbox.d.ts": {
+        "version": "c09d3d8964ff66481d085b2702fb5295a94756dce4739beda789b11b89c3aaca",
+        "signature": "c09d3d8964ff66481d085b2702fb5295a94756dce4739beda789b11b89c3aaca",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/to-json.d.ts": {
+        "version": "d22280c29a0d4d6acba8968091ed9b772946c78e36d4b0cb7eca1803b8b8c2f0",
+        "signature": "d22280c29a0d4d6acba8968091ed9b772946c78e36d4b0cb7eca1803b8b8c2f0",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/validate-api-spec.d.ts": {
+        "version": "8730131999f563de6b559e35f6253007cd311e676e9d17999c9287dd3e11e618",
+        "signature": "8730131999f563de6b559e35f6253007cd311e676e9d17999c9287dd3e11e618",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/testlab/dist/index.d.ts": {
+        "version": "38992be86825669bca9d84dfa17319e89c30969e05ba85d9c7f99dbc9c2eb83f",
+        "signature": "38992be86825669bca9d84dfa17319e89c30969e05ba85d9c7f99dbc9c2eb83f",
+        "affectsGlobalScope": false
+      },
+      "./src/__tests__/acceptance/test-helper.ts": {
+        "version": "c9433e33370c51eff99e6d23887d0ba9d1b530d501b3d0cbe68234afd9d94066",
+        "signature": "49ff2663e028079c0b59752f8cde842a03eb58f5c2b2e9d940b810e1d4de9bfc",
+        "affectsGlobalScope": false
+      },
+      "./src/__tests__/acceptance/home-page.acceptance.ts": {
+        "version": "5c15c945108fb34f614e9ed4db6cc3b00bfb9e9327169304001956d1a9ddd273",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "affectsGlobalScope": false
+      },
+      "./src/__tests__/acceptance/ping.controller.acceptance.ts": {
+        "version": "c6e91d549ea5bc598fc8ddce8a45dd89bc0193903eb8a6924413ba6354257694",
+        "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+        "affectsGlobalScope": false
+      },
+      "./src/controllers/blocks-slices.controller.ts": {
+        "version": "f7f856697d279328e964ca3c90e3fe4df958349e2e7d298d103d1530c71655e7",
+        "signature": "29586feff4c11862b012e98be5c8e26c1d757466729c1580fc72535b92cdd198",
+        "affectsGlobalScope": false
+      },
+      "./src/controllers/blocks.controller.ts": {
+        "version": "a92554680ae5505b4ca2681e39b9ff75177b61d7a53f01ed98ddc54dfef43c15",
+        "signature": "17793cf051ac95a639b872346d806426d86451e8f63ed06cc2c5455161459857",
+        "affectsGlobalScope": false
+      },
+      "./src/controllers/companies-wallets.controller.ts": {
+        "version": "53a4d2c2419b6abfe501a0c98a6150d9d806d0d8639bc93c07683eb316623e2e",
+        "signature": "bbb8541fef10d4475f45d699c4ade4a77fdb330f9157ca8ea684ab7858ef571c",
+        "affectsGlobalScope": false
+      },
+      "./src/controllers/companies.controller.ts": {
+        "version": "9a37ddbb0048b0614455c4326b3243468102c6b660ab50dd54409eee13af17f0",
+        "signature": "f07682db6c2461b5263acfc4910eff3cad297cb6c9a903250b9d0595bce9056f",
+        "affectsGlobalScope": false
+      },
+      "./src/controllers/employees-companies.controller.ts": {
+        "version": "9c2660c7f8d095c1e546f5ce32eddc97e28672d7ce472b039984eb51db936428",
+        "signature": "8eaf6854db274e6a2258e1677d548c2cea58d6d46b044d24d746e6edd3002efb",
+        "affectsGlobalScope": false
+      },
+      "./src/controllers/employees-wallets.controller.ts": {
+        "version": "692d2870aa9b475810e404f0c915facbd5cff946eeae9ba80c58556fc8000e24",
+        "signature": "62c32e636ab65a49e2f2f1fd03dc17b144293eeddb390dc7f5b80417f7864bd4",
+        "affectsGlobalScope": false
+      },
+      "./src/controllers/employees.controller.ts": {
+        "version": "a71515d7427530d5dd209b639d770585b5451a1a056b8782fd43d2dd365aed25",
+        "signature": "a6bd4dd985bd7724c7d77a7223788bee69f837fc858ce259479c1137f30f4a60",
         "affectsGlobalScope": false
       },
       "./src/controllers/ping.controller.ts": {
@@ -2647,8 +2652,8 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/slices-transactions.controller.ts": {
-        "version": "c1af924a07a1350d28966b7c9e27adfa8117f604e7175f64eae85141aad882b7",
-        "signature": "16bd2426c51ec7f42a72e47301555121e525a5a606d65623f0fcc5b83c908ed8",
+        "version": "2c97c2dca405ded0526c602bf25221c107624354bb8850e0146e46ab9ea6295d",
+        "signature": "2a5c575fa3c62e1906807a22747a0e86bcd2147fd2848c85ac7a372c1a0876c3",
         "affectsGlobalScope": false
       },
       "./src/controllers/index.ts": {
@@ -2662,8 +2667,8 @@
         "affectsGlobalScope": false
       },
       "./src/types/nodes.type.ts": {
-        "version": "b24df517d81d691678bca31df20090ecc93bcd6be7abfdd4ddcaadde86ac55ac",
-        "signature": "b6325ea4fc9b71b0fce89a428b799798f23a20149fcd1be66773b1483863853e",
+        "version": "a7ab73e7667fa92a5bde642ae57435dddcadf650a12b76ea2133e1fb49bffce7",
+        "signature": "097f9aa7e97708fda7e91b88ba39ee00b7ba3cc6dccf70fd5126dd5228f291fe",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/fs-extra/index.d.ts": {
@@ -4971,8 +4976,7 @@
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
         "./src/datasources/index.ts",
-        "./src/models/index.ts",
-        "./src/repositories/transactions.repository.ts"
+        "./src/models/index.ts"
       ],
       "./src/repositories/transactions.repository.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
@@ -4991,6 +4995,14 @@
       "./src/sequence.ts": [
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts"
+      ],
+      "./src/services/blockchain.service.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@waves/ts-lib-crypto/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/models/index.ts",
+        "./src/services/contract.service.ts",
+        "./src/services/index.ts"
       ],
       "./src/services/bscscan.service.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
@@ -5013,6 +5025,7 @@
       ],
       "./src/services/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
+        "./src/services/blockchain.service.ts",
         "./src/services/bscscan.service.ts",
         "./src/services/contract.service.ts",
         "./src/services/nodes-service.service.ts",
@@ -5042,13 +5055,15 @@
         "./src/services/index.ts",
         "./src/types/transactions.type.ts"
       ],
-      "./src/tasks/create-sql.task.ts": [
+      "./src/tasks/create-blocks.task.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/cron/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts"
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/services/index.ts"
       ],
       "./src/tasks/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
-        "./src/tasks/create-sql.task.ts"
+        "./src/tasks/create-blocks.task.ts"
       ],
       "./src/types/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
@@ -7150,7 +7165,6 @@
         "./node_modules/@loopback/rest/dist/index.d.ts"
       ],
       "./src/controllers/slices-transactions.controller.ts": [
-        "./src/models/index.ts",
         "./src/repositories/index.ts"
       ],
       "./src/controllers/transactions.controller.ts": [
@@ -7187,8 +7201,7 @@
         "./src/models/wallets.model.ts"
       ],
       "./src/models/slices.model.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./src/models/transactions.model.ts"
+        "./node_modules/@loopback/repository/dist/index.d.ts"
       ],
       "./src/models/transactions.model.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts"
@@ -7227,11 +7240,9 @@
         "./src/repositories/wallets.repository.ts"
       ],
       "./src/repositories/slices.repository.ts": [
-        "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./src/datasources/index.ts",
-        "./src/models/index.ts",
-        "./src/repositories/transactions.repository.ts"
+        "./src/models/index.ts"
       ],
       "./src/repositories/transactions.repository.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
@@ -7246,6 +7257,10 @@
       "./src/sequence.ts": [
         "./node_modules/@loopback/rest/dist/index.d.ts"
       ],
+      "./src/services/blockchain.service.ts": [
+        "./src/models/index.ts",
+        "./src/services/contract.service.ts"
+      ],
       "./src/services/bscscan.service.ts": [
         "./node_modules/@loopback/logging/dist/index.d.ts",
         "./src/types/index.ts"
@@ -7259,6 +7274,7 @@
         "./src/types/index.ts"
       ],
       "./src/services/index.ts": [
+        "./src/services/blockchain.service.ts",
         "./src/services/bscscan.service.ts",
         "./src/services/contract.service.ts",
         "./src/services/nodes-service.service.ts",
@@ -7271,11 +7287,12 @@
         "./src/repositories/index.ts",
         "./src/types/transactions.type.ts"
       ],
-      "./src/tasks/create-sql.task.ts": [
-        "./node_modules/@loopback/cron/dist/index.d.ts"
+      "./src/tasks/create-blocks.task.ts": [
+        "./node_modules/@loopback/cron/dist/index.d.ts",
+        "./src/services/index.ts"
       ],
       "./src/tasks/index.ts": [
-        "./src/tasks/create-sql.task.ts"
+        "./src/tasks/create-blocks.task.ts"
       ],
       "./src/types/index.ts": [
         "./src/types/tx-bsc.type.ts"
@@ -7820,13 +7837,268 @@
       "./src/repositories/transactions.repository.ts",
       "./src/repositories/wallets.repository.ts",
       "./src/sequence.ts",
+      [
+        "./src/services/blockchain.service.ts",
+        [
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1674,
+            "length": 5,
+            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
+            "category": 1,
+            "code": 2552
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1710,
+            "length": 6,
+            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
+            "category": 1,
+            "code": 2552,
+            "relatedInformation": [
+              {
+                "file": "./src/services/blockchain.service.ts",
+                "start": 1607,
+                "length": 5,
+                "messageText": "'slice' is declared here.",
+                "category": 3,
+                "code": 2728
+              }
+            ]
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1719,
+            "length": 6,
+            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
+            "category": 1,
+            "code": 2552,
+            "relatedInformation": [
+              {
+                "file": "./src/services/blockchain.service.ts",
+                "start": 1607,
+                "length": 5,
+                "messageText": "'slice' is declared here.",
+                "category": 3,
+                "code": 2728
+              }
+            ]
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1732,
+            "length": 1,
+            "messageText": "Parameter 'a' implicitly has an 'any' type.",
+            "category": 1,
+            "code": 7006
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1735,
+            "length": 1,
+            "messageText": "Parameter 'b' implicitly has an 'any' type.",
+            "category": 1,
+            "code": 7006
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1767,
+            "length": 6,
+            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
+            "category": 1,
+            "code": 2552,
+            "relatedInformation": [
+              {
+                "file": "./src/services/blockchain.service.ts",
+                "start": 1607,
+                "length": 5,
+                "messageText": "'slice' is declared here.",
+                "category": 3,
+                "code": 2728
+              }
+            ]
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1782,
+            "length": 5,
+            "messageText": "Parameter 'slice' implicitly has an 'any' type.",
+            "category": 1,
+            "code": 7006
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1799,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1868,
+            "length": 5,
+            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
+            "category": 1,
+            "code": 2552
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1893,
+            "length": 5,
+            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
+            "category": 1,
+            "code": 2552
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 1967,
+            "length": 5,
+            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
+            "category": 1,
+            "code": 2552
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2038,
+            "length": 6,
+            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
+            "category": 1,
+            "code": 2552,
+            "relatedInformation": [
+              {
+                "file": "./src/services/blockchain.service.ts",
+                "start": 1607,
+                "length": 5,
+                "messageText": "'slice' is declared here.",
+                "category": 3,
+                "code": 2728
+              }
+            ]
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2065,
+            "length": 6,
+            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
+            "category": 1,
+            "code": 2552,
+            "relatedInformation": [
+              {
+                "file": "./src/services/blockchain.service.ts",
+                "start": 1607,
+                "length": 5,
+                "messageText": "'slice' is declared here.",
+                "category": 3,
+                "code": 2728
+              }
+            ]
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2080,
+            "length": 5,
+            "messageText": "Parameter 'slice' implicitly has an 'any' type.",
+            "category": 1,
+            "code": 7006
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2263,
+            "length": 5,
+            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
+            "category": 1,
+            "code": 2552
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2296,
+            "length": 9,
+            "messageText": "Cannot find name 'lastBlock'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2315,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2332,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2363,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2458,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2507,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2519,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2571,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2610,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          },
+          {
+            "file": "./src/services/blockchain.service.ts",
+            "start": 2646,
+            "length": 5,
+            "messageText": "Cannot find name 'block'.",
+            "category": 1,
+            "code": 2304
+          }
+        ]
+      ],
       "./src/services/bscscan.service.ts",
       "./src/services/contract.service.ts",
       "./src/services/index.ts",
       "./src/services/nodes-service.service.ts",
       "./src/services/virtual-machine.service.ts",
       "./src/services/wallet.service.ts",
-      "./src/tasks/create-sql.task.ts",
+      "./src/tasks/create-blocks.task.ts",
       "./src/tasks/index.ts",
       "./src/types/index.ts",
       "./src/types/nodes.type.ts",

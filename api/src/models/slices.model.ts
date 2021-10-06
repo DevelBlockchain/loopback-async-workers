@@ -17,6 +17,18 @@ export class Slices extends Entity {
   height: number;
 
   @property({
+    type: 'boolean',
+    required: true,
+  })
+  isPublic: boolean;
+
+  @property({
+    type: 'array',
+    itemType: 'string'
+  })
+  transactions: string[];
+
+  @property({
     type: 'number',
     required: true,
   })
@@ -27,6 +39,7 @@ export class Slices extends Entity {
     required: true,
   })
   version: string;
+  
   @property({
     type: 'string',
     required: true,
@@ -48,16 +61,25 @@ export class Slices extends Entity {
     type: 'string',
     required: true,
   })
+  createdBy: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   hash: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  sign: string;
 
   @property({
     type: 'string',
   })
   blocksId?: string;
-
-  @hasMany(() => Transactions)
-  transactions: Transactions[];
-
+  
   constructor(data?: Partial<Slices>) {
     super(data);
   }

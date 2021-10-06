@@ -1,15 +1,15 @@
 import {Entity, model, property} from '@loopback/repository';
 
-enum TransactionsStatus {
-  MEMPOOL = 'mempool',
-  MINED = 'mined',
+export enum TransactionsStatus {
+  TX_MEMPOOL = 'mempool',
+  TX_MINED = 'mined',
 }
 
-enum TransactionsType {
-  JSON = 'json',
-  COMMAND = 'command',
-  FILE = 'file',
-  STRING = 'string',
+export enum TransactionsType {
+  TX_JSON = 'json',
+  TX_COMMAND = 'command',
+  TX_FILE = 'file',
+  TX_STRING = 'string',
 }
 
 @model()
@@ -25,13 +25,31 @@ export class Transactions extends Entity {
     type: 'string',
     required: true,
   })
+  version: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   from: string;
 
   @property({
-    type: 'array',
-    itemType: 'string',
+    type: 'string',
+    required: true,
   })
-  ForeignKeys?: string[];
+  to: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  amount: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  fee: string;
 
   @property({
     type: 'string',
@@ -43,22 +61,28 @@ export class Transactions extends Entity {
   type: string;
 
   @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  foreignKeys?: string[];
+
+  @property({
     type: 'string',
     required: true,
   })
   data: string;
 
   @property({
-    type: 'string',
-    required: true,
-  })
-  hash: string;
-
-  @property({
     type: 'date',
     required: true,
   })
   created: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  hash: string;
 
   @property({
     type: 'string',

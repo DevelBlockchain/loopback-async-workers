@@ -5,6 +5,7 @@ export class NodesProvider {
 
   static nodes = [];
 
-  constructor() {}
+  constructor() {
 
+  }
 }

@@ -1,7 +1,7 @@
 import { injectable, BindingScope, Provider } from '@loopback/core';
 import { repository } from '@loopback/repository';
 
-import { randomSeed, base58Encode, keyPair, publicKey, seedWithNonce, sha256, signBytes, stringToBytes, verifySignature, privateKey } from '@waves/ts-lib-crypto';
+import { randomSeed, base58Encode, keyPair, publicKey, seedWithNonce, sha256, signBytes, stringToBytes, verifySignature, privateKey, base16Decode } from '@waves/ts-lib-crypto';
 import { ContractProvider } from '.';
 import { Transactions } from '../models';
 import { WalletsRepository } from '../repositories';
@@ -28,7 +28,7 @@ export class WalletProvider {
   }
 
   static getBywiseAddress(publicKey: string): string {
-    let hash = base58Encode(sha256(sha256(publicKey))).substring(0, 28);
+    let hash = base58Encode(sha256(sha256(base16Decode(publicKey)))).substring(0, 28);
     let addressWithoutSum = WalletProvider.getAddressIdentifier() + hash;
     let sum = base58Encode(sha256(addressWithoutSum)).substring(0, 3);
     return addressWithoutSum + sum;

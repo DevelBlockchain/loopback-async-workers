@@ -27,7 +27,7 @@ export class SlicesTransactionsController {
     @repository(SlicesRepository) protected slicesRepository: SlicesRepository,
   ) { }
 
-  @get('/slices/{hash}/transactions', {
+  /*@get('/slices/{hash}/transactions', {
     responses: {
       '200': {
         description: 'Array of Slices has many Transactions',
@@ -49,5 +49,5 @@ export class SlicesTransactionsController {
     });
     if(!item) throw new HttpErrors.NotFound();
     return this.slicesRepository.transactions(item.id).find();
-  }
+  }*/
 }

@@ -13,6 +13,16 @@ export class NodeDTO extends Model {
   })
   fullNode: boolean;
 
+  @property({
+    type: 'string',
+  })
+  version: string;
+
+  @property({
+    type: 'number',
+  })
+  lastBlock: number;
+  
   constructor(data?: Partial<NodeDTO>) {
     super(data);
   }

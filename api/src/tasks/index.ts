@@ -1,2 +1,2 @@
-export * from './create-sql.task';
+export * from './create-blocks.task';
 

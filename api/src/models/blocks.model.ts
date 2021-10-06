@@ -41,6 +41,12 @@ export class Blocks extends Entity {
   lastHash: string;
 
   @property({
+    type: 'string',
+    required: true,
+  })
+  createdBy: string;
+
+  @property({
     type: "date",
     default: '$now'
   })
@@ -62,13 +68,7 @@ export class Blocks extends Entity {
     type: 'string',
     required: true,
   })
-  externalHash: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  externalURL: string;
+  externalTxID: string;
 
   @hasMany(() => Slices)
   slices: Slices[];
