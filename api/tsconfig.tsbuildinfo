@@ -1821,6 +1821,66 @@
         "signature": "4399c2b2ec8004633d4c5a6aca0d491f461af2631ba9157ea54a6b7b2993d0a6",
         "affectsGlobalScope": false
       },
+      "./src/models/transactions.model.ts": {
+        "version": "2c6ea0b80a411a88d973cdcac32b70502270fa272c87a15658d8afd488de0658",
+        "signature": "f4d7bb1e851d747aaaede92ff874800f151336d68d46dfbf7c0605b357df07b2",
+        "affectsGlobalScope": false
+      },
+      "./src/models/slices.model.ts": {
+        "version": "40f11acdef2757d03260560b961c826b7c2f76f970c53f724f454c1e7eae2606",
+        "signature": "24e494ba5c182483a037ba8b6079f2b390716cf85cde0e950555319c8dfa8f45",
+        "affectsGlobalScope": false
+      },
+      "./src/models/blocks.model.ts": {
+        "version": "e3b55a278f6e156702513eb66ccfa88651b960e9c3584b566cde2058af6ca712",
+        "signature": "ac7ba6c817f12120fbafc4d9f31395501c44b71201bc3d8ee254c9d61f1c7306",
+        "affectsGlobalScope": false
+      },
+      "./src/models/wallets.model.ts": {
+        "version": "cd0cfac440a7c137f923c7a4931c25e0b825f500d5f6f52f0623c9f383172224",
+        "signature": "da376d8f2eae29ce595be7518b6783a0e8136a86b5f98c05be61f465f101249e",
+        "affectsGlobalScope": false
+      },
+      "./src/models/index.ts": {
+        "version": "d68ded109508056279ecc8b464b418069f029334297a77ebdb27e67b5af443bd",
+        "signature": "d68ded109508056279ecc8b464b418069f029334297a77ebdb27e67b5af443bd",
+        "affectsGlobalScope": false
+      },
+      "./src/datasources/blockchain.datasource.ts": {
+        "version": "8964f14d5c3982a716738ae448488b79c013325417aa437dc29006ad373f67b5",
+        "signature": "51f745b789435d0ecd9aaad14760a63d951cfe80c20062f15e0074a83748d1c1",
+        "affectsGlobalScope": false
+      },
+      "./src/datasources/index.ts": {
+        "version": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
+        "signature": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/slices.repository.ts": {
+        "version": "becb430327cb35b2e1b6acb5cbf5b2fa7b9d045ea6c5a69ddae4ecddb93a5293",
+        "signature": "3cf879e215e9a6e5c7f5f90b90cfefe52122cccd6486e9156562d6a74a7474bc",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/blocks.repository.ts": {
+        "version": "511781193f8d350a5ca97f8fd5356d8109badfaa0212f15c89408280c790812d",
+        "signature": "60671191f446024ba8e3ffdd8c8940397671b1d639562c0c1b9ecfc7cf4a3b3a",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/transactions.repository.ts": {
+        "version": "32846fa8113e2e2114fc17f7bed528162b7b427c309070b16440c415d72d9de4",
+        "signature": "2d95895729eb5d4ec0637d5c8ea7466c2dbb141734f4f60bb914f5fd0d7e95d5",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/wallets.repository.ts": {
+        "version": "545b83e224fe97cba22391eef6e9d25b4a79a9136dd7ecc4aa97edc9a9b847c0",
+        "signature": "a3ba784e6611677a500e5624a0f944fa52e1c26940ed92268ecb3c240a0edbdc",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/index.ts": {
+        "version": "907484ea4a1fa1c51ea383d004fc6b9db047e5272e1f8f22d5392ec6d78104ad",
+        "signature": "907484ea4a1fa1c51ea383d004fc6b9db047e5272e1f8f22d5392ec6d78104ad",
+        "affectsGlobalScope": false
+      },
       "./node_modules/event-target-shim/index.d.ts": {
         "version": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
         "signature": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
@@ -1836,9 +1896,19 @@
         "signature": "68ee5d93def93aff96b71cca5bbd9fe5bff4b6e05a86d45fb1ec2c248af6a9d1",
         "affectsGlobalScope": false
       },
+      "./src/types/nodes.type.ts": {
+        "version": "a7ab73e7667fa92a5bde642ae57435dddcadf650a12b76ea2133e1fb49bffce7",
+        "signature": "097f9aa7e97708fda7e91b88ba39ee00b7ba3cc6dccf70fd5126dd5228f291fe",
+        "affectsGlobalScope": false
+      },
+      "./src/types/transactions.type.ts": {
+        "version": "8f4411298b15412d7c3df4330a8008bbe884f379164b2c64ce58682fe1d3e750",
+        "signature": "3805a01ef5244ddcb4f2d3091c94c6efccb5d9269cf81317a2f876dec0f23ed3",
+        "affectsGlobalScope": false
+      },
       "./src/types/index.ts": {
-        "version": "0de66037e3bba11406de9d6ab4125f13d256df914783fcdf7c99d3e15313b92d",
-        "signature": "3bbb21f4bb6b8c42b17c4cab2c199e5aa2e470433b09eae770499220e7ea10d4",
+        "version": "902d7eacf56a38dd0974c4bc4d2be619a1dbe76d93ba0126358883188caadde7",
+        "signature": "ce7fea6062ef205397c2377ba499d397a1ecea4bff1d5566927cd9f0d2a41334",
         "affectsGlobalScope": false
       },
       "./node_modules/@ethersproject/bytes/lib/index.d.ts": {
@@ -2361,114 +2431,49 @@
         "signature": "3d858edce04b692913cc04f955422f902071deee2d29fc57ae54efc8885e385c",
         "affectsGlobalScope": false
       },
-      "./src/models/transactions.model.ts": {
-        "version": "20931b97967bee5cfad0a0e7bd6a76548df77094698186eebca629d0e11f12b1",
-        "signature": "3c3f98a6ec6f9cc5eddf8561df75c32df881bd1449743dbed4dbd62ae270e67b",
-        "affectsGlobalScope": false
-      },
-      "./src/models/slices.model.ts": {
-        "version": "12e0ccf22ca33a8dca650197d2cf24778aa090e565256053626801d1614ebc28",
-        "signature": "f645e882f42c53cb90ffbd8b7478216bb66217f0a96f0d17237b2cd94c1f8e5c",
-        "affectsGlobalScope": false
-      },
-      "./src/models/blocks.model.ts": {
-        "version": "ce794fbcf89a8c73941f839e6aea180820e057d199c80bee437bc9c6de5e90ec",
-        "signature": "6f01490bd9db0156e38665d84bf13b9ca1fec6458671ee3ffc878d9a1639edf1",
-        "affectsGlobalScope": false
-      },
-      "./src/models/wallets.model.ts": {
-        "version": "055efa106ba149aa466f8895f59fc5851423d78c5109d1ac78548307f826344e",
-        "signature": "2d6c4e2dde164ef46f5af6b70feb577481dfcd578d906cc4bfb3c80d4ed326d0",
-        "affectsGlobalScope": false
-      },
-      "./src/models/companies.model.ts": {
-        "version": "c0c4e1a0ac72c9621688124d3b2f4d01df87552dc670ba54a1d9ba52d57c48d1",
-        "signature": "b81ce503de15527c8c62c6ae051d2c6c33ba37f95010df6d6d2739bef07a76ad",
-        "affectsGlobalScope": false
-      },
-      "./src/models/employees.model.ts": {
-        "version": "e9b4d13e87728f5502b107da59657419cf402e2e7844a58377b6c3b80bf9ca60",
-        "signature": "6255f6ee73917c398d475dd30e96664e214deed3ed9a3ce9d6fbdb2eef3e14ab",
-        "affectsGlobalScope": false
-      },
-      "./src/models/index.ts": {
-        "version": "86b26e6474bc4c899b7c2601f0197c3762478a193784838f72cb1a7beba122b5",
-        "signature": "86b26e6474bc4c899b7c2601f0197c3762478a193784838f72cb1a7beba122b5",
-        "affectsGlobalScope": false
-      },
-      "./src/datasources/blockchain.datasource.ts": {
-        "version": "8964f14d5c3982a716738ae448488b79c013325417aa437dc29006ad373f67b5",
-        "signature": "51f745b789435d0ecd9aaad14760a63d951cfe80c20062f15e0074a83748d1c1",
-        "affectsGlobalScope": false
-      },
-      "./src/datasources/index.ts": {
-        "version": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
-        "signature": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/slices.repository.ts": {
-        "version": "becb430327cb35b2e1b6acb5cbf5b2fa7b9d045ea6c5a69ddae4ecddb93a5293",
-        "signature": "3cf879e215e9a6e5c7f5f90b90cfefe52122cccd6486e9156562d6a74a7474bc",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/blocks.repository.ts": {
-        "version": "cd7edc8425b372dfa49401d70dc3b2cab9e92e9b79630bc31c7dff89872211c2",
-        "signature": "5d2639bc20ea681185b433881939dc72b590bd592d48d671402b6e922a5965d2",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/wallets.repository.ts": {
-        "version": "545b83e224fe97cba22391eef6e9d25b4a79a9136dd7ecc4aa97edc9a9b847c0",
-        "signature": "a3ba784e6611677a500e5624a0f944fa52e1c26940ed92268ecb3c240a0edbdc",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/companies.repository.ts": {
-        "version": "9edb112311fa68a0bf7a1500dfd550fae035ee137fe6281c85d10911e126f1f5",
-        "signature": "71d27051d54db26a3ec7192c4e79374219ceea92ba3e3ae554e6224d2e06b7cd",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/employees.repository.ts": {
-        "version": "6b121b3a54f0c402af7483a88ecf2e3be999b0994f9bb296a7424b616ee0cd18",
-        "signature": "aeff49111898ede09f37e164be2b8041fca8be52fb7ee7290bf9b588b67c8997",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/transactions.repository.ts": {
-        "version": "32846fa8113e2e2114fc17f7bed528162b7b427c309070b16440c415d72d9de4",
-        "signature": "2d95895729eb5d4ec0637d5c8ea7466c2dbb141734f4f60bb914f5fd0d7e95d5",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/index.ts": {
-        "version": "32df67647b56564adb625df1b2981367ead5d24654c83787313510d566a586c1",
-        "signature": "32df67647b56564adb625df1b2981367ead5d24654c83787313510d566a586c1",
-        "affectsGlobalScope": false
-      },
-      "./src/types/transactions.type.ts": {
-        "version": "a364c00d0577e49bc09136462aba704cd869942c251c025e7f2e1c0d616e4d68",
-        "signature": "424b5eeefc8f1eb55d3d7e783e797970fa4d5b1db18c1d78dee8292a387c9242",
-        "affectsGlobalScope": false
-      },
       "./src/services/wallet.service.ts": {
-        "version": "183289a615ba25d416206073c06da632f53da73a8599ca95355ce6d9e72f68e6",
-        "signature": "22f0282323b7a4dab4c04715aa6c5fc517ced6549094962c43a2eca794ddc63c",
+        "version": "a91380b9750c6ae2b9c1eb9738d9b7960da5c5a29ac7c38d2673ce6274aa0a56",
+        "signature": "3e09902449a18bd74fd94d7f055736717a913a24d58bedd5b362c5d73424cc48",
         "affectsGlobalScope": false
       },
-      "./src/services/blockchain.service.ts": {
-        "version": "fdaafdab19d252c85b0476cafb32b0282e4d60f18bcbe9328484ab015c729947",
-        "signature": "f703dc39f2b6841d28e60b15bfe935cd5212e55918cab004b36775eab3ea4112",
+      "./src/services/transactions.service.ts": {
+        "version": "c7c1e9f2331b20f4714fb49afc18e3d1675fbb0bca851117c385005ec15e9da5",
+        "signature": "17c1b51e54cea8baca8dcb122474c0bf74bd56b44735ca0d00cd5d934941c298",
+        "affectsGlobalScope": false
+      },
+      "./src/utils/helper.ts": {
+        "version": "97c0e7f5ac3480a5d084063b9d9f390853fb07c610efce349546b7da07fbf4b2",
+        "signature": "e96580bba43b200dd203c62bddac890fb3e040904ef988e3c814f5c2e3c79323",
+        "affectsGlobalScope": false
+      },
+      "./src/services/slices.service.ts": {
+        "version": "a46129c7dbeb28f2da0c5c25b358fca51a5d7530623958b00c895d1c2ac7b135",
+        "signature": "d7ca361fb5b8f5507dbf7488aa632d1697c6158441fb1d223abb7f78952dac77",
+        "affectsGlobalScope": false
+      },
+      "./src/services/blocks.service.ts": {
+        "version": "097c3c42f7a7d6c285acc75a09f707234e78344fa02e6d26d140c137e46d1683",
+        "signature": "4e4ef6d66eb42a3066002f8b8010a4a03002467ff67247d0c90e70645ac3f5ee",
         "affectsGlobalScope": false
       },
       "./src/services/index.ts": {
-        "version": "df59a265eecacbc45f11bb8942fb06e5053946c4424cb105e41cc872c97f87a1",
-        "signature": "df59a265eecacbc45f11bb8942fb06e5053946c4424cb105e41cc872c97f87a1",
+        "version": "d35bd1144d57f79e14c9a4bd66a4a1b2002042e2c13816550bdf139feff7cd48",
+        "signature": "d35bd1144d57f79e14c9a4bd66a4a1b2002042e2c13816550bdf139feff7cd48",
         "affectsGlobalScope": false
       },
       "./src/tasks/create-blocks.task.ts": {
-        "version": "39da403e8d64df98c971912fe4acf23b88b07d63861be0b620912070655b8eb4",
-        "signature": "18a835444b9abea927670766a0f7ed16aa7aeca841671df8a32db703f6e295c4",
+        "version": "a78050effca5ad37713c9e1ccde345d22af48611d486374911696b8f2ce4d1ad",
+        "signature": "4403198ea456c6c183076b2b0c417f46feee3b705422af412ab9751621e264a0",
+        "affectsGlobalScope": false
+      },
+      "./src/tasks/create-slices.task.ts": {
+        "version": "4d2a0c2cbe750c748ed66b50200e2529f6b292b8755001da9794780a24145f3d",
+        "signature": "c3acdc18248a4489af52b3fa3cfd93b812c2a8e7faec47b154fbb43e6def84f0",
         "affectsGlobalScope": false
       },
       "./src/tasks/index.ts": {
-        "version": "aa187893ec1574a77d484072bf54784382368c09f440a80768d766ddc96cc6e8",
-        "signature": "7d091d195ac17fcac08e585e738d342e57d6c2c598128920eee6cfa09540b617",
+        "version": "1b2255f7119430ab213d442121dc02960e6821af5a53e26db148e12f87830404",
+        "signature": "beb10ec79c3199c048c325ae7f98ebdaa4af09868cfe056e5f787d27bd222f1e",
         "affectsGlobalScope": false
       },
       "./src/application.ts": {
@@ -2602,8 +2607,8 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/blocks-slices.controller.ts": {
-        "version": "f7f856697d279328e964ca3c90e3fe4df958349e2e7d298d103d1530c71655e7",
-        "signature": "29586feff4c11862b012e98be5c8e26c1d757466729c1580fc72535b92cdd198",
+        "version": "e2110391898e8f63e186038e2753f0c298e42859bb2e081aba348d18a9222e3f",
+        "signature": "23e66e9d6e3b5b5aa223a0338f4a8acbadf56f7818ad83fc01f50b36e183a7a0",
         "affectsGlobalScope": false
       },
       "./src/controllers/blocks.controller.ts": {
@@ -2611,34 +2616,9 @@
         "signature": "17793cf051ac95a639b872346d806426d86451e8f63ed06cc2c5455161459857",
         "affectsGlobalScope": false
       },
-      "./src/controllers/companies-wallets.controller.ts": {
-        "version": "53a4d2c2419b6abfe501a0c98a6150d9d806d0d8639bc93c07683eb316623e2e",
-        "signature": "bbb8541fef10d4475f45d699c4ade4a77fdb330f9157ca8ea684ab7858ef571c",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/companies.controller.ts": {
-        "version": "9a37ddbb0048b0614455c4326b3243468102c6b660ab50dd54409eee13af17f0",
-        "signature": "f07682db6c2461b5263acfc4910eff3cad297cb6c9a903250b9d0595bce9056f",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/employees-companies.controller.ts": {
-        "version": "9c2660c7f8d095c1e546f5ce32eddc97e28672d7ce472b039984eb51db936428",
-        "signature": "8eaf6854db274e6a2258e1677d548c2cea58d6d46b044d24d746e6edd3002efb",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/employees-wallets.controller.ts": {
-        "version": "692d2870aa9b475810e404f0c915facbd5cff946eeae9ba80c58556fc8000e24",
-        "signature": "62c32e636ab65a49e2f2f1fd03dc17b144293eeddb390dc7f5b80417f7864bd4",
-        "affectsGlobalScope": false
-      },
-      "./src/controllers/employees.controller.ts": {
-        "version": "a71515d7427530d5dd209b639d770585b5451a1a056b8782fd43d2dd365aed25",
-        "signature": "a6bd4dd985bd7724c7d77a7223788bee69f837fc858ce259479c1137f30f4a60",
-        "affectsGlobalScope": false
-      },
       "./src/controllers/ping.controller.ts": {
-        "version": "bdd01144826ca12fcd9046e7fbe734cd54af56c82baf6bb9dbee77eb49d168ff",
-        "signature": "80e3e158fbbb22cab068c3f91ec262086822f90ca629e02984060b8caf571993",
+        "version": "03990ae9a3977dcf92bf2ce55ed1a17de756e9c3613f3f724f9ef7dd5df2adad",
+        "signature": "444af40b88114939d11ef4956403ff62f15e3e4b107e1ae7949d0ad5a7011b85",
         "affectsGlobalScope": false
       },
       "./src/controllers/transactions.controller.ts": {
@@ -2657,18 +2637,13 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/index.ts": {
-        "version": "990cf5c5e9b99d1656158648920cdf66cd12c163332ee54f610d5c352966e93a",
-        "signature": "990cf5c5e9b99d1656158648920cdf66cd12c163332ee54f610d5c352966e93a",
+        "version": "bb49cabb50966d5b82c247d8b45840b84d0617fe95508148aeaff1e88a62ab38",
+        "signature": "bb49cabb50966d5b82c247d8b45840b84d0617fe95508148aeaff1e88a62ab38",
         "affectsGlobalScope": false
       },
       "./src/services/virtual-machine.service.ts": {
         "version": "32a4641e237fc5fafd70316f4425549217421643e8c79c543f0b9cdb4349ea31",
         "signature": "6c99a8bc16da910c7cbe6bf3fea25055b1047cf5f8234642f8fd792e456cd2b6",
-        "affectsGlobalScope": false
-      },
-      "./src/types/nodes.type.ts": {
-        "version": "a7ab73e7667fa92a5bde642ae57435dddcadf650a12b76ea2133e1fb49bffce7",
-        "signature": "097f9aa7e97708fda7e91b88ba39ee00b7ba3cc6dccf70fd5126dd5228f291fe",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/fs-extra/index.d.ts": {
@@ -4805,50 +4780,10 @@
         "./src/models/index.ts",
         "./src/repositories/index.ts"
       ],
-      "./src/controllers/companies-wallets.controller.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/@loopback/rest/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
-      "./src/controllers/companies.controller.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/@loopback/rest/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
-      "./src/controllers/employees-companies.controller.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/@loopback/rest/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
-      "./src/controllers/employees-wallets.controller.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/@loopback/rest/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
-      "./src/controllers/employees.controller.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/@loopback/rest/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
       "./src/controllers/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
         "./src/controllers/blocks-slices.controller.ts",
         "./src/controllers/blocks.controller.ts",
-        "./src/controllers/companies-wallets.controller.ts",
-        "./src/controllers/companies.controller.ts",
-        "./src/controllers/employees-companies.controller.ts",
-        "./src/controllers/employees-wallets.controller.ts",
-        "./src/controllers/employees.controller.ts",
         "./src/controllers/nodes.controller.ts",
         "./src/controllers/ping.controller.ts",
         "./src/controllers/slices-transactions.controller.ts",
@@ -4859,9 +4794,13 @@
       ],
       "./src/controllers/ping.controller.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
-        "./src/services/index.ts"
+        "./src/models/index.ts",
+        "./src/repositories/index.ts",
+        "./src/services/index.ts",
+        "./src/services/transactions.service.ts"
       ],
       "./src/controllers/slices-transactions.controller.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
@@ -4899,22 +4838,9 @@
         "./node_modules/tslib/tslib.d.ts",
         "./src/models/slices.model.ts"
       ],
-      "./src/models/companies.model.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/models/wallets.model.ts"
-      ],
-      "./src/models/employees.model.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/models/companies.model.ts",
-        "./src/models/wallets.model.ts"
-      ],
       "./src/models/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
         "./src/models/blocks.model.ts",
-        "./src/models/companies.model.ts",
-        "./src/models/employees.model.ts",
         "./src/models/slices.model.ts",
         "./src/models/transactions.model.ts",
         "./src/models/wallets.model.ts"
@@ -4945,28 +4871,9 @@
         "./src/models/index.ts",
         "./src/repositories/slices.repository.ts"
       ],
-      "./src/repositories/companies.repository.ts": [
-        "./node_modules/@loopback/core/dist/index.d.ts",
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/datasources/index.ts",
-        "./src/models/index.ts",
-        "./src/repositories/wallets.repository.ts"
-      ],
-      "./src/repositories/employees.repository.ts": [
-        "./node_modules/@loopback/core/dist/index.d.ts",
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts",
-        "./src/datasources/index.ts",
-        "./src/models/index.ts",
-        "./src/repositories/companies.repository.ts",
-        "./src/repositories/wallets.repository.ts"
-      ],
       "./src/repositories/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
         "./src/repositories/blocks.repository.ts",
-        "./src/repositories/companies.repository.ts",
-        "./src/repositories/employees.repository.ts",
         "./src/repositories/slices.repository.ts",
         "./src/repositories/transactions.repository.ts",
         "./src/repositories/wallets.repository.ts"
@@ -4996,13 +4903,17 @@
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts"
       ],
-      "./src/services/blockchain.service.ts": [
+      "./src/services/blocks.service.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/@waves/ts-lib-crypto/index.d.ts",
+        "./node_modules/ethers/lib/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
-        "./src/models/index.ts",
+        "./src/repositories/index.ts",
         "./src/services/contract.service.ts",
-        "./src/services/index.ts"
+        "./src/services/index.ts",
+        "./src/types/transactions.type.ts",
+        "./src/utils/helper.ts"
       ],
       "./src/services/bscscan.service.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
@@ -5025,15 +4936,42 @@
       ],
       "./src/services/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
-        "./src/services/blockchain.service.ts",
+        "./src/services/blocks.service.ts",
         "./src/services/bscscan.service.ts",
         "./src/services/contract.service.ts",
         "./src/services/nodes-service.service.ts",
+        "./src/services/slices.service.ts",
+        "./src/services/transactions.service.ts",
         "./src/services/wallet.service.ts"
       ],
       "./src/services/nodes-service.service.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts"
+      ],
+      "./src/services/slices.service.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/@waves/ts-lib-crypto/index.d.ts",
+        "./node_modules/ethers/lib/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/models/index.ts",
+        "./src/repositories/index.ts",
+        "./src/services/contract.service.ts",
+        "./src/services/index.ts",
+        "./src/types/transactions.type.ts",
+        "./src/utils/helper.ts"
+      ],
+      "./src/services/transactions.service.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/@waves/ts-lib-crypto/index.d.ts",
+        "./node_modules/ethers/lib/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/models/index.ts",
+        "./src/repositories/index.ts",
+        "./src/services/contract.service.ts",
+        "./src/services/index.ts",
+        "./src/types/transactions.type.ts"
       ],
       "./src/services/virtual-machine.service.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
@@ -5049,24 +4987,38 @@
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/@waves/ts-lib-crypto/index.d.ts",
+        "./node_modules/bignumber.js/bignumber.d.ts",
         "./node_modules/tslib/tslib.d.ts",
         "./src/models/index.ts",
-        "./src/repositories/index.ts",
-        "./src/services/index.ts",
-        "./src/types/transactions.type.ts"
+        "./src/repositories/index.ts"
       ],
       "./src/tasks/create-blocks.task.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/cron/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
+        "./src/models/index.ts",
+        "./src/repositories/index.ts",
+        "./src/services/index.ts"
+      ],
+      "./src/tasks/create-slices.task.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/cron/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/models/index.ts",
+        "./src/repositories/index.ts",
         "./src/services/index.ts"
       ],
       "./src/tasks/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
-        "./src/tasks/create-blocks.task.ts"
+        "./src/tasks/create-blocks.task.ts",
+        "./src/tasks/create-slices.task.ts"
       ],
       "./src/types/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
+        "./src/types/nodes.type.ts",
+        "./src/types/transactions.type.ts",
         "./src/types/tx-bsc.type.ts"
       ],
       "./src/types/nodes.type.ts": [
@@ -5079,6 +5031,9 @@
       ],
       "./src/types/tx-bsc.type.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts"
+      ],
+      "./src/utils/helper.ts": [
         "./node_modules/tslib/tslib.d.ts"
       ]
     },
@@ -7118,7 +7073,6 @@
         "./node_modules/@loopback/rest/dist/index.d.ts"
       ],
       "./src/controllers/blocks-slices.controller.ts": [
-        "./src/models/index.ts",
         "./src/repositories/index.ts"
       ],
       "./src/controllers/blocks.controller.ts": [
@@ -7126,43 +7080,19 @@
         "./src/models/index.ts",
         "./src/repositories/index.ts"
       ],
-      "./src/controllers/companies-wallets.controller.ts": [
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
-      "./src/controllers/companies.controller.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
-      "./src/controllers/employees-companies.controller.ts": [
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
-      "./src/controllers/employees-wallets.controller.ts": [
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
-      "./src/controllers/employees.controller.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./src/models/index.ts",
-        "./src/repositories/index.ts"
-      ],
       "./src/controllers/index.ts": [
         "./src/controllers/blocks-slices.controller.ts",
         "./src/controllers/blocks.controller.ts",
-        "./src/controllers/companies-wallets.controller.ts",
-        "./src/controllers/companies.controller.ts",
-        "./src/controllers/employees-companies.controller.ts",
-        "./src/controllers/employees-wallets.controller.ts",
-        "./src/controllers/employees.controller.ts",
         "./src/controllers/nodes.controller.ts",
         "./src/controllers/ping.controller.ts",
         "./src/controllers/slices-transactions.controller.ts",
         "./src/controllers/transactions.controller.ts"
       ],
       "./src/controllers/ping.controller.ts": [
-        "./node_modules/@loopback/rest/dist/index.d.ts"
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./src/repositories/index.ts",
+        "./src/services/index.ts",
+        "./src/services/transactions.service.ts"
       ],
       "./src/controllers/slices-transactions.controller.ts": [
         "./src/repositories/index.ts"
@@ -7183,19 +7113,10 @@
         "./src/application.ts"
       ],
       "./src/models/blocks.model.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./src/models/slices.model.ts"
-      ],
-      "./src/models/companies.model.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts"
-      ],
-      "./src/models/employees.model.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts"
       ],
       "./src/models/index.ts": [
         "./src/models/blocks.model.ts",
-        "./src/models/companies.model.ts",
-        "./src/models/employees.model.ts",
         "./src/models/slices.model.ts",
         "./src/models/transactions.model.ts",
         "./src/models/wallets.model.ts"
@@ -7210,31 +7131,12 @@
         "./node_modules/@loopback/repository/dist/index.d.ts"
       ],
       "./src/repositories/blocks.repository.ts": [
-        "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./src/datasources/index.ts",
-        "./src/models/index.ts",
-        "./src/repositories/slices.repository.ts"
-      ],
-      "./src/repositories/companies.repository.ts": [
-        "./node_modules/@loopback/core/dist/index.d.ts",
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./src/datasources/index.ts",
-        "./src/models/index.ts",
-        "./src/repositories/wallets.repository.ts"
-      ],
-      "./src/repositories/employees.repository.ts": [
-        "./node_modules/@loopback/core/dist/index.d.ts",
-        "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./src/datasources/index.ts",
-        "./src/models/index.ts",
-        "./src/repositories/companies.repository.ts",
-        "./src/repositories/wallets.repository.ts"
+        "./src/models/index.ts"
       ],
       "./src/repositories/index.ts": [
         "./src/repositories/blocks.repository.ts",
-        "./src/repositories/companies.repository.ts",
-        "./src/repositories/employees.repository.ts",
         "./src/repositories/slices.repository.ts",
         "./src/repositories/transactions.repository.ts",
         "./src/repositories/wallets.repository.ts"
@@ -7257,9 +7159,11 @@
       "./src/sequence.ts": [
         "./node_modules/@loopback/rest/dist/index.d.ts"
       ],
-      "./src/services/blockchain.service.ts": [
-        "./src/models/index.ts",
-        "./src/services/contract.service.ts"
+      "./src/services/blocks.service.ts": [
+        "./src/repositories/index.ts",
+        "./src/services/contract.service.ts",
+        "./src/services/index.ts",
+        "./src/types/transactions.type.ts"
       ],
       "./src/services/bscscan.service.ts": [
         "./node_modules/@loopback/logging/dist/index.d.ts",
@@ -7274,27 +7178,49 @@
         "./src/types/index.ts"
       ],
       "./src/services/index.ts": [
-        "./src/services/blockchain.service.ts",
+        "./src/services/blocks.service.ts",
         "./src/services/bscscan.service.ts",
         "./src/services/contract.service.ts",
         "./src/services/nodes-service.service.ts",
+        "./src/services/slices.service.ts",
+        "./src/services/transactions.service.ts",
         "./src/services/wallet.service.ts"
+      ],
+      "./src/services/slices.service.ts": [
+        "./src/repositories/index.ts",
+        "./src/services/contract.service.ts",
+        "./src/services/index.ts",
+        "./src/types/transactions.type.ts"
+      ],
+      "./src/services/transactions.service.ts": [
+        "./src/repositories/index.ts",
+        "./src/services/contract.service.ts",
+        "./src/types/transactions.type.ts"
       ],
       "./src/services/virtual-machine.service.ts": [
         "./src/types/transactions.type.ts"
       ],
       "./src/services/wallet.service.ts": [
-        "./src/repositories/index.ts",
-        "./src/types/transactions.type.ts"
+        "./src/models/index.ts",
+        "./src/repositories/index.ts"
       ],
       "./src/tasks/create-blocks.task.ts": [
         "./node_modules/@loopback/cron/dist/index.d.ts",
+        "./src/repositories/index.ts",
+        "./src/services/index.ts"
+      ],
+      "./src/tasks/create-slices.task.ts": [
+        "./node_modules/@loopback/cron/dist/index.d.ts",
+        "./src/repositories/index.ts",
         "./src/services/index.ts"
       ],
       "./src/tasks/index.ts": [
-        "./src/tasks/create-blocks.task.ts"
+        "./src/tasks/create-blocks.task.ts",
+        "./src/tasks/create-slices.task.ts"
       ],
       "./src/types/index.ts": [
+        "./src/types/nodes.type.ts",
+        "./src/types/transactions.type.ts",
         "./src/types/tx-bsc.type.ts"
       ],
       "./src/types/nodes.type.ts": [
@@ -7807,11 +7733,6 @@
       "./src/application.ts",
       "./src/controllers/blocks-slices.controller.ts",
       "./src/controllers/blocks.controller.ts",
-      "./src/controllers/companies-wallets.controller.ts",
-      "./src/controllers/companies.controller.ts",
-      "./src/controllers/employees-companies.controller.ts",
-      "./src/controllers/employees-wallets.controller.ts",
-      "./src/controllers/employees.controller.ts",
       "./src/controllers/index.ts",
       "./src/controllers/nodes.controller.ts",
       "./src/controllers/ping.controller.ts",
@@ -7822,288 +7743,34 @@
       "./src/index.ts",
       "./src/migrate.ts",
       "./src/models/blocks.model.ts",
-      "./src/models/companies.model.ts",
-      "./src/models/employees.model.ts",
       "./src/models/index.ts",
       "./src/models/slices.model.ts",
       "./src/models/transactions.model.ts",
       "./src/models/wallets.model.ts",
       "./src/openapi-spec.ts",
       "./src/repositories/blocks.repository.ts",
-      "./src/repositories/companies.repository.ts",
-      "./src/repositories/employees.repository.ts",
       "./src/repositories/index.ts",
       "./src/repositories/slices.repository.ts",
       "./src/repositories/transactions.repository.ts",
       "./src/repositories/wallets.repository.ts",
       "./src/sequence.ts",
-      [
-        "./src/services/blockchain.service.ts",
-        [
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1674,
-            "length": 5,
-            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
-            "category": 1,
-            "code": 2552
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1710,
-            "length": 6,
-            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
-            "category": 1,
-            "code": 2552,
-            "relatedInformation": [
-              {
-                "file": "./src/services/blockchain.service.ts",
-                "start": 1607,
-                "length": 5,
-                "messageText": "'slice' is declared here.",
-                "category": 3,
-                "code": 2728
-              }
-            ]
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1719,
-            "length": 6,
-            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
-            "category": 1,
-            "code": 2552,
-            "relatedInformation": [
-              {
-                "file": "./src/services/blockchain.service.ts",
-                "start": 1607,
-                "length": 5,
-                "messageText": "'slice' is declared here.",
-                "category": 3,
-                "code": 2728
-              }
-            ]
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1732,
-            "length": 1,
-            "messageText": "Parameter 'a' implicitly has an 'any' type.",
-            "category": 1,
-            "code": 7006
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1735,
-            "length": 1,
-            "messageText": "Parameter 'b' implicitly has an 'any' type.",
-            "category": 1,
-            "code": 7006
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1767,
-            "length": 6,
-            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
-            "category": 1,
-            "code": 2552,
-            "relatedInformation": [
-              {
-                "file": "./src/services/blockchain.service.ts",
-                "start": 1607,
-                "length": 5,
-                "messageText": "'slice' is declared here.",
-                "category": 3,
-                "code": 2728
-              }
-            ]
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1782,
-            "length": 5,
-            "messageText": "Parameter 'slice' implicitly has an 'any' type.",
-            "category": 1,
-            "code": 7006
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1799,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1868,
-            "length": 5,
-            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
-            "category": 1,
-            "code": 2552
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1893,
-            "length": 5,
-            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
-            "category": 1,
-            "code": 2552
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 1967,
-            "length": 5,
-            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
-            "category": 1,
-            "code": 2552
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2038,
-            "length": 6,
-            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
-            "category": 1,
-            "code": 2552,
-            "relatedInformation": [
-              {
-                "file": "./src/services/blockchain.service.ts",
-                "start": 1607,
-                "length": 5,
-                "messageText": "'slice' is declared here.",
-                "category": 3,
-                "code": 2728
-              }
-            ]
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2065,
-            "length": 6,
-            "messageText": "Cannot find name 'slices'. Did you mean 'slice'?",
-            "category": 1,
-            "code": 2552,
-            "relatedInformation": [
-              {
-                "file": "./src/services/blockchain.service.ts",
-                "start": 1607,
-                "length": 5,
-                "messageText": "'slice' is declared here.",
-                "category": 3,
-                "code": 2728
-              }
-            ]
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2080,
-            "length": 5,
-            "messageText": "Parameter 'slice' implicitly has an 'any' type.",
-            "category": 1,
-            "code": 7006
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2263,
-            "length": 5,
-            "messageText": "Cannot find name 'block'. Did you mean 'Blocks'?",
-            "category": 1,
-            "code": 2552
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2296,
-            "length": 9,
-            "messageText": "Cannot find name 'lastBlock'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2315,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2332,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2363,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2458,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2507,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2519,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2571,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2610,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          },
-          {
-            "file": "./src/services/blockchain.service.ts",
-            "start": 2646,
-            "length": 5,
-            "messageText": "Cannot find name 'block'.",
-            "category": 1,
-            "code": 2304
-          }
-        ]
-      ],
+      "./src/services/blocks.service.ts",
       "./src/services/bscscan.service.ts",
       "./src/services/contract.service.ts",
       "./src/services/index.ts",
       "./src/services/nodes-service.service.ts",
+      "./src/services/slices.service.ts",
+      "./src/services/transactions.service.ts",
       "./src/services/virtual-machine.service.ts",
       "./src/services/wallet.service.ts",
       "./src/tasks/create-blocks.task.ts",
+      "./src/tasks/create-slices.task.ts",
       "./src/tasks/index.ts",
       "./src/types/index.ts",
       "./src/types/nodes.type.ts",
       "./src/types/transactions.type.ts",
-      "./src/types/tx-bsc.type.ts"
+      "./src/types/tx-bsc.type.ts",
+      "./src/utils/helper.ts"
     ]
   },
   "version": "4.1.6"

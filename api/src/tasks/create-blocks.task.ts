@@ -1,17 +1,18 @@
 import { service } from '@loopback/core';
-import {CronJob, cronJob} from '@loopback/cron';
-import { BlockchainProvider } from '../services';
-const sleep = async function sleep(ms: number) {
-  await new Promise((resolve) => {
-    setTimeout(resolve, ms + 10);
-  });
-}
+import { CronJob, cronJob } from '@loopback/cron';
+import { repository } from '@loopback/repository';
+import { TransactionsType } from '../models';
+import { BlocksRepository, SlicesRepository, TransactionsRepository } from '../repositories';
+import { SlicesProvider, BlocksProvider } from '../services';
+import { SliceDTO } from '../types';
 
 @cronJob()
 export class CreateBlocks extends CronJob {
 
   constructor(
-    @service(BlockchainProvider) private blockchainProvider: BlockchainProvider
+    @service(SlicesProvider) private slicesProvider: SlicesProvider,
+    @service(BlocksProvider) private blocksProvider: BlocksProvider,
+    @repository(BlocksRepository) public blocksRepository: BlocksRepository,
   ) {
     super({
       name: 'create-blocks',
@@ -24,12 +25,31 @@ export class CreateBlocks extends CronJob {
         }
         await this.start();
       },
-      cronTime: '*/30 * * * * *',
+      cronTime: '*/1 * * * *',
     });
   }
 
   runProcess = async () => {
-    console.log('end task', new Date().toISOString(), await this.blockchainProvider.createNewBlock([], undefined))
+    let lastBlockParams = await this.blocksProvider.getLastHashAndHeight();
+    let slices = await this.slicesProvider.getMempoolSlices();
+
+    let selectedSlices: SliceDTO[] = []
+    if (slices.length > 0) {
+      slices = slices.sort((a, b) => b.numberOfTransactions - a.numberOfTransactions);
+      for (let i = 0; i < slices.length && selectedSlices.length === 0; i++) {
+        let slice = slices[i];
+        try {
+          await this.slicesProvider.validadeSlice(lastBlockParams.lastHash, slice);
+          await this.slicesProvider.consolidateSlices([slice.hash], true);
+          selectedSlices.push(slice);
+        } catch (err: any) {
+          console.log('create new blocks task - ' + err.message)
+        }
+      }
+    }
+    let block = await this.blocksProvider.createNewBlock(selectedSlices);
+    await this.blocksProvider.addNewBLock(block);
+    console.log('created block', block.height);
   }
 
 }

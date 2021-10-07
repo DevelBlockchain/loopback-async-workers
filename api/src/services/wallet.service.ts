@@ -1,11 +1,9 @@
-import { injectable, BindingScope, Provider } from '@loopback/core';
+import { injectable, BindingScope } from '@loopback/core';
 import { repository } from '@loopback/repository';
-
-import { randomSeed, base58Encode, keyPair, publicKey, seedWithNonce, sha256, signBytes, stringToBytes, verifySignature, privateKey, base16Decode } from '@waves/ts-lib-crypto';
-import { ContractProvider } from '.';
-import { Transactions } from '../models';
+import BigNumber from "bignumber.js";
+import { sha256, base16Decode, base16Encode } from '@waves/ts-lib-crypto';
+import { Transactions, Wallets } from '../models';
 import { WalletsRepository } from '../repositories';
-import { TransactionsDTO } from '../types/transactions.type';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class WalletProvider {
@@ -13,66 +11,82 @@ export class WalletProvider {
     @repository(WalletsRepository) public walletsRepository: WalletsRepository,
   ) { }
 
-  static transactionToBytes = (tx: any): Uint8Array => {
-    let entries = Object.entries(tx);
-    entries = entries.sort((entireA, entireB) => entireA[0].localeCompare(entireB[0]));
-    tx = {};
-    entries.forEach((entire) => {
-      tx[entire[0]] = entire[1]
-    });
-    return sha256(sha256(stringToBytes(JSON.stringify(tx))));
-  }
-
-  static getAddressIdentifier(): string {
-    return ContractProvider.isMainNet() ? 'BWS1M' : 'BWS1T';
-  }
-
-  static getBywiseAddress(publicKey: string): string {
-    let hash = base58Encode(sha256(sha256(base16Decode(publicKey)))).substring(0, 28);
-    let addressWithoutSum = WalletProvider.getAddressIdentifier() + hash;
-    let sum = base58Encode(sha256(addressWithoutSum)).substring(0, 3);
-    return addressWithoutSum + sum;
-  }
-
-  static isBywiseAddress(address: string): boolean {
-    try {
-      if (!address.startsWith(WalletProvider.getAddressIdentifier())) return false;
-      let addressWithoutSum = address.substring(0, address.length - 3);
-      let sum = address.substring(address.length - 3);
-      let sumCalc = base58Encode(sha256(addressWithoutSum)).substring(0, 3);
-      return sum == sumCalc;
-    } catch (er) {
+  static encodeBWSAddress = (isMainnet: boolean, isContract: boolean, address: string, tag?: string) => {
+    let finalAddress = 'BWS1';
+    finalAddress += isMainnet ? 'M' : 'T';
+    finalAddress += isContract ? 'C' : 'U';
+    finalAddress += address.substring(2);
+    if (tag && !/ˆ[0-9a-fA-F]{1, 40}$/.test(tag)) {
+      console.log('tag', tag)
+      let checkSum = base16Encode(sha256(base16Decode(tag))).substring(0, 3);
+      finalAddress += tag;
+      finalAddress += checkSum;
     }
-    return false;
+    return finalAddress;
   }
 
-  async verifyTransactions(transaction: TransactionsDTO) {
-    if (!WalletProvider.isBywiseAddress(transaction.from)) throw new Error('invalid address');
-    let wallet = await this.walletsRepository.findOne({
-      where: {
-        address: transaction.from
+  static isValidAddress = (address: string) => {
+    return !/ˆBWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0, 43}$/.test(address);
+  }
+
+  static decodeBWSAddress = (address: string) => {
+    if (!WalletProvider.isValidAddress(address) || address.substring(0, 4) !== 'BWS1') {
+      throw new Error('invalid address');
+    }
+    let isMainnet = address.substring(4, 5) === 'M';
+    let isContract = address.substring(5, 6) === 'C';
+    let ethAddress = '0x' + address.substring(6, 46);
+    let tag = '';
+    if (address.length > 46) {
+      tag = address.substring(46, address.length - 3);
+      let checkSum = address.substring(address.length - 3);
+      let checkSum2 = base16Encode(sha256(base16Decode(tag))).substring(0, 3);
+      if (checkSum !== checkSum2) {
+        throw new Error('corrupted address');
       }
-    });
-    if (!wallet) throw new Error('address not allowed');
-    if (!transaction.sign) throw new Error('signature not found');
-    let sign = transaction.sign;
-    transaction.sign = undefined;
-    let hash = WalletProvider.transactionToBytes(transaction);
-    let isValidSign = await verifySignature(wallet.publicKey, hash, sign);
-    transaction.sign = sign;
-    if (!isValidSign) throw new Error('invalid signature');
+    }
+    return {
+      isMainnet,
+      isContract,
+      ethAddress,
+      tag,
+    };
   }
 
-  static newWallet() {
-    let seed = randomSeed();
-    let pubKey = publicKey(seed);
-    let priKey = privateKey(seed);
-    let address = WalletProvider.getBywiseAddress(pubKey);
-    return {
-      seed,
-      pubKey,
-      priKey,
-      address,
+  private async getWallet(address: string, updatedWallets: Wallets[]): Promise<Wallets> {
+    for (let i = 0; i < updatedWallets.length; i++) {
+      let updatedWallet = updatedWallets[i];
+      if (updatedWallet.address === address) {
+        return updatedWallet;
+      }
     }
+    let wallet = null;
+    if (!wallet) {
+      wallet = await this.walletsRepository.findOne({ where: { address: address } });
+    }
+    if (!wallet) {
+      wallet = await this.walletsRepository.create({
+        balance: '0',
+        address: address,
+      });
+    }
+    updatedWallets.push(wallet);
+    return wallet;
+  }
+
+  async executeTransaction(tx: Transactions, updatedWallets: Wallets[]) {
+    let sender = await this.getWallet(tx.from, updatedWallets);
+    let recipient = await this.getWallet(tx.to, updatedWallets);
+    let amount = new BigNumber(tx.amount);
+    let fee = new BigNumber(tx.fee);
+    let senderBalance = new BigNumber(sender.balance);
+    let recipientBalance = new BigNumber(recipient.balance);
+    senderBalance = senderBalance.minus(amount).minus(fee);
+    if(senderBalance.isLessThan(new BigNumber(0))) {
+      throw new Error('insufficient funds')
+    }
+    recipientBalance = recipientBalance.plus(amount);
+    sender.balance = senderBalance.toString();
+    recipient.balance = recipientBalance.toString();
   }
 }

@@ -48,8 +48,9 @@ export class Slices extends Entity {
 
   @property({
     type: 'string',
+    required: true,
   })
-  lastHash?: string;
+  lastBlockHash: string;
 
   @property({
     type: "date",
@@ -61,7 +62,7 @@ export class Slices extends Entity {
     type: 'string',
     required: true,
   })
-  createdBy: string;
+  from: string;
 
   @property({
     type: 'string',

@@ -23,6 +23,12 @@ export class Blocks extends Entity {
   numberOfTransactions: number;
 
   @property({
+    type: 'array',
+    itemType: 'string'
+  })
+  slices: string[];
+
+  @property({
     type: 'string',
     required: true,
   })
@@ -44,7 +50,7 @@ export class Blocks extends Entity {
     type: 'string',
     required: true,
   })
-  createdBy: string;
+  from: string;
 
   @property({
     type: "date",
@@ -66,12 +72,8 @@ export class Blocks extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
-  externalTxID: string;
-
-  @hasMany(() => Slices)
-  slices: Slices[];
+  externalTxID?: string;
 
   constructor(data?: Partial<Blocks>) {
     super(data);

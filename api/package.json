@@ -71,6 +71,7 @@
     "@loopback/service-proxy": "^3.0.7",
     "@waves/ts-lib-crypto": "^1.4.4-beta.1",
     "abort-controller": "^3.0.0",
+    "bignumber.js": "^9.0.1",
     "dotenv": "^10.0.0",
     "ethers": "^5.4.7",
     "loopback-connector-postgresql": "^5.4.0",

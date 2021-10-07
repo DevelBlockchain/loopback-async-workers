@@ -27,7 +27,7 @@ export class BlocksSlicesController {
     @repository(BlocksRepository) protected blocksRepository: BlocksRepository,
   ) { }
 
-  @get('/blocks/{hash}/slices', {
+  /*@get('/blocks/{hash}/slices', {
     responses: {
       '200': {
         description: 'Array of Blocks has many Slices',
@@ -49,5 +49,5 @@ export class BlocksSlicesController {
     });
     if(!item) throw new HttpErrors.NotFound();
     return this.blocksRepository.slices(item.id).find();
-  }
+  }*/
 }

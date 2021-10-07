@@ -1,16 +1,18 @@
-import { inject } from '@loopback/core';
+import { inject, service } from '@loopback/core';
+import { repository } from '@loopback/repository';
 import {
   Request,
   RestBindings,
   get,
   response,
   ResponseObject,
+  post,
 } from '@loopback/rest';
-import { WalletProvider } from '../services';
+import { TransactionsType } from '../models';
+import { TransactionsRepository } from '../repositories';
+import { ContractProvider, WalletProvider } from '../services';
+import { TransactionsProvider } from '../services/transactions.service';
 
-/**
- * OpenAPI response for ping()
- */
 const PING_RESPONSE: ResponseObject = {
   description: 'Ping Response',
   content: {
@@ -35,23 +37,31 @@ const PING_RESPONSE: ResponseObject = {
   },
 };
 
-/**
- * A simple controller to bounce back http requests
- */
 export class PingController {
-  constructor(@inject(RestBindings.Http.REQUEST) private req: Request) { }
+  constructor(
+    @inject(RestBindings.Http.REQUEST) private req: Request,
+    @service(ContractProvider) private contractProvider: ContractProvider,
+    @service(TransactionsProvider) private transactionsProvider: TransactionsProvider,
+    @repository(TransactionsRepository) private transactionsRepository: TransactionsRepository,
+  ) { }
 
-  // Map to `GET /ping`
   @get('/ping')
   @response(200, PING_RESPONSE)
   ping(): object {
-    // Reply with a greeting, the current time, the url, and request headers
     return {
       greeting: 'Hello World',
       date: new Date(),
       url: this.req.url,
-      headers: Object.assign({}, this.req.headers),
-      address: WalletProvider.newWallet()
+      headers: Object.assign({}, this.req.headers)
     };
+  }
+
+  @post('/debug')
+  async create(): Promise<any> {
+    let account = this.contractProvider.getAccount();
+    let address = WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
+    let tx = await this.transactionsProvider.createNewTransaction(address, '0', '0', TransactionsType.TX_STRING, 'Think outside the block');
+    await this.transactionsProvider.saveTransaction(tx);
+    return tx;
   }
 }

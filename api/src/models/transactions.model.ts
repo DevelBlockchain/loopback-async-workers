@@ -31,6 +31,12 @@ export class Transactions extends Entity {
     type: 'string',
     required: true,
   })
+  validator: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   from: string;
 
   @property({
@@ -38,6 +44,12 @@ export class Transactions extends Entity {
     required: true,
   })
   to: string;
+
+  @property({
+    type: 'string',
+    default: ''
+  })
+  tag: string;
 
   @property({
     type: 'string',
@@ -89,6 +101,12 @@ export class Transactions extends Entity {
     required: true,
   })
   sign: string;
+  
+  @property({
+    type: 'string',
+    required: true,
+  })
+  validatorSign: string;
 
   @property({
     type: 'string',

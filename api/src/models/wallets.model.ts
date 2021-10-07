@@ -11,39 +11,15 @@ export class Wallets extends Entity {
 
   @property({
     type: 'string',
-    required: true,
+    default: '0',
   })
-  publicKey: string;
-
-  @property({
-    type: 'number',
-    default: 0,
-  })
-  balance: number;
+  balance: string;
 
   @property({
     type: 'string',
     required: true,
   })
   address: string;
-
-  @property({
-    type: 'boolean',
-    default: false,
-  })
-  createCompanies: boolean;
-
-  @property({
-    type: 'boolean',
-    default: false,
-  })
-  createEmployees: boolean;
-
-  @property({
-    type: 'boolean',
-    default: false,
-  })
-  createTransactions: boolean;
 
   constructor(data?: Partial<Wallets>) {
     super(data);
