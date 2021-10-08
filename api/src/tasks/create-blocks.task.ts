@@ -4,7 +4,7 @@ import { repository } from '@loopback/repository';
 import { TransactionsType } from '../models';
 import { BlocksRepository, SlicesRepository, TransactionsRepository } from '../repositories';
 import { SlicesProvider, BlocksProvider } from '../services';
-import { SliceDTO } from '../types';
+import { SimulateSliceDTO, SliceDTO } from '../types';
 
 @cronJob()
 export class CreateBlocks extends CronJob {
@@ -39,8 +39,9 @@ export class CreateBlocks extends CronJob {
       for (let i = 0; i < slices.length && selectedSlices.length === 0; i++) {
         let slice = slices[i];
         try {
+          let ctx = new SimulateSliceDTO();
           await this.slicesProvider.validadeSlice(lastBlockParams.lastHash, slice);
-          await this.slicesProvider.consolidateSlices([slice.hash], true);
+          await this.slicesProvider.simulateBlock([slice.hash], ctx);
           selectedSlices.push(slice);
         } catch (err: any) {
           console.log('create new blocks task - ' + err.message)

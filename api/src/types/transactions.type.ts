@@ -1,5 +1,6 @@
 
 import {Model, model, property} from '@loopback/repository';
+import { Transactions, Wallets } from '../models';
 
 enum TransactionsStatus {
   MEMPOOL = 'mempool',
@@ -278,4 +279,13 @@ export class PackageDTO extends Model {
   constructor(data?: Partial<PackageDTO>) {
     super(data);
   }
+}
+
+@model()
+export class SimulateSliceDTO extends Model {
+  
+  walletsModels: Wallets[] = [];
+  slicesModels: SliceDTO[] = [];
+  transactionsModels: Transactions[] = [];
+
 }

@@ -4,25 +4,53 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where
+  Where,
 } from '@loopback/repository';
 import {
+  post,
+  param,
   get,
-  getModelSchemaRef, HttpErrors, param, post, requestBody,
-  response
+  getModelSchemaRef,
+  patch,
+  put,
+  del,
+  requestBody,
+  response,
 } from '@loopback/rest';
-import { Blocks } from '../models';
-import { BlocksRepository } from '../repositories';
+import {Blocks} from '../models';
+import {BlocksRepository} from '../repositories';
 
 export class BlocksController {
   constructor(
-    @repository(BlocksRepository) public blocksRepository: BlocksRepository,
-  ) { }
+    @repository(BlocksRepository)
+    public blocksRepository : BlocksRepository,
+  ) {}
+
+  @post('/blocks')
+  @response(200, {
+    description: 'Blocks model instance',
+    content: {'application/json': {schema: getModelSchemaRef(Blocks)}},
+  })
+  async create(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Blocks, {
+            title: 'NewBlocks',
+            exclude: ['id'],
+          }),
+        },
+      },
+    })
+    blocks: Omit<Blocks, 'id'>,
+  ): Promise<Blocks> {
+    return this.blocksRepository.create(blocks);
+  }
 
   @get('/blocks/count')
   @response(200, {
     description: 'Blocks model count',
-    content: { 'application/json': { schema: CountSchema } },
+    content: {'application/json': {schema: CountSchema}},
   })
   async count(
     @param.where(Blocks) where?: Where<Blocks>,
@@ -37,7 +65,7 @@ export class BlocksController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Blocks, { includeRelations: true }),
+          items: getModelSchemaRef(Blocks, {includeRelations: true}),
         },
       },
     },
@@ -48,45 +76,75 @@ export class BlocksController {
     return this.blocksRepository.find(filter);
   }
 
-  @get('/blocks/{hash}')
+  @patch('/blocks')
+  @response(200, {
+    description: 'Blocks PATCH success count',
+    content: {'application/json': {schema: CountSchema}},
+  })
+  async updateAll(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Blocks, {partial: true}),
+        },
+      },
+    })
+    blocks: Blocks,
+    @param.where(Blocks) where?: Where<Blocks>,
+  ): Promise<Count> {
+    return this.blocksRepository.updateAll(blocks, where);
+  }
+
+  @get('/blocks/{id}')
   @response(200, {
     description: 'Blocks model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Blocks, { includeRelations: true }),
+        schema: getModelSchemaRef(Blocks, {includeRelations: true}),
       },
     },
   })
   async findById(
-    @param.path.string('hash') hash: string
+    @param.path.string('id') id: string,
+    @param.filter(Blocks, {exclude: 'where'}) filter?: FilterExcludingWhere<Blocks>
   ): Promise<Blocks> {
-    let item = await this.blocksRepository.findOne({
-      where: {
-        hash: hash
-      }
-    });
-    if (!item) throw new HttpErrors.NotFound();
-    return item;
+    return this.blocksRepository.findById(id, filter);
   }
 
-  @get('/blocks/{height}/by-height')
-  @response(200, {
-    description: 'Blocks model instance',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(Blocks, { includeRelations: true }),
-      },
-    },
+  @patch('/blocks/{id}')
+  @response(204, {
+    description: 'Blocks PATCH success',
   })
-  async findByIndex(
-    @param.path.string('height') height: number
-  ): Promise<Blocks> {
-    let item = await this.blocksRepository.findOne({
-      where: {
-        height: height
-      }
-    });
-    if (!item) throw new HttpErrors.NotFound();
-    return item;
+  async updateById(
+    @param.path.string('id') id: string,
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(Blocks, {partial: true}),
+        },
+      },
+    })
+    blocks: Blocks,
+  ): Promise<void> {
+    await this.blocksRepository.updateById(id, blocks);
+  }
+
+  @put('/blocks/{id}')
+  @response(204, {
+    description: 'Blocks PUT success',
+  })
+  async replaceById(
+    @param.path.string('id') id: string,
+    @requestBody() blocks: Blocks,
+  ): Promise<void> {
+    await this.blocksRepository.replaceById(id, blocks);
+  }
+
+  @del('/blocks/{id}')
+  @response(204, {
+    description: 'Blocks DELETE success',
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.blocksRepository.deleteById(id);
   }
 }

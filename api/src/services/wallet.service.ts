@@ -4,6 +4,7 @@ import BigNumber from "bignumber.js";
 import { sha256, base16Decode, base16Encode } from '@waves/ts-lib-crypto';
 import { Transactions, Wallets } from '../models';
 import { WalletsRepository } from '../repositories';
+import { SimulateSliceDTO } from '../types';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class WalletProvider {
@@ -53,9 +54,9 @@ export class WalletProvider {
     };
   }
 
-  private async getWallet(address: string, updatedWallets: Wallets[]): Promise<Wallets> {
-    for (let i = 0; i < updatedWallets.length; i++) {
-      let updatedWallet = updatedWallets[i];
+  private async getWallet(address: string, ctx: SimulateSliceDTO): Promise<Wallets> {
+    for (let i = 0; i < ctx.walletsModels.length; i++) {
+      let updatedWallet = ctx.walletsModels[i];
       if (updatedWallet.address === address) {
         return updatedWallet;
       }
@@ -70,13 +71,13 @@ export class WalletProvider {
         address: address,
       });
     }
-    updatedWallets.push(wallet);
+    ctx.walletsModels.push(wallet);
     return wallet;
   }
 
-  async executeTransaction(tx: Transactions, updatedWallets: Wallets[]) {
-    let sender = await this.getWallet(tx.from, updatedWallets);
-    let recipient = await this.getWallet(tx.to, updatedWallets);
+  async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO) {
+    let sender = await this.getWallet(tx.from, ctx);
+    let recipient = await this.getWallet(tx.to, ctx);
     let amount = new BigNumber(tx.amount);
     let fee = new BigNumber(tx.fee);
     let senderBalance = new BigNumber(sender.balance);

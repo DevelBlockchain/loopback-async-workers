@@ -4,6 +4,7 @@ import { repository } from '@loopback/repository';
 import { TransactionsStatus } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { BlocksProvider, SlicesProvider } from '../services';
+import { SimulateSliceDTO } from '../types';
 
 @cronJob()
 export class CreateSlices extends CronJob {
@@ -37,8 +38,19 @@ export class CreateSlices extends CronJob {
     if (transactionsOnMempool.length > 0) {
       let lastBlockParams = await this.blocksProvider.getLastHashAndHeight();
       let lastHash = lastBlockParams.lastHash;
-      let slice = await this.slicesProvider.createNewSlice(lastHash, transactionsOnMempool);
-      await this.slicesProvider.addSlice(lastHash, slice);
+      let ctx = new SimulateSliceDTO();
+
+      for (let i = 0; i < transactionsOnMempool.length; i++) {
+        try {
+          await this.slicesProvider.simulateTransaction(transactionsOnMempool[i].hash, ctx);
+        } catch (err: any) {
+          console.log('new slice - invalid transaction - ' + err.message, transactionsOnMempool[i])
+        }
+      }
+      if (ctx.transactionsModels.length > 0) {
+        let slice = await this.slicesProvider.createNewSlice(lastHash, ctx.transactionsModels);
+        await this.slicesProvider.addSlice(lastHash, slice);
+      }
     }
   }
 

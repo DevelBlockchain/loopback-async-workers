@@ -5,7 +5,7 @@ import { ethers } from 'ethers';
 import { WalletProvider } from '.';
 import { Blocks, Slices, Transactions, TransactionsStatus, Wallets } from '../models';
 import { SlicesRepository, TransactionsRepository, WalletsRepository } from '../repositories';
-import { BlockDTO, SliceDTO, TransactionsDTO } from '../types/transactions.type';
+import { BlockDTO, SimulateSliceDTO, SliceDTO, TransactionsDTO } from '../types/transactions.type';
 import { numberToHex } from '../utils/helper';
 import { ContractProvider } from './contract.service';
 
@@ -115,46 +115,65 @@ export class SlicesProvider {
     }
     await this.validadeSlice(lastBlockHash, slice);
     SlicesProvider.mempoolSlices.push(slice);
+    console.log('created new slice')
     return true;
   }
 
-  async consolidateSlices(slices: string[], simulate = false) {
-    let walletsModels: Wallets[] = [];
-    let slicesModels: SliceDTO[] = [];
-    let transactionsModels: Transactions[] = [];
+  async consolidateSlices(slices: string[]) {
+    let ctx = new SimulateSliceDTO();
+    await this.simulateBlock(slices, ctx);
+    SlicesProvider.mempoolSlices = [];
+    for (let i = 0; i < ctx.slicesModels.length; i++) {
+      await this.slicesRepository.create(ctx.slicesModels[i]);
+    }
+    for (let i = 0; i < ctx.transactionsModels.length; i++) {
+      await this.transactionsRepository.update(ctx.transactionsModels[i]);
+    }
+    for (let i = 0; i < ctx.walletsModels.length; i++) {
+      await this.walletsRepository.update(ctx.walletsModels[i]);
+    }
+  }
+
+  async simulateBlock(slices: string[], ctx: SimulateSliceDTO) {
     for (let i = 0; i < slices.length; i++) {
       let sliceHash = slices[i];
-      let slice = this.getSlice(sliceHash);
-      if (!slice) {
-        throw new Error('mempool slice ' + sliceHash + ' not found');
-      }
-      slicesModels.push(slice);
-      for (let i = 0; i < slice.transactions.length; i++) {
-        let txHash = slice.transactions[i];
-        let tx = await this.transactionsRepository.findOne({ where: { hash: txHash } });
-        if (!tx) {
-          throw new Error('slice transaction ' + txHash + ' not found');
-        }
-        if (tx.status !== TransactionsStatus.TX_MEMPOOL) {
-          throw new Error(`slice transaction ${txHash} already registered`);
-        }
-        tx.status = TransactionsStatus.TX_MINED;
-        await this.walletProvider.executeTransaction(tx, walletsModels);
-        transactionsModels.push(tx);
+      await this.simulateSlice(sliceHash, ctx);
+    }
+  }
+
+  async simulateSlice(sliceHash: string, ctx: SimulateSliceDTO) {
+    for (let i = 0; i < ctx.slicesModels.length; i++) {
+      if (ctx.slicesModels[i].hash === sliceHash) {
+        throw new Error('slice duplicate slice ' + sliceHash);
       }
     }
-    if (!simulate) {
-      SlicesProvider.mempoolSlices = [];
-      for (let i = 0; i < slicesModels.length; i++) {
-        await this.slicesRepository.create(slicesModels[i]);
-      }
-      for (let i = 0; i < transactionsModels.length; i++) {
-        await this.transactionsRepository.update(transactionsModels[i]);
-      }
-      for (let i = 0; i < walletsModels.length; i++) {
-        await this.walletsRepository.update(walletsModels[i]);
+    let slice = this.getSlice(sliceHash);
+    if (!slice) {
+      throw new Error('mempool slice ' + sliceHash + ' not found');
+    }
+    for (let i = 0; i < slice.transactions.length; i++) {
+      let txHash = slice.transactions[i];
+      await this.simulateTransaction(txHash, ctx);
+    }
+    ctx.slicesModels.push(slice);
+  }
+
+  async simulateTransaction(txHash: string, ctx: SimulateSliceDTO) {
+    for (let i = 0; i < ctx.transactionsModels.length; i++) {
+      if (ctx.transactionsModels[i].hash === txHash) {
+        throw new Error('slice duplicate transaction ' + txHash);
       }
     }
+    let tx = await this.transactionsRepository.findOne({ where: { hash: txHash } });
+    if (!tx) {
+      throw new Error('slice transaction ' + txHash + ' not found');
+    }
+    if (tx.status !== TransactionsStatus.TX_MEMPOOL) {
+      throw new Error(`slice transaction ${txHash} already registered`);
+    }
+    tx.status = TransactionsStatus.TX_MINED;
+    await this.walletProvider.executeTransaction(tx, ctx);
+    ctx.transactionsModels.push(tx);
   }
 
   async createNewSlice(lastBlockHash: string, transactions: TransactionsDTO[]) {

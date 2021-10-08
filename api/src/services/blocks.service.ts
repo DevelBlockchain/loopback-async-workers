@@ -53,14 +53,17 @@ export class BlocksProvider {
     if (/ˆ[0-9a-f]{40}$/.test(block.hash)) {
       throw new Error('invalid block hash ' + block.hash);
     }
-    if (block.slices.length !== block.numberOfTransactions) {
-      throw new Error('invalid block slices length ' + block.slices.length + ' ' + block.numberOfTransactions);
-    }
+    let numberOfTransactions = 0;
     for (let i = 0; i < block.slices.length; i++) {
       let sliceHash = block.slices[i];
-      if (!this.slicesProvider.getSlice(sliceHash)) {
+      let slice = this.slicesProvider.getSlice(sliceHash);
+      if (!slice) {
         throw new Error('block slice ' + sliceHash + ' not found');
       }
+      numberOfTransactions += slice.numberOfTransactions
+    }
+    if (numberOfTransactions !== block.numberOfTransactions) {
+      throw new Error('invalid block numberOfTransactions ' + numberOfTransactions + ' ' + block.numberOfTransactions);
     }
     if (block.version !== '1') {
       throw new Error('invalid block version ' + block.version);
