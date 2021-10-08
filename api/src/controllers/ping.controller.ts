@@ -56,12 +56,11 @@ export class PingController {
     };
   }
 
-  @post('/debug')
+  @post('/debug-transaction')
   async create(): Promise<any> {
     let account = this.contractProvider.getAccount();
     let address = WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
     let tx = await this.transactionsProvider.createNewTransaction(address, '0', '0', TransactionsType.TX_STRING, 'Think outside the block');
-    await this.transactionsProvider.saveTransaction(tx);
     return tx;
   }
 }

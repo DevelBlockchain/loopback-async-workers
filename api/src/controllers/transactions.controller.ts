@@ -1,3 +1,4 @@
+import { service } from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -17,40 +18,38 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {Transactions} from '../models';
-import {TransactionsRepository} from '../repositories';
+import { Transactions } from '../models';
+import { TransactionsRepository } from '../repositories';
+import { TransactionsProvider } from '../services';
+import { TransactionsDTO } from '../types';
 
 export class TransactionsController {
   constructor(
-    @repository(TransactionsRepository)
-    public transactionsRepository : TransactionsRepository,
-  ) {}
+    @repository(TransactionsRepository) public transactionsRepository: TransactionsRepository,
+    @service(TransactionsProvider) private transactionsProvider: TransactionsProvider,
+  ) { }
 
   @post('/transactions')
-  @response(200, {
-    description: 'Transactions model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Transactions)}},
+  @response(204, {
+    description: 'Accepted transaction',
   })
   async create(
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Transactions, {
-            title: 'NewTransactions',
-            exclude: ['id'],
-          }),
+          schema: getModelSchemaRef(TransactionsDTO),
         },
       },
     })
-    transactions: Omit<Transactions, 'id'>,
-  ): Promise<Transactions> {
-    return this.transactionsRepository.create(transactions);
+    tx: TransactionsDTO,
+  ): Promise<void> {
+    await this.transactionsProvider.saveTransaction(tx);
   }
 
   @get('/transactions/count')
   @response(200, {
     description: 'Transactions model count',
-    content: {'application/json': {schema: CountSchema}},
+    content: { 'application/json': { schema: CountSchema } },
   })
   async count(
     @param.where(Transactions) where?: Where<Transactions>,
@@ -65,7 +64,7 @@ export class TransactionsController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Transactions, {includeRelations: true}),
+          items: getModelSchemaRef(Transactions, { includeRelations: true }),
         },
       },
     },
@@ -76,75 +75,19 @@ export class TransactionsController {
     return this.transactionsRepository.find(filter);
   }
 
-  @patch('/transactions')
-  @response(200, {
-    description: 'Transactions PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Transactions, {partial: true}),
-        },
-      },
-    })
-    transactions: Transactions,
-    @param.where(Transactions) where?: Where<Transactions>,
-  ): Promise<Count> {
-    return this.transactionsRepository.updateAll(transactions, where);
-  }
-
   @get('/transactions/{id}')
   @response(200, {
     description: 'Transactions model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Transactions, {includeRelations: true}),
+        schema: getModelSchemaRef(Transactions, { includeRelations: true }),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Transactions, {exclude: 'where'}) filter?: FilterExcludingWhere<Transactions>
+    @param.filter(Transactions, { exclude: 'where' }) filter?: FilterExcludingWhere<Transactions>
   ): Promise<Transactions> {
     return this.transactionsRepository.findById(id, filter);
-  }
-
-  @patch('/transactions/{id}')
-  @response(204, {
-    description: 'Transactions PATCH success',
-  })
-  async updateById(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Transactions, {partial: true}),
-        },
-      },
-    })
-    transactions: Transactions,
-  ): Promise<void> {
-    await this.transactionsRepository.updateById(id, transactions);
-  }
-
-  @put('/transactions/{id}')
-  @response(204, {
-    description: 'Transactions PUT success',
-  })
-  async replaceById(
-    @param.path.string('id') id: string,
-    @requestBody() transactions: Transactions,
-  ): Promise<void> {
-    await this.transactionsRepository.replaceById(id, transactions);
-  }
-
-  @del('/transactions/{id}')
-  @response(204, {
-    description: 'Transactions DELETE success',
-  })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.transactionsRepository.deleteById(id);
   }
 }

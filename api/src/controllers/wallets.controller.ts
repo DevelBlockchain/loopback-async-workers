@@ -26,27 +26,6 @@ export class WalletsController {
     public walletsRepository : WalletsRepository,
   ) {}
 
-  @post('/wallets')
-  @response(200, {
-    description: 'Wallets model instance',
-    content: {'application/json': {schema: getModelSchemaRef(Wallets)}},
-  })
-  async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Wallets, {
-            title: 'NewWallets',
-            exclude: ['id'],
-          }),
-        },
-      },
-    })
-    wallets: Omit<Wallets, 'id'>,
-  ): Promise<Wallets> {
-    return this.walletsRepository.create(wallets);
-  }
-
   @get('/wallets/count')
   @response(200, {
     description: 'Wallets model count',
@@ -76,25 +55,6 @@ export class WalletsController {
     return this.walletsRepository.find(filter);
   }
 
-  @patch('/wallets')
-  @response(200, {
-    description: 'Wallets PATCH success count',
-    content: {'application/json': {schema: CountSchema}},
-  })
-  async updateAll(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Wallets, {partial: true}),
-        },
-      },
-    })
-    wallets: Wallets,
-    @param.where(Wallets) where?: Where<Wallets>,
-  ): Promise<Count> {
-    return this.walletsRepository.updateAll(wallets, where);
-  }
-
   @get('/wallets/{id}')
   @response(200, {
     description: 'Wallets model instance',
@@ -109,42 +69,5 @@ export class WalletsController {
     @param.filter(Wallets, {exclude: 'where'}) filter?: FilterExcludingWhere<Wallets>
   ): Promise<Wallets> {
     return this.walletsRepository.findById(id, filter);
-  }
-
-  @patch('/wallets/{id}')
-  @response(204, {
-    description: 'Wallets PATCH success',
-  })
-  async updateById(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Wallets, {partial: true}),
-        },
-      },
-    })
-    wallets: Wallets,
-  ): Promise<void> {
-    await this.walletsRepository.updateById(id, wallets);
-  }
-
-  @put('/wallets/{id}')
-  @response(204, {
-    description: 'Wallets PUT success',
-  })
-  async replaceById(
-    @param.path.string('id') id: string,
-    @requestBody() wallets: Wallets,
-  ): Promise<void> {
-    await this.walletsRepository.replaceById(id, wallets);
-  }
-
-  @del('/wallets/{id}')
-  @response(204, {
-    description: 'Wallets DELETE success',
-  })
-  async deleteById(@param.path.string('id') id: string): Promise<void> {
-    await this.walletsRepository.deleteById(id);
   }
 }

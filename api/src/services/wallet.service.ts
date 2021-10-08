@@ -76,17 +76,22 @@ export class WalletProvider {
   }
 
   async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO) {
+    let validator = await this.getWallet(tx.validator, ctx);
     let sender = await this.getWallet(tx.from, ctx);
     let recipient = await this.getWallet(tx.to, ctx);
     let amount = new BigNumber(tx.amount);
     let fee = new BigNumber(tx.fee);
+    let validatorBalance = new BigNumber(validator.balance);
     let senderBalance = new BigNumber(sender.balance);
     let recipientBalance = new BigNumber(recipient.balance);
+    validatorBalance = validatorBalance.plus(fee);
     senderBalance = senderBalance.minus(amount).minus(fee);
     if(senderBalance.isLessThan(new BigNumber(0))) {
       throw new Error('insufficient funds')
     }
     recipientBalance = recipientBalance.plus(amount);
+    
+    validator.balance = validatorBalance.toString();
     sender.balance = senderBalance.toString();
     recipient.balance = recipientBalance.toString();
   }

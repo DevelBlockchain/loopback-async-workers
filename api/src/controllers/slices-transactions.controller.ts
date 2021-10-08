@@ -39,72 +39,8 @@ export class SlicesTransactionsController {
     },
   })
   async find(
-    @param.path.string('id') id: string,
-    @param.query.object('filter') filter?: Filter<Transactions>,
+    @param.path.string('id') id: string
   ): Promise<Transactions[]> {
-    return this.slicesRepository.transactionsArray(id).find(filter);
-  }
-
-  @post('/slices/{id}/transactions', {
-    responses: {
-      '200': {
-        description: 'Slices model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Transactions)}},
-      },
-    },
-  })
-  async create(
-    @param.path.string('id') id: typeof Slices.prototype.id,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Transactions, {
-            title: 'NewTransactionsInSlices',
-            exclude: ['id'],
-            optional: ['slicesId']
-          }),
-        },
-      },
-    }) transactions: Omit<Transactions, 'id'>,
-  ): Promise<Transactions> {
-    return this.slicesRepository.transactionsArray(id).create(transactions);
-  }
-
-  @patch('/slices/{id}/transactions', {
-    responses: {
-      '200': {
-        description: 'Slices.Transactions PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
-  })
-  async patch(
-    @param.path.string('id') id: string,
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(Transactions, {partial: true}),
-        },
-      },
-    })
-    transactions: Partial<Transactions>,
-    @param.query.object('where', getWhereSchemaFor(Transactions)) where?: Where<Transactions>,
-  ): Promise<Count> {
-    return this.slicesRepository.transactionsArray(id).patch(transactions, where);
-  }
-
-  @del('/slices/{id}/transactions', {
-    responses: {
-      '200': {
-        description: 'Slices.Transactions DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
-      },
-    },
-  })
-  async delete(
-    @param.path.string('id') id: string,
-    @param.query.object('where', getWhereSchemaFor(Transactions)) where?: Where<Transactions>,
-  ): Promise<Count> {
-    return this.slicesRepository.transactionsArray(id).delete(where);
+    return this.slicesRepository.transactionsArray(id).find();
   }
 }
