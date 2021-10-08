@@ -34,19 +34,7 @@
     "rebuild": "npm run clean && npm run build",
     "prestart": "npm run rebuild",
     "start": "node -r source-map-support/register .",
-    "devel": "nodemon ./dist/index.ts",
     "clean": "lb-clean dist *.tsbuildinfo .eslintcache"
-  },
-  "nodemonConfig": {
-    "verbose": true,
-    "watch": [
-      "src/"
-    ],
-    "ignore": [
-      "dist/*"
-    ],
-    "ext": "ts",
-    "exec": "npm start"
   },
   "repository": {
     "type": "git",
@@ -81,7 +69,6 @@
     "web3": "^1.5.2",
     "web3-eth-contract": "^1.5.2",
     "web3-utils": "^1.5.2",
-    "nodemon": "^2.0.6",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.5"
   },

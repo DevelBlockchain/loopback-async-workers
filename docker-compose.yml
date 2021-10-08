@@ -11,7 +11,7 @@ services:
     networks:
       - app-connect
     ports:
-      - '${PORT}:${PORT}'
+      - '${PORT}:8080'
 
   blockine-db:
     container_name: blockine-db

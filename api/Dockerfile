@@ -6,10 +6,10 @@ WORKDIR /home/node/app
 
 COPY package*.json ./
 
-USER node
-
 RUN npm install
+
+USER node
 
 COPY --chown=node:node . .
 
-CMD ["npm", "run", "devel"]
+CMD ["npm", "start"]

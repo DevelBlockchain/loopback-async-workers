@@ -1,8 +1,7 @@
 import { service } from '@loopback/core';
 import { CronJob, cronJob } from '@loopback/cron';
 import { repository } from '@loopback/repository';
-import { TransactionsType } from '../models';
-import { BlocksRepository, SlicesRepository, TransactionsRepository } from '../repositories';
+import { BlocksRepository } from '../repositories';
 import { SlicesProvider, BlocksProvider } from '../services';
 import { SimulateSliceDTO, SliceDTO } from '../types';
 
