@@ -80,7 +80,10 @@ export class Slices extends Entity {
     type: 'string',
   })
   blocksId?: string;
-  
+
+  @hasMany(() => Transactions)
+  transactionsArray: Transactions[];
+
   constructor(data?: Partial<Slices>) {
     super(data);
   }

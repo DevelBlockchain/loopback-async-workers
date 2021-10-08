@@ -10,9 +10,13 @@ export class BlocksRepository extends DefaultCrudRepository<
   BlocksRelations
 > {
 
+  public readonly slicesArray: HasManyRepositoryFactory<Slices, typeof Blocks.prototype.id>;
+
   constructor(
-    @inject('datasources.blockchain') dataSource: BlockchainDataSource,
+    @inject('datasources.blockchain') dataSource: BlockchainDataSource, @repository.getter('SlicesRepository') protected slicesRepositoryGetter: Getter<SlicesRepository>,
   ) {
     super(Blocks, dataSource);
+    this.slicesArray = this.createHasManyRepositoryFactoryFor('slicesArray', slicesRepositoryGetter,);
+    this.registerInclusionResolver('slicesArray', this.slicesArray.inclusionResolver);
   }
 }

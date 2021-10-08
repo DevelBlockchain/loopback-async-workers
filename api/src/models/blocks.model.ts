@@ -75,6 +75,9 @@ export class Blocks extends Entity {
   })
   externalTxID?: string;
 
+  @hasMany(() => Slices)
+  slicesArray: Slices[];
+
   constructor(data?: Partial<Blocks>) {
     super(data);
   }

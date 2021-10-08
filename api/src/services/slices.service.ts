@@ -4,7 +4,7 @@ import { base16Decode, base16Encode, sha256, signBytes } from '@waves/ts-lib-cry
 import { ethers } from 'ethers';
 import { WalletProvider } from '.';
 import { Blocks, Slices, Transactions, TransactionsStatus, Wallets } from '../models';
-import { SlicesRepository, TransactionsRepository, WalletsRepository } from '../repositories';
+import { BlocksRepository, SlicesRepository, TransactionsRepository, WalletsRepository } from '../repositories';
 import { BlockDTO, SimulateSliceDTO, SliceDTO, TransactionsDTO } from '../types/transactions.type';
 import { numberToHex } from '../utils/helper';
 import { ContractProvider } from './contract.service';
@@ -17,6 +17,7 @@ export class SlicesProvider {
   constructor(
     @repository(SlicesRepository) private slicesRepository: SlicesRepository,
     @repository(TransactionsRepository) private transactionsRepository: TransactionsRepository,
+    @repository(BlocksRepository) public blocksRepository: BlocksRepository,
     @repository(WalletsRepository) public walletsRepository: WalletsRepository,
     @service(ContractProvider) private contractProvider: ContractProvider,
     @service(WalletProvider) private walletProvider: WalletProvider,
@@ -119,12 +120,26 @@ export class SlicesProvider {
     return true;
   }
 
-  async consolidateSlices(slices: string[]) {
+  async consolidateSlices(block: BlockDTO) {
     let ctx = new SimulateSliceDTO();
-    await this.simulateBlock(slices, ctx);
+    await this.simulateBlock(block.slices, ctx);
     SlicesProvider.mempoolSlices = [];
+    let newBlock = await this.blocksRepository.create(block);
     for (let i = 0; i < ctx.slicesModels.length; i++) {
-      await this.slicesRepository.create(ctx.slicesModels[i]);
+      let slice = await this.slicesRepository.create({
+        blocksId: newBlock.id,
+        ...ctx.slicesModels[i]
+      });
+      for (let j = 0; j < slice.transactions.length; j++) {
+        let txHash = slice.transactions[j];
+        for (let z = 0; z < ctx.transactionsModels.length && txHash.length > 0; z++) {
+          let tx = ctx.transactionsModels[z];
+          if (tx.hash === txHash) {
+            tx.slicesId = slice.id;
+            txHash = '';
+          }
+        }
+      }
     }
     for (let i = 0; i < ctx.transactionsModels.length; i++) {
       await this.transactionsRepository.update(ctx.transactionsModels[i]);
