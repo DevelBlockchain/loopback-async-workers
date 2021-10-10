@@ -45,10 +45,13 @@ export class CreateSlices extends CronJob {
       let ctx = new SimulateSliceDTO();
 
       for (let i = 0; i < transactionsOnMempool.length; i++) {
+        let tx = transactionsOnMempool[i];
         try {
-          await this.slicesProvider.simulateTransaction(transactionsOnMempool[i].hash, ctx);
+          await this.slicesProvider.simulateTransaction(tx.hash, ctx);
         } catch (err: any) {
-          console.log('new slice - invalid transaction - ' + err.message, transactionsOnMempool[i])
+          tx.status = TransactionsStatus.TX_INVALIDATED;
+          console.log('new slice - invalid transaction - ' + err.message, tx)
+          await this.transactionsRepository.update(tx);
         }
       }
       if (ctx.transactionsModels.length > 0) {

@@ -8,6 +8,8 @@ import { SimulateSliceDTO } from '../types';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class WalletProvider {
+  static ZERO_ADDRESS = 'BWS0000000000000000000000000000000000000000000';
+
   constructor(
     @repository(WalletsRepository) public walletsRepository: WalletsRepository,
   ) { }
@@ -26,11 +28,23 @@ export class WalletProvider {
     return finalAddress;
   }
 
-  static isValidAddress = (address: string) => {
-    return !/ˆBWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0, 43}$/.test(address);
+  static isZeroAddress = (address: string) => {
+    return address === WalletProvider.ZERO_ADDRESS;
   }
 
-  static decodeBWSAddress = (address: string) => {
+  static isValidAddress = (address: string) => {
+    return address === WalletProvider.ZERO_ADDRESS || !/ˆBWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0, 43}$/.test(address);
+  }
+
+  static decodeBWSAddress = (address: string): { isMainnet: boolean, isContract: boolean, ethAddress: string, tag: string } => {
+    if (address === WalletProvider.ZERO_ADDRESS) {
+      return {
+        isMainnet: false,
+        isContract: false,
+        ethAddress:'0x0000000000000000000000000000000000000000',
+        tag:'',
+      };
+    }
     if (!WalletProvider.isValidAddress(address) || address.substring(0, 4) !== 'BWS1') {
       throw new Error('invalid address');
     }
@@ -52,47 +66,5 @@ export class WalletProvider {
       ethAddress,
       tag,
     };
-  }
-
-  private async getWallet(address: string, ctx: SimulateSliceDTO): Promise<Wallets> {
-    for (let i = 0; i < ctx.walletsModels.length; i++) {
-      let updatedWallet = ctx.walletsModels[i];
-      if (updatedWallet.address === address) {
-        return updatedWallet;
-      }
-    }
-    let wallet = null;
-    if (!wallet) {
-      wallet = await this.walletsRepository.findOne({ where: { address: address } });
-    }
-    if (!wallet) {
-      wallet = await this.walletsRepository.create({
-        balance: '0',
-        address: address,
-      });
-    }
-    ctx.walletsModels.push(wallet);
-    return wallet;
-  }
-
-  async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO) {
-    let validator = await this.getWallet(tx.validator, ctx);
-    let sender = await this.getWallet(tx.from, ctx);
-    let recipient = await this.getWallet(tx.to, ctx);
-    let amount = new BigNumber(tx.amount);
-    let fee = new BigNumber(tx.fee);
-    let validatorBalance = new BigNumber(validator.balance);
-    let senderBalance = new BigNumber(sender.balance);
-    let recipientBalance = new BigNumber(recipient.balance);
-    validatorBalance = validatorBalance.plus(fee);
-    senderBalance = senderBalance.minus(amount).minus(fee);
-    if(senderBalance.isLessThan(new BigNumber(0))) {
-      throw new Error('insufficient funds')
-    }
-    recipientBalance = recipientBalance.plus(amount);
-    
-    validator.balance = validatorBalance.toString();
-    sender.balance = senderBalance.toString();
-    recipient.balance = recipientBalance.toString();
   }
 }

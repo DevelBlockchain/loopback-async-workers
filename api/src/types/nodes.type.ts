@@ -1,4 +1,5 @@
 import { Model, model, property } from '@loopback/repository';
+import { Configs } from '../models';
 
 @model()
 export class NodeDTO extends Model {
@@ -77,6 +78,12 @@ export class InfoDTO extends Model {
     itemType: NodeDTO,
   })
   nodes: NodeDTO[];
+
+  @property({
+    type: 'array',
+    itemType: Configs,
+  })
+  configs: Configs[];
 
   constructor(data?: Partial<InfoDTO>) {
     super(data);

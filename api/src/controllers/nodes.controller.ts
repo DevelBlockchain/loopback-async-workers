@@ -9,12 +9,14 @@ import {
   HttpErrors,
 } from '@loopback/rest';
 import { ContractProvider, NodesProvider, WalletProvider } from '../services';
+import { ConfigProvider } from "../services/configs.service";
 import { InfoDTO, NodeDTO } from '../types';
 
 export class NodesController {
   constructor(
     @service(NodesProvider) private nodesProvider: NodesProvider,
     @service(ContractProvider) private contractProvider: ContractProvider,
+    @service(ConfigProvider) private configProvider: ConfigProvider,
   ) { }
 
   @get('/nodes/debug')
@@ -88,6 +90,7 @@ export class NodesController {
       isFullNode: true,
       nodesLimit: this.nodesProvider.getNodeLimit(),
       nodes: this.nodesProvider.getNodes(),
+      configs: await this.configProvider.getAll()
     });
   }
 }

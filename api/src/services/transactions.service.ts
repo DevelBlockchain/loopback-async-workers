@@ -6,7 +6,8 @@ import { WalletProvider } from '.';
 import { Transactions, TransactionsStatus } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { ContractProvider } from './contract.service';
-import { TransactionsDTO } from '../types/transactions.type';
+import { SimulateSliceDTO, TransactionsDTO } from '../types/transactions.type';
+import { VirtualMachineProvider } from './virtual-machine.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class TransactionsProvider {
@@ -15,7 +16,8 @@ export class TransactionsProvider {
 
   constructor(
     @repository(TransactionsRepository) private transactionsRepository: TransactionsRepository,
-    @service(ContractProvider) private contractProvider: ContractProvider
+    @service(ContractProvider) private contractProvider: ContractProvider,
+    @service(VirtualMachineProvider) private virtualMachineProvider: VirtualMachineProvider,
   ) {
 
   }
@@ -124,7 +126,11 @@ export class TransactionsProvider {
         }
       })
       if (!registeredTx) {
+
+        let ctx = new SimulateSliceDTO();
         let newTx = new Transactions(tx);
+        await this.virtualMachineProvider.executeTransaction(newTx, ctx);
+
         newTx.status = TransactionsStatus.TX_MEMPOOL;
         await this.transactionsRepository.create(newTx);
         console.log('add new transaction');

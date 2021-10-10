@@ -1946,14 +1946,9 @@
         "signature": "68ee5d93def93aff96b71cca5bbd9fe5bff4b6e05a86d45fb1ec2c248af6a9d1",
         "affectsGlobalScope": false
       },
-      "./src/types/nodes.type.ts": {
-        "version": "49ab3a368ccdfca594da9a96b221d96af615d06f8b71afe35b03332980c1bfe7",
-        "signature": "9f25b7b8dce03277cd4851b95d2de7090980f20f441ac3c502ec6b0094f90c9e",
-        "affectsGlobalScope": false
-      },
       "./src/models/transactions.model.ts": {
-        "version": "7840cf46b54e4313a3cd0609ca75f6645f07e0f18b05b4c25c2811b3f678ebb4",
-        "signature": "99317182b3251ebf6eff65ddc40dd01e05be6a860516a38e7504ee4b872ea318",
+        "version": "673c5b3e9712a04fe652ebb3742be9a52e1a11f90e6b0c06b1c56e2bfa673fb6",
+        "signature": "247aa4591b41b12dca3e7222c0db41a0eee0ac5dc8bff5d4581ccb898e5d7606",
         "affectsGlobalScope": false
       },
       "./src/models/slices.model.ts": {
@@ -1971,14 +1966,34 @@
         "signature": "da376d8f2eae29ce595be7518b6783a0e8136a86b5f98c05be61f465f101249e",
         "affectsGlobalScope": false
       },
+      "./src/models/configs.model.ts": {
+        "version": "08a873c833731361e47cefaf14b22871dba4fb7738bdd2bb9dea61d8f1eec8dc",
+        "signature": "1ef738232f21f1bb43688ed466e0d32f1973e83d77b05186533b5b697810d7d7",
+        "affectsGlobalScope": false
+      },
+      "./src/models/contracts-env.model.ts": {
+        "version": "0300a8f70477dea3098b66f9ae9385abfee16af0da125fb09b8f4e1e5eadb3e1",
+        "signature": "2dbee8d24d77a8ac6f2f5aa398ddcb354453b9580913c3b471f33b1242607b3b",
+        "affectsGlobalScope": false
+      },
+      "./src/models/contracts-vars.model.ts": {
+        "version": "5d26af104b15f7ff5096d52f09fbc2cdca7c3fd009d533a3dcd74b4dc31b8ed2",
+        "signature": "787daa478816790301e8bbcc772917f9670107763f57b5ff346ea896fabcbfa7",
+        "affectsGlobalScope": false
+      },
       "./src/models/index.ts": {
-        "version": "d68ded109508056279ecc8b464b418069f029334297a77ebdb27e67b5af443bd",
-        "signature": "d68ded109508056279ecc8b464b418069f029334297a77ebdb27e67b5af443bd",
+        "version": "c0313c4c1fc43431d3587b2b161c5890dfb9a6273adf6d26c0eea40321361654",
+        "signature": "c0313c4c1fc43431d3587b2b161c5890dfb9a6273adf6d26c0eea40321361654",
+        "affectsGlobalScope": false
+      },
+      "./src/types/nodes.type.ts": {
+        "version": "dbcb4b3bb742a45aa8f24b1b43b1cf6c80d67718a7e2724f1c0e62fbdaf08447",
+        "signature": "a9725ebd13f2dc006b5771e968057a60dd961d84d8e94105d49831c229ade425",
         "affectsGlobalScope": false
       },
       "./src/types/transactions.type.ts": {
-        "version": "282ffc576c362bdfeee322ab1f8e4fe956d32082781e60ca84974bc12405e547",
-        "signature": "faa70004ec4d7175dc81e8cb9670e9dd1f430dd501105d10d277c001d7057e6c",
+        "version": "fc5979af415e94520b072078a6123a5f897ca1c9000ff124984046d37eee3bf4",
+        "signature": "b98903bdfc71543bcc48158bf9005c6ea27aa8bab86e24a45c14c81f037afa07",
         "affectsGlobalScope": false
       },
       "./src/types/index.ts": {
@@ -2467,12 +2482,12 @@
         "affectsGlobalScope": false
       },
       "./src/utils/bywise-api.ts": {
-        "version": "43802714cf81381ec3c7687d5f99e1a0210f2a9ba9ff401f22687b0878b7fe9d",
-        "signature": "629ba4d04d29bb53eda5d39ac0bf8476402bcb651c59788f51fdede8467e3125",
+        "version": "4c65ead7aaf65b307d4cc8b2c1f2faa9bf4a697c5daa6ca73ef3d698d2bc3e61",
+        "signature": "7862e5d8a6147bef40ac1ef4521610a4a382379e4bdc02c2f415df1b788ab433",
         "affectsGlobalScope": false
       },
       "./src/services/nodes-service.service.ts": {
-        "version": "1f3cd93cb62ab079c412a483239db71f1a9a3d1df6f8c96cbf23676738a7f51e",
+        "version": "1ab00f3569c75222ff2f865340fe01e6686812a19fbdd74fb4b4512fe2d6d1ee",
         "signature": "7504b3d3f7f95d87a9b87ee48a3b699b663938fa94acf1e9a854ba0dfd2c740b",
         "affectsGlobalScope": false
       },
@@ -2541,19 +2556,54 @@
         "signature": "a3ba784e6611677a500e5624a0f944fa52e1c26940ed92268ecb3c240a0edbdc",
         "affectsGlobalScope": false
       },
+      "./src/repositories/configs.repository.ts": {
+        "version": "400e6c758764445313836f3a722712ebbe4b1aad9c2567307720de28165cb4ca",
+        "signature": "fbb441789a2e8468b8ef33097c24b039789a1c84fb79046a639b4407f3ed01f4",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/contracts-env.repository.ts": {
+        "version": "2763b4d4f3c5c5c161d63d66a6355ca3b6574fb6ae0e3aecca3d80e4877fa7b4",
+        "signature": "1ffa150e10e6fc2ba04c0ff18499a323c40d00d2593c8e87c006ac9c0d78c587",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/contracts-vars.repository.ts": {
+        "version": "3cba9643c0c130a8a12227398415edf5f922dff0e0e7a919ca330b5bc298e10a",
+        "signature": "2d646fa64dd45dba374bfec5250945710f0dd2d81d4f279707f1a5e53586400d",
+        "affectsGlobalScope": false
+      },
       "./src/repositories/index.ts": {
-        "version": "907484ea4a1fa1c51ea383d004fc6b9db047e5272e1f8f22d5392ec6d78104ad",
-        "signature": "907484ea4a1fa1c51ea383d004fc6b9db047e5272e1f8f22d5392ec6d78104ad",
+        "version": "b8ba3eae244847c9a04e37d1bfd1926b3f24ac7b1ee437d4fbcb5259c5c89645",
+        "signature": "b8ba3eae244847c9a04e37d1bfd1926b3f24ac7b1ee437d4fbcb5259c5c89645",
         "affectsGlobalScope": false
       },
       "./src/services/wallet.service.ts": {
-        "version": "0556d69e0844ffe684da9ee3a4b67df35e67c4868935d38e7fc80684ac5dc122",
-        "signature": "fa748fb84d07e7c6a1e01f239a88f0a221575cb73a1f93f87dd74c2e9478cce5",
+        "version": "f10847dd91a38e675a095270d4414dcfb4fde0d5ccbb8b16952cefc10198bf70",
+        "signature": "0d56f8aff910e16066a9c3eb565d0369647642da4f77fd09e2299a2214c04f30",
         "affectsGlobalScope": false
       },
-      "./src/services/transactions.service.ts": {
-        "version": "4e3ac5091b7622818b8bfc85ef7fe58de70176484c22b5fd13bc8bf69137d6f8",
-        "signature": "e7d88bdae51e4ddc45ac40e935667e37bbc373ece89b3717e4457814267b71e0",
+      "./src/compiler/vm/data.ts": {
+        "version": "830c32a32cf29f8676bf64c13be2a9159182351bdab679835bfd5855c37d3ab3",
+        "signature": "d77b690126251bac70721dc8e94f7ba5e799cd0ea628701ff5d7d59d6aac3fcd",
+        "affectsGlobalScope": false
+      },
+      "./src/compiler/bywise/bywise-blockchain.ts": {
+        "version": "f880092d3eaf2f8c6fa2448ec1c89b7ddeb3cb6145c202e6329fa5e497ed2580",
+        "signature": "9474967c2dd55ec7b764ffd4c07bfd33ce09444d58f43feb73822be881c17ce9",
+        "affectsGlobalScope": false
+      },
+      "./src/compiler/vm/compiler.ts": {
+        "version": "cec430ab517d82d582473f944dff4d398f0a1e5dc9e9cc67f82934771e4fd46f",
+        "signature": "9e2cbe5e6d91addcbf97b950bfec6d72c4b7050cbce4f003aee9e4d0b3532d51",
+        "affectsGlobalScope": false
+      },
+      "./src/compiler/vm/ula.ts": {
+        "version": "2b81f22d86db288fe34e47cc4f17ad9b6a7d287b121ccc597f61e95e53737670",
+        "signature": "00965768f5fd344c6e4e0e199c2cd0140285628038ba3d014215bfda933acb85",
+        "affectsGlobalScope": false
+      },
+      "./src/compiler/vm/virtual-machine.ts": {
+        "version": "9e8a503679502b377556e39eb0b37231321ae05f663b46b6d75fd33081281df8",
+        "signature": "8c76c40cb628f21714b704a0bde1d32edec0ea0ceced3262151d6a35fde9cda9",
         "affectsGlobalScope": false
       },
       "./src/utils/helper.ts": {
@@ -2561,13 +2611,28 @@
         "signature": "0a1e38ec6024d87a46a20a4526551779bfcc08a1e7d14bf514f919146c2eba12",
         "affectsGlobalScope": false
       },
+      "./src/services/configs.service.ts": {
+        "version": "e53c0cb78e4c6c51cf9b3de39e315a189b4a16ff604dfda283e31ada49f7c47e",
+        "signature": "1c76688d61f11926593f727419e0e4067025fcc81e0231dc9e42af335d8b9cb7",
+        "affectsGlobalScope": false
+      },
+      "./src/services/virtual-machine.service.ts": {
+        "version": "a6ec731986a7fe6c00eaf0ebf6aad1d5370b59487f776e9fc3e9309178196af1",
+        "signature": "d44791d3b18d1b207264cc746df07ea68c44b6fb37fe9600912ee2c52a9f7c30",
+        "affectsGlobalScope": false
+      },
+      "./src/services/transactions.service.ts": {
+        "version": "e01840c3bfd539cbfc3b05e99c512e01a4003ae740147a9e972111c93baba040",
+        "signature": "04e4252c6876ae0ad31214e2b46a48899c51886c7ecd933fe778de2df471a84f",
+        "affectsGlobalScope": false
+      },
       "./src/services/slices.service.ts": {
-        "version": "b11fb78602f751dab4d726a872239302bd9632944aa2b376374a35a4d6589e96",
-        "signature": "21c1bf70169e66d690e0e451381fdd1c7b4d1fb0745dbad9964490f490e19711",
+        "version": "0414c431f085afa1642c62398c3717b89593c7eb4da5dd6c5776b44aa848e9a3",
+        "signature": "ac12c33e931bd10328bc232a6f4b4a0bed2191b7b4be8e1d11af27a8199846b8",
         "affectsGlobalScope": false
       },
       "./src/services/blocks.service.ts": {
-        "version": "c0b9ecee2185af6a641e78307f496ecd681afe61011508c254ac0dead84d75cd",
+        "version": "fc1b079fc31df92ee85028e95da55c7b1e287007a90c46e9456bd2cebb08d8d5",
         "signature": "4e4ef6d66eb42a3066002f8b8010a4a03002467ff67247d0c90e70645ac3f5ee",
         "affectsGlobalScope": false
       },
@@ -2577,7 +2642,7 @@
         "affectsGlobalScope": false
       },
       "./src/authorization/JWT.strategy.ts": {
-        "version": "a4e74cce61e6afee943896e3ea7e81d5fc67d722b9202d872353277a3d8f1aca",
+        "version": "1df6e59916f252cf9d27e93b669cc8f685274d6f2b1925ea934a0e7864ca656b",
         "signature": "dc891b5827364fe4511878f5d24bd801e179b7f840cc456d03f79c9366661e14",
         "affectsGlobalScope": false
       },
@@ -2657,8 +2722,8 @@
         "affectsGlobalScope": false
       },
       "./src/tasks/create-slices.task.ts": {
-        "version": "8b6dbf69e3d6225d9951ee89c0fba89c7fbbae4daecb3fa6c30b91c695be2fd4",
-        "signature": "c3acdc18248a4489af52b3fa3cfd93b812c2a8e7faec47b154fbb43e6def84f0",
+        "version": "e28c1f3746d5ad2bb0c76c17fa3507f822490cfdde5c421f2d72a1fc43efb037",
+        "signature": "a786aa148dd1fe6db38e3071b0dae3cce8090acbfba8a6d14a0983f4bd46a746",
         "affectsGlobalScope": false
       },
       "./src/tasks/p2p.task.ts": {
@@ -2666,9 +2731,14 @@
         "signature": "9ea5c8a15bad01ed0333c16a7a0510434417895d90ecff69e70441495194daf6",
         "affectsGlobalScope": false
       },
+      "./src/tasks/sync-blockchain.task.ts": {
+        "version": "d8f5f6e8a17b1949e81dd1ee2cd7c44f9afc7a7d422d9b8a6ae356f069cfe6d6",
+        "signature": "8673fe1cf6d4ebfec8f1108b649891ed599d8582ed73cc6f8189b5a6a6399f9d",
+        "affectsGlobalScope": false
+      },
       "./src/tasks/index.ts": {
-        "version": "9f59aabab0611dd63c8af01e6f145876a9a482104307fc7f6eda7744ab0e37f3",
-        "signature": "396154439189b941d20c9f9a552b5050cdf80c0b9159fc04ed99d6ca51b16425",
+        "version": "7c796794242377d47d91396d9e6b4646f03684d64e153e80d6042b86e8455b23",
+        "signature": "1d8e6e141efd517c56f19aae5a297de8d164484fa4c5d918c514956082c543e4",
         "affectsGlobalScope": false
       },
       "./src/application.ts": {
@@ -2801,59 +2871,59 @@
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
         "affectsGlobalScope": false
       },
+      "./src/compiler/bywise/bywise.ts": {
+        "version": "82d74535109661c2aa98b0b31de21d2c66fc97afd2057bd02e984b3be5bc9437",
+        "signature": "44057ccb3649c9c486ed83cf17db31f7e88e222c5b1ab104b0bae95f8b959428",
+        "affectsGlobalScope": false
+      },
+      "./src/compiler/vm/blockchain-interface.ts": {
+        "version": "88b1c133187f8b1dfd9296da9a1c9d21e8e09c8b2e459c9195d489408faea8c9",
+        "signature": "1c30c49627e0def15a0f00fe70fd5b4b881f240778324c1647a0965a238c70b5",
+        "affectsGlobalScope": false
+      },
       "./src/controllers/blocks-slices.controller.ts": {
-        "version": "3224c87b028e1a3a17766227afab532957878e9d45ce02fe77152be486de65d4",
-        "signature": "21b0907daa91ba5d8571154058614e69b6600fb039ab9d2ae43d9ef2b7cd1a91",
+        "version": "47ab48c5e1faa7029861df90d8b4d4dea6b7f714538b20f3c4636f8ff42405c8",
+        "signature": "29586feff4c11862b012e98be5c8e26c1d757466729c1580fc72535b92cdd198",
         "affectsGlobalScope": false
       },
       "./src/controllers/blocks.controller.ts": {
-        "version": "940394bf54dac129a407f4d4503d9f1dfdd5d9e289cccb96ed323140b7a2af02",
-        "signature": "7b48eb24f97a038e22a093f5caac54996999d8d62e3ad999646e36059d80f9db",
+        "version": "59d33718952432c90a29fc19b4a8c501f101b37b3c74458cf9c129f6a45bc61d",
+        "signature": "be4bd7d953b9ba21bd9192d55657ed230e3dcfd25cca057443a82267e4842721",
         "affectsGlobalScope": false
       },
       "./src/controllers/ping.controller.ts": {
-        "version": "1f13f93eb91f0753f282e28fac48c022e12f554b2c64de00f26104fcaf6e5746",
-        "signature": "444af40b88114939d11ef4956403ff62f15e3e4b107e1ae7949d0ad5a7011b85",
+        "version": "007bb1569b0de35e57bad13dcb56ea93714e0f18fe5bad1cf7f7c7b2b120b391",
+        "signature": "e75c2af10832996053a3785c07e943dae8c4e3e5b31d02e376b375e8f694a356",
         "affectsGlobalScope": false
       },
       "./src/controllers/nodes.controller.ts": {
-        "version": "c0b292ac2bdaa9bb4ea1549f149a7bdf43a0a1a333b518a1a3d2c1ec189c6358",
-        "signature": "67c24afe784ce46d42be36a75bd1046abf1b4dc81a0d90db08552cc9a211aac1",
+        "version": "57cff48a820df10b89e0515f0a0037a8adf4d26291ad32af5d929c296b58611b",
+        "signature": "9a7245b4763d674c149c8a501458b58ff806a07466336837207d54e4e2d704f7",
         "affectsGlobalScope": false
       },
       "./src/controllers/transactions.controller.ts": {
-        "version": "bb37b9d28dde5760f68ecf72bd064553811b5f7129ea48ea7baa41638e7e7190",
-        "signature": "e33ae3614a0ab9b1014a95fa504e1bd59e6bcb676ce85d7b9097c7a2c49cc674",
+        "version": "83f267d822fc6f691b71f4f4103fe135418a0647f408496ebffba264414cf538",
+        "signature": "0932a516b4b7e9aa6f7d7a95cc94c1c4d7e92d17cb9a6e602424fe667629c0ba",
         "affectsGlobalScope": false
       },
       "./src/controllers/wallets.controller.ts": {
-        "version": "6e5303e7e5b2c5c4198cf730566479a201139d76c499fc418f3407b80e816cf9",
-        "signature": "53a0954654749702d4a7d87e256ebd6e24b2ea3f856eb074c2fd70a006f8caf2",
+        "version": "f3933525d99fd1afc774c89e6a825fc0179dbad3e2e60706c596599e4338da12",
+        "signature": "5c5694d13c8c81a986c4ec879467ae9579382359fe4fb9c15cff2798c33bb8dd",
         "affectsGlobalScope": false
       },
       "./src/controllers/slices.controller.ts": {
-        "version": "576ad28d23e2467c18438d54fa48e4d89324c19a5203457ded3f2691e97d3f61",
-        "signature": "f3787eb6bcee3688d6b7c6995d94f0b7d3403591aa12eeb0b265975cd45f2186",
+        "version": "e6dc4595c8ed6584a958de58a6be46824bf8434438942d3c1ca91f2d03d05d11",
+        "signature": "ab6048e5024a6ff00693ee2663f2786127ac771b044fefd1bad47d4c393686fc",
         "affectsGlobalScope": false
       },
       "./src/controllers/slices-transactions.controller.ts": {
-        "version": "7e9395f5caab667d8fbc662b3b84a701772e65d3400390ca821aeee4a90e7a0a",
-        "signature": "4b133f1c72d6d98d360c2dbdcc216217ec7b0aa346ec7083078ab737be0351a3",
+        "version": "d3cbccd7ed9a41c5434211a01b2266673a397db0a28bc093a36725e33e5a85cd",
+        "signature": "16bd2426c51ec7f42a72e47301555121e525a5a606d65623f0fcc5b83c908ed8",
         "affectsGlobalScope": false
       },
       "./src/controllers/index.ts": {
         "version": "69fee1cb9682885656211b3bebab7a8d1a40af7d386606b064ffddebb05e5116",
         "signature": "69fee1cb9682885656211b3bebab7a8d1a40af7d386606b064ffddebb05e5116",
-        "affectsGlobalScope": false
-      },
-      "./src/services/virtual-machine.service.ts": {
-        "version": "32a4641e237fc5fafd70316f4425549217421643e8c79c543f0b9cdb4349ea31",
-        "signature": "6c99a8bc16da910c7cbe6bf3fea25055b1047cf5f8234642f8fd792e456cd2b6",
-        "affectsGlobalScope": false
-      },
-      "./src/tasks/sync-blockchain.task.ts": {
-        "version": "30fe9b4eae5f1a7f62570e8ed4ee2205a718540e2eb1d218a17703bf7113cad6",
-        "signature": "867448976ac4123315136d533e2de9adf9c358345f7c1795596d2dca644765e0",
         "affectsGlobalScope": false
       },
       "./node_modules/@types/bcryptjs/index.d.ts": {
@@ -5402,6 +5472,45 @@
         "./node_modules/tslib/tslib.d.ts",
         "./src/authorization/JWT.strategy.ts"
       ],
+      "./src/compiler/bywise/bywise-blockchain.ts": [
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/compiler/vm/data.ts",
+        "./src/types/index.ts"
+      ],
+      "./src/compiler/bywise/bywise.ts": [
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/compiler/bywise/bywise-blockchain.ts",
+        "./src/compiler/vm/data.ts",
+        "./src/types/index.ts"
+      ],
+      "./src/compiler/vm/blockchain-interface.ts": [
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/compiler/vm/data.ts"
+      ],
+      "./src/compiler/vm/compiler.ts": [
+        "./node_modules/@waves/ts-lib-crypto/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/compiler/vm/data.ts"
+      ],
+      "./src/compiler/vm/data.ts": [
+        "./node_modules/bignumber.js/bignumber.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/types/index.ts"
+      ],
+      "./src/compiler/vm/ula.ts": [
+        "./node_modules/bignumber.js/bignumber.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/compiler/vm/data.ts"
+      ],
+      "./src/compiler/vm/virtual-machine.ts": [
+        "./node_modules/bignumber.js/bignumber.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/compiler/bywise/bywise-blockchain.ts",
+        "./src/compiler/vm/compiler.ts",
+        "./src/compiler/vm/data.ts",
+        "./src/compiler/vm/ula.ts",
+        "./src/types/index.ts"
+      ],
       "./src/controllers/blocks-slices.controller.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/@loopback/rest/dist/index.d.ts",
@@ -5414,8 +5523,7 @@
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
         "./src/models/index.ts",
-        "./src/repositories/index.ts",
-        "./src/types/index.ts"
+        "./src/repositories/index.ts"
       ],
       "./src/controllers/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
@@ -5433,6 +5541,7 @@
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
+        "./src/services/configs.service.ts",
         "./src/services/index.ts",
         "./src/types/index.ts"
       ],
@@ -5441,10 +5550,14 @@
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
+        "./src/compiler/vm/compiler.ts",
+        "./src/compiler/vm/virtual-machine.ts",
         "./src/models/index.ts",
         "./src/repositories/index.ts",
         "./src/services/index.ts",
-        "./src/services/transactions.service.ts"
+        "./src/services/transactions.service.ts",
+        "./src/services/virtual-machine.service.ts",
+        "./src/types/index.ts"
       ],
       "./src/controllers/slices-transactions.controller.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
@@ -5454,11 +5567,15 @@
         "./src/repositories/index.ts"
       ],
       "./src/controllers/slices.controller.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
         "./src/models/index.ts",
-        "./src/repositories/index.ts"
+        "./src/repositories/index.ts",
+        "./src/services/index.ts",
+        "./src/types/index.ts",
+        "./src/utils/bywise-api.ts"
       ],
       "./src/controllers/transactions.controller.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
@@ -5468,7 +5585,8 @@
         "./src/models/index.ts",
         "./src/repositories/index.ts",
         "./src/services/index.ts",
-        "./src/types/index.ts"
+        "./src/types/index.ts",
+        "./src/utils/bywise-api.ts"
       ],
       "./src/controllers/wallets.controller.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
@@ -5500,9 +5618,24 @@
         "./node_modules/tslib/tslib.d.ts",
         "./src/models/slices.model.ts"
       ],
+      "./src/models/configs.model.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts"
+      ],
+      "./src/models/contracts-env.model.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts"
+      ],
+      "./src/models/contracts-vars.model.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts"
+      ],
       "./src/models/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
         "./src/models/blocks.model.ts",
+        "./src/models/configs.model.ts",
+        "./src/models/contracts-env.model.ts",
+        "./src/models/contracts-vars.model.ts",
         "./src/models/slices.model.ts",
         "./src/models/transactions.model.ts",
         "./src/models/wallets.model.ts"
@@ -5533,9 +5666,33 @@
         "./src/models/index.ts",
         "./src/repositories/slices.repository.ts"
       ],
+      "./src/repositories/configs.repository.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/datasources/index.ts",
+        "./src/models/index.ts"
+      ],
+      "./src/repositories/contracts-env.repository.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/datasources/index.ts",
+        "./src/models/index.ts"
+      ],
+      "./src/repositories/contracts-vars.repository.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/datasources/index.ts",
+        "./src/models/index.ts"
+      ],
       "./src/repositories/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
         "./src/repositories/blocks.repository.ts",
+        "./src/repositories/configs.repository.ts",
+        "./src/repositories/contracts-env.repository.ts",
+        "./src/repositories/contracts-vars.repository.ts",
         "./src/repositories/slices.repository.ts",
         "./src/repositories/transactions.repository.ts",
         "./src/repositories/wallets.repository.ts"
@@ -5586,6 +5743,20 @@
         "./src/services/contract.service.ts",
         "./src/types/index.ts"
       ],
+      "./src/services/configs.service.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/@waves/ts-lib-crypto/index.d.ts",
+        "./node_modules/ethers/lib/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/compiler/vm/data.ts",
+        "./src/models/index.ts",
+        "./src/repositories/index.ts",
+        "./src/services/contract.service.ts",
+        "./src/services/index.ts",
+        "./src/types/transactions.type.ts",
+        "./src/utils/helper.ts"
+      ],
       "./src/services/contract.service.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/logging/dist/index.d.ts",
@@ -5621,9 +5792,12 @@
         "./node_modules/ethers/lib/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
         "./src/models/index.ts",
+        "./src/repositories/contracts-env.repository.ts",
+        "./src/repositories/contracts-vars.repository.ts",
         "./src/repositories/index.ts",
         "./src/services/contract.service.ts",
         "./src/services/index.ts",
+        "./src/services/virtual-machine.service.ts",
         "./src/types/transactions.type.ts",
         "./src/utils/helper.ts"
       ],
@@ -5637,15 +5811,24 @@
         "./src/repositories/index.ts",
         "./src/services/contract.service.ts",
         "./src/services/index.ts",
+        "./src/services/virtual-machine.service.ts",
         "./src/types/transactions.type.ts"
       ],
       "./src/services/virtual-machine.service.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/@waves/ts-lib-crypto/index.d.ts",
+        "./node_modules/bignumber.js/bignumber.d.ts",
         "./node_modules/tslib/tslib.d.ts",
+        "./src/compiler/bywise/bywise-blockchain.ts",
+        "./src/compiler/vm/data.ts",
+        "./src/compiler/vm/virtual-machine.ts",
+        "./src/models/contracts-env.model.ts",
+        "./src/models/contracts-vars.model.ts",
         "./src/models/index.ts",
+        "./src/repositories/contracts-env.repository.ts",
+        "./src/repositories/contracts-vars.repository.ts",
         "./src/repositories/index.ts",
+        "./src/services/configs.service.ts",
         "./src/services/index.ts",
         "./src/types/transactions.type.ts"
       ],
@@ -5676,13 +5859,15 @@
         "./src/models/index.ts",
         "./src/repositories/index.ts",
         "./src/services/index.ts",
-        "./src/types/index.ts"
+        "./src/types/index.ts",
+        "./src/utils/bywise-api.ts"
       ],
       "./src/tasks/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
         "./src/tasks/create-blocks.task.ts",
         "./src/tasks/create-slices.task.ts",
-        "./src/tasks/p2p.task.ts"
+        "./src/tasks/p2p.task.ts",
+        "./src/tasks/sync-blockchain.task.ts"
       ],
       "./src/tasks/p2p.task.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
@@ -5699,7 +5884,8 @@
         "./node_modules/tslib/tslib.d.ts",
         "./src/repositories/index.ts",
         "./src/services/index.ts",
-        "./src/types/index.ts"
+        "./src/types/index.ts",
+        "./src/utils/bywise-api.ts"
       ],
       "./src/types/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
@@ -5709,11 +5895,14 @@
       ],
       "./src/types/nodes.type.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts"
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/models/index.ts"
       ],
       "./src/types/transactions.type.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
+        "./src/models/contracts-env.model.ts",
+        "./src/models/contracts-vars.model.ts",
         "./src/models/index.ts"
       ],
       "./src/types/tx-bsc.type.ts": [
@@ -8114,6 +8303,33 @@
       "./src/authorization/index.ts": [
         "./src/authorization/JWT.strategy.ts"
       ],
+      "./src/compiler/bywise/bywise-blockchain.ts": [
+        "./src/compiler/vm/data.ts",
+        "./src/types/index.ts"
+      ],
+      "./src/compiler/bywise/bywise.ts": [
+        "./src/compiler/bywise/bywise-blockchain.ts",
+        "./src/compiler/vm/data.ts",
+        "./src/types/index.ts"
+      ],
+      "./src/compiler/vm/blockchain-interface.ts": [
+        "./src/compiler/vm/data.ts"
+      ],
+      "./src/compiler/vm/compiler.ts": [
+        "./src/compiler/vm/data.ts"
+      ],
+      "./src/compiler/vm/data.ts": [
+        "./node_modules/bignumber.js/bignumber.d.ts",
+        "./src/types/index.ts"
+      ],
+      "./src/compiler/vm/ula.ts": [
+        "./src/compiler/vm/data.ts"
+      ],
+      "./src/compiler/vm/virtual-machine.ts": [
+        "./src/compiler/bywise/bywise-blockchain.ts",
+        "./src/compiler/vm/data.ts",
+        "./src/types/index.ts"
+      ],
       "./src/controllers/blocks-slices.controller.ts": [
         "./src/models/index.ts",
         "./src/repositories/index.ts"
@@ -8121,8 +8337,7 @@
       "./src/controllers/blocks.controller.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./src/models/index.ts",
-        "./src/repositories/index.ts",
-        "./src/types/index.ts"
+        "./src/repositories/index.ts"
       ],
       "./src/controllers/index.ts": [
         "./src/controllers/blocks-slices.controller.ts",
@@ -8135,6 +8350,7 @@
         "./src/controllers/wallets.controller.ts"
       ],
       "./src/controllers/nodes.controller.ts": [
+        "./src/services/configs.service.ts",
         "./src/services/index.ts",
         "./src/types/index.ts"
       ],
@@ -8142,7 +8358,9 @@
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./src/repositories/index.ts",
         "./src/services/index.ts",
-        "./src/services/transactions.service.ts"
+        "./src/services/transactions.service.ts",
+        "./src/services/virtual-machine.service.ts",
+        "./src/types/index.ts"
       ],
       "./src/controllers/slices-transactions.controller.ts": [
         "./src/models/index.ts",
@@ -8151,7 +8369,9 @@
       "./src/controllers/slices.controller.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./src/models/index.ts",
-        "./src/repositories/index.ts"
+        "./src/repositories/index.ts",
+        "./src/services/index.ts",
+        "./src/types/index.ts"
       ],
       "./src/controllers/transactions.controller.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
@@ -8179,8 +8399,20 @@
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./src/models/slices.model.ts"
       ],
+      "./src/models/configs.model.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./src/models/contracts-env.model.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./src/models/contracts-vars.model.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
       "./src/models/index.ts": [
         "./src/models/blocks.model.ts",
+        "./src/models/configs.model.ts",
+        "./src/models/contracts-env.model.ts",
+        "./src/models/contracts-vars.model.ts",
         "./src/models/slices.model.ts",
         "./src/models/transactions.model.ts",
         "./src/models/wallets.model.ts"
@@ -8202,8 +8434,26 @@
         "./src/models/index.ts",
         "./src/repositories/slices.repository.ts"
       ],
+      "./src/repositories/configs.repository.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./src/datasources/index.ts",
+        "./src/models/index.ts"
+      ],
+      "./src/repositories/contracts-env.repository.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./src/datasources/index.ts",
+        "./src/models/index.ts"
+      ],
+      "./src/repositories/contracts-vars.repository.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./src/datasources/index.ts",
+        "./src/models/index.ts"
+      ],
       "./src/repositories/index.ts": [
         "./src/repositories/blocks.repository.ts",
+        "./src/repositories/configs.repository.ts",
+        "./src/repositories/contracts-env.repository.ts",
+        "./src/repositories/contracts-vars.repository.ts",
         "./src/repositories/slices.repository.ts",
         "./src/repositories/transactions.repository.ts",
         "./src/repositories/wallets.repository.ts"
@@ -8238,6 +8488,11 @@
         "./node_modules/@loopback/logging/dist/index.d.ts",
         "./src/types/index.ts"
       ],
+      "./src/services/configs.service.ts": [
+        "./src/compiler/vm/data.ts",
+        "./src/models/index.ts",
+        "./src/repositories/index.ts"
+      ],
       "./src/services/contract.service.ts": [
         "./node_modules/@loopback/logging/dist/index.d.ts",
         "./node_modules/ethers/lib/index.d.ts",
@@ -8260,23 +8515,33 @@
         "./src/types/index.ts"
       ],
       "./src/services/slices.service.ts": [
+        "./src/repositories/contracts-env.repository.ts",
+        "./src/repositories/contracts-vars.repository.ts",
         "./src/repositories/index.ts",
         "./src/services/contract.service.ts",
-        "./src/services/index.ts",
+        "./src/services/virtual-machine.service.ts",
         "./src/types/transactions.type.ts"
       ],
       "./src/services/transactions.service.ts": [
         "./src/repositories/index.ts",
         "./src/services/contract.service.ts",
+        "./src/services/virtual-machine.service.ts",
         "./src/types/transactions.type.ts"
       ],
       "./src/services/virtual-machine.service.ts": [
+        "./src/compiler/bywise/bywise-blockchain.ts",
+        "./src/compiler/vm/data.ts",
+        "./src/models/contracts-env.model.ts",
+        "./src/models/contracts-vars.model.ts",
+        "./src/models/index.ts",
+        "./src/repositories/contracts-env.repository.ts",
+        "./src/repositories/contracts-vars.repository.ts",
+        "./src/repositories/index.ts",
+        "./src/services/configs.service.ts",
         "./src/types/transactions.type.ts"
       ],
       "./src/services/wallet.service.ts": [
-        "./src/models/index.ts",
-        "./src/repositories/index.ts",
-        "./src/types/index.ts"
+        "./src/repositories/index.ts"
       ],
       "./src/tasks/create-blocks.task.ts": [
         "./node_modules/@loopback/cron/dist/index.d.ts",
@@ -8291,7 +8556,8 @@
       "./src/tasks/index.ts": [
         "./src/tasks/create-blocks.task.ts",
         "./src/tasks/create-slices.task.ts",
-        "./src/tasks/p2p.task.ts"
+        "./src/tasks/p2p.task.ts",
+        "./src/tasks/sync-blockchain.task.ts"
       ],
       "./src/tasks/p2p.task.ts": [
         "./node_modules/@loopback/cron/dist/index.d.ts",
@@ -8300,7 +8566,8 @@
       "./src/tasks/sync-blockchain.task.ts": [
         "./node_modules/@loopback/cron/dist/index.d.ts",
         "./src/repositories/index.ts",
-        "./src/services/index.ts"
+        "./src/services/index.ts",
+        "./src/types/index.ts"
       ],
       "./src/types/index.ts": [
         "./src/types/nodes.type.ts",
@@ -8308,10 +8575,13 @@
         "./src/types/tx-bsc.type.ts"
       ],
       "./src/types/nodes.type.ts": [
-        "./node_modules/@loopback/repository/dist/index.d.ts"
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./src/models/index.ts"
       ],
       "./src/types/transactions.type.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./src/models/contracts-env.model.ts",
+        "./src/models/contracts-vars.model.ts",
         "./src/models/index.ts"
       ],
       "./src/types/tx-bsc.type.ts": [
@@ -8870,6 +9140,13 @@
       "./src/application.ts",
       "./src/authorization/JWT.strategy.ts",
       "./src/authorization/index.ts",
+      "./src/compiler/bywise/bywise-blockchain.ts",
+      "./src/compiler/bywise/bywise.ts",
+      "./src/compiler/vm/blockchain-interface.ts",
+      "./src/compiler/vm/compiler.ts",
+      "./src/compiler/vm/data.ts",
+      "./src/compiler/vm/ula.ts",
+      "./src/compiler/vm/virtual-machine.ts",
       "./src/controllers/blocks-slices.controller.ts",
       "./src/controllers/blocks.controller.ts",
       "./src/controllers/index.ts",
@@ -8884,12 +9161,18 @@
       "./src/index.ts",
       "./src/migrate.ts",
       "./src/models/blocks.model.ts",
+      "./src/models/configs.model.ts",
+      "./src/models/contracts-env.model.ts",
+      "./src/models/contracts-vars.model.ts",
       "./src/models/index.ts",
       "./src/models/slices.model.ts",
       "./src/models/transactions.model.ts",
       "./src/models/wallets.model.ts",
       "./src/openapi-spec.ts",
       "./src/repositories/blocks.repository.ts",
+      "./src/repositories/configs.repository.ts",
+      "./src/repositories/contracts-env.repository.ts",
+      "./src/repositories/contracts-vars.repository.ts",
       "./src/repositories/index.ts",
       "./src/repositories/slices.repository.ts",
       "./src/repositories/transactions.repository.ts",
@@ -8897,6 +9180,7 @@
       "./src/sequence.ts",
       "./src/services/blocks.service.ts",
       "./src/services/bscscan.service.ts",
+      "./src/services/configs.service.ts",
       "./src/services/contract.service.ts",
       "./src/services/index.ts",
       "./src/services/nodes-service.service.ts",

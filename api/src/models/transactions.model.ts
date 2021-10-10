@@ -3,11 +3,15 @@ import {Entity, model, property} from '@loopback/repository';
 export enum TransactionsStatus {
   TX_MEMPOOL = 'mempool',
   TX_MINED = 'mined',
+  TX_INVALIDATED = 'invalidated',
 }
 
 export enum TransactionsType {
+  TX_NONE = 'none',
   TX_JSON = 'json',
   TX_COMMAND = 'command',
+  TX_CONTRACT = 'contract',
+  TX_CONTRACT_EXE = 'contract-exe',
   TX_FILE = 'file',
   TX_STRING = 'string',
 }
@@ -80,7 +84,7 @@ export class Transactions extends Entity {
 
   @property({
     type: 'string',
-    required: true,
+    default: '',
   })
   data: string;
 

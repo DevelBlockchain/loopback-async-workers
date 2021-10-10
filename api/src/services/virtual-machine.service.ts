@@ -1,32 +1,214 @@
-import { injectable, BindingScope, Provider } from '@loopback/core';
+import { injectable, BindingScope, service } from '@loopback/core';
 import { repository } from '@loopback/repository';
-
-import { address, base58Encode, keyPair, publicKey, seedWithNonce, sha256, signBytes, stringToBytes, verifySignature } from '@waves/ts-lib-crypto';
-import { ContractProvider } from '.';
-import { Transactions } from '../models';
+import BigNumber from "bignumber.js";
+import { ContractProvider, WalletProvider } from '.';
+import { BywiseBlockchainInterface } from '../compiler/bywise/bywise-blockchain';
+import { ContractABI, Environment, Types, Variable } from '../compiler/vm/data';
+import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
+import { Transactions, TransactionsType, Wallets } from '../models';
+import { ContractsEnv } from '../models/contracts-env.model';
+import { ContractsVars } from '../models/contracts-vars.model';
 import { WalletsRepository } from '../repositories';
-import { TransactionsDTO } from '../types/transactions.type';
+import { ContractsEnvRepository } from '../repositories/contracts-env.repository';
+import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
+import { CommandDTO, SimulateSliceDTO } from '../types/transactions.type';
+import { ConfigProvider } from './configs.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
-export class VirtualMachineProvider {
+export class VirtualMachineProvider implements BywiseBlockchainInterface {
   constructor(
-    @repository(WalletsRepository) public walletsRepository: VirtualMachineProvider,
+    @repository(WalletsRepository) public walletsRepository: WalletsRepository,
+    @repository(ContractsEnvRepository) public contractsEnvRepository: ContractsEnvRepository,
+    @repository(ContractsVarsRepository) public contractsVarsRepository: ContractsVarsRepository,
+    @service(ConfigProvider) public configProvider: ConfigProvider,
   ) { }
 
-  async executeTransaction(transaction: TransactionsDTO) {
-    /*if (!WalletProvider.isBywiseAddress(transaction.from)) throw new Error('invalid address');
-    let wallet = await this.walletsRepository.findOne({
-      where: {
-        address: transaction.from
+  async calcFee() {
+
+  }
+
+  async getWallet(address: string, ctx: SimulateSliceDTO): Promise<Wallets> {
+    for (let i = 0; i < ctx.walletsModels.length; i++) {
+      let updatedWallet = ctx.walletsModels[i];
+      if (updatedWallet.address === address) {
+        return updatedWallet;
       }
-    });
-    if (!wallet) throw new Error('address not allowed');
-    if (!transaction.sign) throw new Error('signature not found');
-    let sign = transaction.sign;
-    transaction.sign = undefined;
-    let hash = WalletProvider.transactionToBytes(transaction);
-    let isValidSign = await verifySignature(wallet.publicKey, hash, sign);
-    transaction.sign = sign;
-    if (!isValidSign) throw new Error('invalid signature');*/
+    }
+    let wallet = null;
+    if (!wallet) {
+      wallet = await this.walletsRepository.findOne({ where: { address: address } });
+    }
+    if (!wallet) {
+      wallet = await this.walletsRepository.create({
+        balance: '0',
+        address: address,
+      });
+    }
+    ctx.walletsModels.push(wallet);
+    return wallet;
+  }
+
+  async getContractEnv(address: string, ctx: SimulateSliceDTO): Promise<ContractsEnv> {
+    for (let i = 0; i < ctx.contractEnvModels.length; i++) {
+      let contractEnv = ctx.contractEnvModels[i];
+      if (contractEnv.address === address) {
+        return contractEnv;
+      }
+    }
+    let contractEnv = null;
+    if (!contractEnv) {
+      contractEnv = await this.contractsEnvRepository.findOne({ where: { address: address } });
+    }
+    if (!contractEnv) {
+      contractEnv = await this.contractsEnvRepository.create({
+        address: address,
+      });
+    }
+    ctx.contractEnvModels.push(contractEnv);
+    return contractEnv;
+  }
+
+  async getContractVars(address: string, key: string, ctx: SimulateSliceDTO): Promise<ContractsVars> {
+    for (let i = 0; i < ctx.contractVarsModels.length; i++) {
+      let contractVars = ctx.contractVarsModels[i];
+      if (contractVars.address === address) {
+        return contractVars;
+      }
+    }
+    let contractVars = null;
+    if (!contractVars) {
+      contractVars = await this.contractsVarsRepository.findOne({ where: { address, key } });
+    }
+    if (!contractVars) {
+      contractVars = await this.contractsVarsRepository.create({
+        address,
+        key,
+      });
+    }
+    ctx.contractVarsModels.push(contractVars);
+    return contractVars;
+  }
+
+  private async send(senderAddress: string, toAddress: string, amount: string, ctx: SimulateSliceDTO) {
+    let sender = await this.getWallet(senderAddress, ctx);
+    let recipient = await this.getWallet(toAddress, ctx);
+    let amountBN = new BigNumber(amount);
+    let senderBalance = new BigNumber(sender.balance);
+    let recipientBalance = new BigNumber(recipient.balance);
+    senderBalance = senderBalance.minus(amountBN);
+    if (senderBalance.isLessThan(new BigNumber(0))) {
+      throw new Error('insufficient funds')
+    }
+    recipientBalance = recipientBalance.plus(amount);
+    sender.balance = senderBalance.toString();
+    recipient.balance = recipientBalance.toString();
+  }
+
+  async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO) {
+    ctx.tx = tx;
+    await this.send(tx.from, tx.validator, tx.fee, ctx);
+    await this.send(tx.from, tx.to, tx.amount, ctx);
+
+    if (tx.type === TransactionsType.TX_CONTRACT) {
+      let contract = ContractABI.fromJSON(JSON.parse(tx.data));
+      await this.getWallet(contract.address, ctx);
+      let contractEnv = await this.getContractEnv(contract.address, ctx);
+      if (contractEnv.env) {
+        throw new Error(`Contract ${contract.address} already exists`);
+      }
+      let isMainnet = ContractProvider.isMainNet();
+      let executeLimit = await this.configProvider.getByName('executeLimit');
+      contractEnv.env = await BywiseVirtualMachine.exec(
+        ctx,
+        isMainnet,
+        executeLimit.getNumber().toNumber(),
+        contract,
+        this
+      );
+    } else if (tx.type === TransactionsType.TX_CONTRACT_EXE) {
+      let contractEnv = await this.getContractEnv(tx.to, ctx);
+      if (!contractEnv.env) {
+        throw new Error(`Contract ${tx.to} not found`);
+      }
+      let env = Environment.fromJSON(contractEnv.env);
+      let isMainnet = ContractProvider.isMainNet();
+      let executeLimit = await this.configProvider.getByName('executeLimit');
+      let cmd = new CommandDTO(JSON.parse(tx.data));
+      await BywiseVirtualMachine.execFunction(
+        ctx,
+        isMainnet,
+        executeLimit.getNumber().toNumber(),
+        true,
+        env,
+        this,
+        cmd.name,
+        cmd.input,
+      );
+    } else if (tx.type === TransactionsType.TX_COMMAND) {
+      let cmd = new CommandDTO(JSON.parse(tx.data));
+      await this.setConfig(ctx, cmd);
+    }
+  }
+
+  async checkAdminAddress(ctx: SimulateSliceDTO) {
+    let adminAddress = await this.configProvider.getByName('adminAddress');
+    if (adminAddress.value !== '' && (!ctx.tx || adminAddress.value !== ctx.tx.from)) {
+      throw new Error(`setConfig forbidden`);
+    }
+  }
+
+  async setConfig(ctx: SimulateSliceDTO, cmd: CommandDTO): Promise<void> {
+    if (cmd.name == 'setConfig' && cmd.input.length === 3) {
+      await this.checkAdminAddress(ctx);
+      let configs = await this.configProvider.getAll();
+      for (let i = 0; i < configs.length; i++) {
+        let cfg = configs[i];
+        if (cmd.input[0] === cfg.name) {
+          let type = Types.getType(cmd.input[1]);
+          if (!type) {
+            throw new Error(`invalid type ${cmd.input[1]}`);
+          }
+          cfg.type = cmd.input[1];
+          cfg.value = cmd.input[2];
+          ctx.configs.push(cfg);
+          return;
+        }
+      }
+    } else if (cmd.name == 'setBalance' && cmd.input.length === 2) {
+      await this.checkAdminAddress(ctx);
+      let address = cmd.input[0];
+      let amount = cmd.input[1];
+      if (WalletProvider.isValidAddress(address)) {
+        let wallet = await this.getWallet(address, ctx);
+        wallet.balance = amount;
+        return;
+      } else {
+        throw new Error(`invalid address ${address}`);
+      }
+    }
+    throw new Error("Method not implemented.");
+  }
+
+  async saveEnvironment(ctx: SimulateSliceDTO, env: Environment): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  async executeFunction(ctx: SimulateSliceDTO, env: Environment, name: string, inputs: Variable[]): Promise<Variable[]> {
+    if (name === 'print') {
+      console.log('Execute funtion on bywise inteface', inputs.map(v => v.value).join(' '))
+      return [];
+    } else if (name === 'balanceOf') {
+      if (inputs.length === 1) {
+        if (WalletProvider.isValidAddress(inputs[0].value)) {
+          let wallet = await this.getWallet(inputs[0].value, ctx);
+          return [new Variable(Types.number, wallet.balance)];
+        } else {
+          throw new Error(`invalid address ${inputs[0]}`);
+        }
+      } else {
+        throw new Error(`invalid input size - expected ${1} received ${inputs.length}`);
+      }
+    }
+    throw new Error("Method not implemented.");
   }
 }

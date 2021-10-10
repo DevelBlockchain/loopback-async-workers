@@ -4,10 +4,13 @@ import { base16Decode, base16Encode, sha256, signBytes } from '@waves/ts-lib-cry
 import { ethers } from 'ethers';
 import { WalletProvider } from '.';
 import { Blocks, Slices, Transactions, TransactionsStatus, Wallets } from '../models';
-import { BlocksRepository, SlicesRepository, TransactionsRepository, WalletsRepository } from '../repositories';
+import { BlocksRepository, ConfigsRepository, SlicesRepository, TransactionsRepository, WalletsRepository } from '../repositories';
+import { ContractsEnvRepository } from '../repositories/contracts-env.repository';
+import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
 import { BlockDTO, SimulateSliceDTO, SliceDTO, TransactionsDTO } from '../types/transactions.type';
 import { numberToHex } from '../utils/helper';
 import { ContractProvider } from './contract.service';
+import { VirtualMachineProvider } from './virtual-machine.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class SlicesProvider {
@@ -20,7 +23,10 @@ export class SlicesProvider {
     @repository(BlocksRepository) public blocksRepository: BlocksRepository,
     @repository(WalletsRepository) public walletsRepository: WalletsRepository,
     @service(ContractProvider) private contractProvider: ContractProvider,
-    @service(WalletProvider) private walletProvider: WalletProvider,
+    @service(VirtualMachineProvider) private virtualMachineProvider: VirtualMachineProvider,
+    @repository(ContractsEnvRepository) public contractsEnvRepository: ContractsEnvRepository,
+    @repository(ContractsVarsRepository) public contractsVarsRepository: ContractsVarsRepository,
+    @repository(ConfigsRepository) public configsRepository: ConfigsRepository,
   ) {
 
   }
@@ -145,7 +151,21 @@ export class SlicesProvider {
       await this.transactionsRepository.update(ctx.transactionsModels[i]);
     }
     for (let i = 0; i < ctx.walletsModels.length; i++) {
+      console.log('save wallet', ctx.walletsModels[i])
       await this.walletsRepository.update(ctx.walletsModels[i]);
+    }
+    for (let i = 0; i < ctx.contractEnvModels.length; i++) {
+      await this.contractsEnvRepository.update(ctx.contractEnvModels[i]);
+    }
+    for (let i = 0; i < ctx.contractVarsModels.length; i++) {
+      await this.contractsVarsRepository.update(ctx.contractVarsModels[i]);
+    }
+    for (let i = 0; i < ctx.configs.length; i++) {
+      if(ctx.configs[i].id) {
+        await this.configsRepository.update(ctx.configs[i]);
+      } else {
+        await this.configsRepository.create(ctx.configs[i]);
+      }
     }
   }
 
@@ -187,7 +207,7 @@ export class SlicesProvider {
       throw new Error(`slice transaction ${txHash} already registered`);
     }
     tx.status = TransactionsStatus.TX_MINED;
-    await this.walletProvider.executeTransaction(tx, ctx);
+    await this.virtualMachineProvider.executeTransaction(tx, ctx);
     ctx.transactionsModels.push(tx);
   }
 

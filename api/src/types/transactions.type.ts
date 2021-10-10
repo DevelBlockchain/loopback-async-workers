@@ -1,22 +1,12 @@
 
-import {Model, model, property} from '@loopback/repository';
-import { Transactions, Wallets } from '../models';
-
-enum TransactionsStatus {
-  MEMPOOL = 'mempool',
-  MINED = 'mined',
-}
-
-enum TransactionsType {
-  JSON = 'json',
-  COMMAND = 'command',
-  FILE = 'file',
-  STRING = 'string',
-}
+import { Model, model, property } from '@loopback/repository';
+import { Configs, Transactions, TransactionsType, Wallets } from '../models';
+import { ContractsEnv } from '../models/contracts-env.model';
+import { ContractsVars } from '../models/contracts-vars.model';
 
 @model()
 export class TransactionsDTO extends Model {
-  
+
   @property({
     type: 'string',
     required: true,
@@ -76,7 +66,7 @@ export class TransactionsDTO extends Model {
 
   @property({
     type: 'string',
-    required: true,
+    default: '',
   })
   data: string;
 
@@ -110,7 +100,7 @@ export class TransactionsDTO extends Model {
 
 @model()
 export class SliceDTO extends Model {
-  
+
   @property({
     type: 'number',
     required: true,
@@ -140,13 +130,13 @@ export class SliceDTO extends Model {
     required: true,
   })
   version: string;
-  
+
   @property({
     type: 'string',
     required: true,
   })
   merkleRoot: string;
-  
+
   @property({
     type: 'string',
     required: true,
@@ -184,7 +174,7 @@ export class SliceDTO extends Model {
 
 @model()
 export class BlockDTO extends Model {
-  
+
   @property({
     type: 'number',
     required: true,
@@ -208,7 +198,7 @@ export class BlockDTO extends Model {
     required: true,
   })
   version: string;
-  
+
   @property({
     type: 'string',
     required: true,
@@ -256,36 +246,44 @@ export class BlockDTO extends Model {
 }
 
 @model()
-export class PackageDTO extends Model {
-  
-  @property({
-    type: 'array',
-    itemType: TransactionsDTO
-  })
-  transactions: TransactionsDTO[];
+export class ValueDTO extends Model {
 
   @property({
-    type: 'array',
-    itemType: SliceDTO
+    type: 'string',
   })
-  slices: SliceDTO[];
+  value: string;
 
-  @property({
-    type: 'array',
-    itemType: BlockDTO
-  })
-  blocks: BlockDTO[];
-
-  constructor(data?: Partial<PackageDTO>) {
+  constructor(data?: Partial<ValueDTO>) {
     super(data);
   }
 }
 
 @model()
 export class SimulateSliceDTO extends Model {
-  
-  walletsModels: Wallets[] = [];
+  tx: Transactions | undefined;
   slicesModels: SliceDTO[] = [];
   transactionsModels: Transactions[] = [];
+  walletsModels: Wallets[] = [];
+  contractEnvModels: ContractsEnv[] = [];
+  contractVarsModels: ContractsVars[] = [];
+  configs: Configs[] = [];
+}
 
+@model()
+export class CommandDTO extends Model {
+
+  @property({
+    type: 'string',
+  })
+  name: string;
+
+  @property({
+    type: 'array',
+    itemType: 'string'
+  })
+  input: string[];
+
+  constructor(data?: Partial<CommandDTO>) {
+    super(data);
+  }
 }

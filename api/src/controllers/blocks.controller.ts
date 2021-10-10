@@ -20,30 +20,12 @@ import {
 } from '@loopback/rest';
 import { Blocks } from '../models';
 import { BlocksRepository } from '../repositories';
-import { BlockDTO, PackageDTO } from '../types';
 
 export class BlocksController {
   constructor(
     @repository(BlocksRepository)
     public blocksRepository: BlocksRepository,
   ) { }
-
-  @post('/blocks')
-  @response(204, {
-    description: 'Created block',
-  })
-  async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(PackageDTO),
-        },
-      },
-    })
-    packageDTO: PackageDTO,
-  ): Promise<void> {
-    //return this.blocksRepository.create(blocks);
-  }
 
   @get('/blocks/count')
   @response(200, {
