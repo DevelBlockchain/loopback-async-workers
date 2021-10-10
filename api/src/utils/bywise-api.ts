@@ -67,7 +67,7 @@ export class BywiseAPI {
     }
 
     static getBlocks(node: NodeDTO, filter: any) {
-        return BywiseAPI.get(`${node.host}/nodes/try-token`, node.token, filter);
+        return BywiseAPI.get(`${node.host}/blocks`, node.token, filter);
     }
 
     static getSlice(node: NodeDTO, sliceHash: string) {
