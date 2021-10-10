@@ -1,5 +1,5 @@
 import AbortController from 'abort-controller';
-import { NodeDTO } from '../types';
+import { NodeDTO, TransactionsDTO } from '../types';
 const fetch = require("node-fetch");
 
 export class BywiseAPI {
@@ -66,6 +66,10 @@ export class BywiseAPI {
         });
     }
 
+    static publishNewTransaction(node: NodeDTO, tx: TransactionsDTO) {
+        return BywiseAPI.post(`${node.host}/transactions`, node.token, tx);
+    }
+
     static getBlocks(node: NodeDTO, filter: any) {
         return BywiseAPI.get(`${node.host}/blocks`, node.token, filter);
     }
@@ -73,7 +77,7 @@ export class BywiseAPI {
     static getSlice(node: NodeDTO, sliceHash: string) {
         return BywiseAPI.get(`${node.host}/slices/${sliceHash}`, node.token);
     }
-    
+
     static getTransactionFromSlice(node: NodeDTO, sliceHash: string) {
         return BywiseAPI.get(`${node.host}/slices/${sliceHash}/transactions`, node.token);
     }

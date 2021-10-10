@@ -21,13 +21,15 @@ import {
 } from '@loopback/rest';
 import { Transactions } from '../models';
 import { TransactionsRepository } from '../repositories';
-import { TransactionsProvider } from '../services';
+import { NodesProvider, TransactionsProvider } from '../services';
 import { TransactionsDTO } from '../types';
+import { BywiseAPI } from '../utils/bywise-api';
 
 export class TransactionsController {
   constructor(
     @repository(TransactionsRepository) public transactionsRepository: TransactionsRepository,
     @service(TransactionsProvider) private transactionsProvider: TransactionsProvider,
+    @service(NodesProvider) private nodesProvider: NodesProvider,
   ) { }
 
   @post('/transactions')
@@ -44,7 +46,13 @@ export class TransactionsController {
     })
     tx: TransactionsDTO,
   ): Promise<void> {
-    await this.transactionsProvider.saveTransaction(tx);
+    let added = await this.transactionsProvider.saveTransaction(tx);
+    if(added) {
+      let nodes = this.nodesProvider.getNodes();
+      for (let i = 0; i < nodes.length; i++) {
+        BywiseAPI.publishNewTransaction(nodes[i], tx);
+      }
+    }
   }
 
   @get('/transactions/count')
