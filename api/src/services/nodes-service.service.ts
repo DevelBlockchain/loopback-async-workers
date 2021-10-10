@@ -78,7 +78,7 @@ export class NodesProvider {
   }
 
   removeNode(node: NodeDTO) {
-    NodesProvider.nodes = NodesProvider.nodes.filter(node => node.host !== node.host);
+    NodesProvider.nodes = NodesProvider.nodes.filter(n => n.host !== node.host);
   }
 
   async addNode(node: NodeDTO): Promise<NodeDTO> {
