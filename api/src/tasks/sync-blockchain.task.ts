@@ -58,8 +58,9 @@ export class SyncBlockchain extends CronJob {
       }
     }
   }
-
+  
   async addBlock(node: NodeDTO, block: BlockDTO) {
+    console.log('try sync block', block)
     let lastHash = (await this.blocksProvider.getLastHashAndHeight()).lastHash;
     let slices: SliceDTO[] = [];
     for (let i = 0; i < block.slices.length; i++) {
