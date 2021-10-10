@@ -64,7 +64,7 @@ export class TransactionsController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Transactions, { includeRelations: true }),
+          items: getModelSchemaRef(Transactions),
         },
       },
     },
@@ -80,14 +80,13 @@ export class TransactionsController {
     description: 'Transactions model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Transactions, { includeRelations: true }),
+        schema: getModelSchemaRef(Transactions),
       },
     },
   })
   async findById(
-    @param.path.string('id') id: string,
-    @param.filter(Transactions, { exclude: 'where' }) filter?: FilterExcludingWhere<Transactions>
+    @param.path.string('id') id: string
   ): Promise<Transactions> {
-    return this.transactionsRepository.findById(id, filter);
+    return this.transactionsRepository.findById(id);
   }
 }

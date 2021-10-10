@@ -44,7 +44,7 @@ export class WalletsController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Wallets, {includeRelations: true}),
+          items: getModelSchemaRef(Wallets),
         },
       },
     },
@@ -60,14 +60,13 @@ export class WalletsController {
     description: 'Wallets model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Wallets, {includeRelations: true}),
+        schema: getModelSchemaRef(Wallets),
       },
     },
   })
   async findById(
-    @param.path.string('id') id: string,
-    @param.filter(Wallets, {exclude: 'where'}) filter?: FilterExcludingWhere<Wallets>
+    @param.path.string('id') id: string
   ): Promise<Wallets> {
-    return this.walletsRepository.findById(id, filter);
+    return this.walletsRepository.findById(id);
   }
 }

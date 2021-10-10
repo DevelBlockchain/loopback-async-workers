@@ -62,7 +62,7 @@ export class BlocksController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Blocks, {includeRelations: true}),
+          items: getModelSchemaRef(Blocks),
         },
       },
     },
@@ -78,14 +78,13 @@ export class BlocksController {
     description: 'Blocks model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Blocks, {includeRelations: true}),
+        schema: getModelSchemaRef(Blocks),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Blocks, {exclude: 'where'}) filter?: FilterExcludingWhere<Blocks>
   ): Promise<Blocks> {
-    return this.blocksRepository.findById(id, filter);
+    return this.blocksRepository.findById(id);
   }
 }

@@ -14,11 +14,13 @@ export class CreateBlocks extends CronJob {
     @repository(BlocksRepository) public blocksRepository: BlocksRepository,
   ) {
     super({
-      name: 'create-blocks',
+      name: 'task-create-blocks',
       onTick: async () => {
         await this.stop();
         try {
-          await this.runProcess();
+          if(`${process.env.CREATE_BLOCKS}`.toLowerCase() === 'true') {
+            await this.runProcess();
+          }
         } catch (err) {
           console.error(`${this.name} ${JSON.stringify(err)}`, err);
         }

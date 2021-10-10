@@ -65,6 +65,7 @@
     "loopback-connector-postgresql": "^5.4.0",
     "node-fetch": "^2.6.1",
     "path": "^0.12.7",
+    "randomstring": "^1.2.1",
     "tslib": "^2.0.0",
     "web3": "^1.5.2",
     "web3-eth-contract": "^1.5.2",

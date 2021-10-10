@@ -15,11 +15,13 @@ export class CreateSlices extends CronJob {
     @repository(TransactionsRepository) private transactionsRepository: TransactionsRepository,
   ) {
     super({
-      name: 'create-slices',
+      name: 'task-create-slices',
       onTick: async () => {
         await this.stop();
         try {
-          await this.runProcess();
+          if(`${process.env.CREATE_SLICES}`.toLowerCase() === 'true') {
+            await this.runProcess();
+          }
         } catch (err) {
           console.error(`${this.name} ${JSON.stringify(err)}`, err);
         }

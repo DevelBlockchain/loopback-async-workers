@@ -1897,8 +1897,8 @@
         "affectsGlobalScope": false
       },
       "./src/types/nodes.type.ts": {
-        "version": "a7ab73e7667fa92a5bde642ae57435dddcadf650a12b76ea2133e1fb49bffce7",
-        "signature": "097f9aa7e97708fda7e91b88ba39ee00b7ba3cc6dccf70fd5126dd5228f291fe",
+        "version": "274d70e4488fc601d113079a1292346e4038865a500fe916053381cfff4741e1",
+        "signature": "4207b08b3954be8924aa9c99bcaded270839d17c92424fd6f693899157ca51fc",
         "affectsGlobalScope": false
       },
       "./src/types/transactions.type.ts": {
@@ -2391,9 +2391,14 @@
         "signature": "0742df43f68a56e558108c607fc56de6898bcd3d255d91680339b8c3d8efa5c1",
         "affectsGlobalScope": false
       },
+      "./src/utils/bywise-api.ts": {
+        "version": "43802714cf81381ec3c7687d5f99e1a0210f2a9ba9ff401f22687b0878b7fe9d",
+        "signature": "629ba4d04d29bb53eda5d39ac0bf8476402bcb651c59788f51fdede8467e3125",
+        "affectsGlobalScope": false
+      },
       "./src/services/nodes-service.service.ts": {
-        "version": "2d698ddcc7240003783c0f8f31cce923f2061ed813f55c641677ca337f734d53",
-        "signature": "a193929c7ebd1ef66003ea7778177025108a48a5e77bdb20c118e03f9b82e3ad",
+        "version": "df64be692e99c5d2f1be5d4db1e67c2048a99fff6fd88c9988a59e0fe87c03ff",
+        "signature": "a448ed2721918f63ff7e066ec487999b1b652a15ed583687a6c20962f55b5da9",
         "affectsGlobalScope": false
       },
       "./node_modules/@waves/ts-lib-crypto/crypto/seed-words-list.d.ts": {
@@ -2462,18 +2467,23 @@
         "affectsGlobalScope": false
       },
       "./src/tasks/create-blocks.task.ts": {
-        "version": "3a44d204ef20279f7581930c621b7e02a52957fad4105f3f5701d42afe1898f6",
+        "version": "17cc810f7446ab07cf6171a17686c02fd533c3312bc477a7e7617615d68e6c8c",
         "signature": "4403198ea456c6c183076b2b0c417f46feee3b705422af412ab9751621e264a0",
         "affectsGlobalScope": false
       },
       "./src/tasks/create-slices.task.ts": {
-        "version": "1c7c2f19b196eb8e4735e89027abbc89935b6ef884f977b873f1232510ec96a0",
+        "version": "8b6dbf69e3d6225d9951ee89c0fba89c7fbbae4daecb3fa6c30b91c695be2fd4",
         "signature": "c3acdc18248a4489af52b3fa3cfd93b812c2a8e7faec47b154fbb43e6def84f0",
         "affectsGlobalScope": false
       },
+      "./src/tasks/p2p.task.ts": {
+        "version": "59dfd9ef6f0b1d333bbb4663d406d6d6e1987ad50c19621de7c992c53dc3da31",
+        "signature": "39b81b2a69834408cd736029a5fe2c9b5fd9dd902f1599a89a2406bde8dfe719",
+        "affectsGlobalScope": false
+      },
       "./src/tasks/index.ts": {
-        "version": "1b2255f7119430ab213d442121dc02960e6821af5a53e26db148e12f87830404",
-        "signature": "beb10ec79c3199c048c325ae7f98ebdaa4af09868cfe056e5f787d27bd222f1e",
+        "version": "9f59aabab0611dd63c8af01e6f145876a9a482104307fc7f6eda7744ab0e37f3",
+        "signature": "396154439189b941d20c9f9a552b5050cdf80c0b9159fc04ed99d6ca51b16425",
         "affectsGlobalScope": false
       },
       "./src/application.ts": {
@@ -2492,7 +2502,7 @@
         "affectsGlobalScope": false
       },
       "./src/openapi-spec.ts": {
-        "version": "8bb2602357f2bc7caa994d0da03dd1e09d8ffdd26987cc1a437b14540a9cdc2a",
+        "version": "c009214b823af58806ce0b5096198c3040702231524517f7e19fdff0b5bf1710",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
         "affectsGlobalScope": false
       },
@@ -2612,8 +2622,8 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/blocks.controller.ts": {
-        "version": "303d1cc986dd15d0daa9cd3ba23334885b3ab3021ead7f6502ad4245b25229d3",
-        "signature": "86d5b8249fe188d4f7bf78d3449e7204b1e81ac69dc82ac561f27d34cf75bdfe",
+        "version": "940394bf54dac129a407f4d4503d9f1dfdd5d9e289cccb96ed323140b7a2af02",
+        "signature": "7b48eb24f97a038e22a093f5caac54996999d8d62e3ad999646e36059d80f9db",
         "affectsGlobalScope": false
       },
       "./src/controllers/ping.controller.ts": {
@@ -2622,23 +2632,23 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/nodes.controller.ts": {
-        "version": "939ca6c714d139a6902af0a6aefa444b828f9917c53e0dace4748c7f23382d08",
-        "signature": "15045418b4df274a568c4345b8345a68e9126814243f80f950351e8fefa8e9a8",
+        "version": "8f56c4f4af0cfa4332acb73c45e4c3e028fcb2e1c4bab03df8ccab5a9a108607",
+        "signature": "d03ce1664b2c918d2fd7959083bfa12ea8d632393ecd80d909756418b74b9c5b",
         "affectsGlobalScope": false
       },
       "./src/controllers/transactions.controller.ts": {
-        "version": "99af425f19409495e413131aad62bf08e5c3fe7a15fa0c28ba5008682c6af2e6",
-        "signature": "63014c5ea39066f82eec0c994e3a91afe695262bed7ee400bf8909c6a3fab10f",
+        "version": "bb37b9d28dde5760f68ecf72bd064553811b5f7129ea48ea7baa41638e7e7190",
+        "signature": "e33ae3614a0ab9b1014a95fa504e1bd59e6bcb676ce85d7b9097c7a2c49cc674",
         "affectsGlobalScope": false
       },
       "./src/controllers/wallets.controller.ts": {
-        "version": "af03837c6123bcd65f558c9acbe64f711c49ae2fe0ba699745c59b4f09203c66",
-        "signature": "b384b65741a2888cbadc7539c393fec92458118968bb360c6f761a05782fe147",
+        "version": "6e5303e7e5b2c5c4198cf730566479a201139d76c499fc418f3407b80e816cf9",
+        "signature": "53a0954654749702d4a7d87e256ebd6e24b2ea3f856eb074c2fd70a006f8caf2",
         "affectsGlobalScope": false
       },
       "./src/controllers/slices.controller.ts": {
-        "version": "9169c24b4cc0cb37c6d7ce96648d0a6dc4948c58d31c1477aa9c7821792e3827",
-        "signature": "0856838e13a009a91c629dbd474ccd966ef491b6149cbbd36500e1d2d9b1f922",
+        "version": "576ad28d23e2467c18438d54fa48e4d89324c19a5203457ded3f2691e97d3f61",
+        "signature": "f3787eb6bcee3688d6b7c6995d94f0b7d3403591aa12eeb0b265975cd45f2186",
         "affectsGlobalScope": false
       },
       "./src/controllers/slices-transactions.controller.ts": {
@@ -4803,7 +4813,13 @@
         "./src/controllers/wallets.controller.ts"
       ],
       "./src/controllers/nodes.controller.ts": [
-        "./node_modules/tslib/tslib.d.ts"
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/services/index.ts",
+        "./src/types/index.ts",
+        "./src/utils/bywise-api.ts"
       ],
       "./src/controllers/ping.controller.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
@@ -4977,7 +4993,10 @@
       ],
       "./src/services/nodes-service.service.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
-        "./node_modules/tslib/tslib.d.ts"
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/services/index.ts",
+        "./src/types/index.ts",
+        "./src/utils/bywise-api.ts"
       ],
       "./src/services/slices.service.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
@@ -5046,7 +5065,16 @@
       "./src/tasks/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
         "./src/tasks/create-blocks.task.ts",
-        "./src/tasks/create-slices.task.ts"
+        "./src/tasks/create-slices.task.ts",
+        "./src/tasks/p2p.task.ts"
+      ],
+      "./src/tasks/p2p.task.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/cron/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/services/index.ts",
+        "./src/types/index.ts",
+        "./src/utils/bywise-api.ts"
       ],
       "./src/types/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
@@ -5066,6 +5094,11 @@
       "./src/types/tx-bsc.type.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts"
+      ],
+      "./src/utils/bywise-api.ts": [
+        "./node_modules/abort-controller/dist/abort-controller.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/types/index.ts"
       ],
       "./src/utils/helper.ts": [
         "./node_modules/tslib/tslib.d.ts"
@@ -7126,6 +7159,10 @@
         "./src/controllers/transactions.controller.ts",
         "./src/controllers/wallets.controller.ts"
       ],
+      "./src/controllers/nodes.controller.ts": [
+        "./src/services/index.ts",
+        "./src/types/index.ts"
+      ],
       "./src/controllers/ping.controller.ts": [
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./src/repositories/index.ts",
@@ -7243,6 +7280,10 @@
         "./src/services/transactions.service.ts",
         "./src/services/wallet.service.ts"
       ],
+      "./src/services/nodes-service.service.ts": [
+        "./src/services/index.ts",
+        "./src/types/index.ts"
+      ],
       "./src/services/slices.service.ts": [
         "./src/repositories/index.ts",
         "./src/services/contract.service.ts",
@@ -7274,7 +7315,12 @@
       ],
       "./src/tasks/index.ts": [
         "./src/tasks/create-blocks.task.ts",
-        "./src/tasks/create-slices.task.ts"
+        "./src/tasks/create-slices.task.ts",
+        "./src/tasks/p2p.task.ts"
+      ],
+      "./src/tasks/p2p.task.ts": [
+        "./node_modules/@loopback/cron/dist/index.d.ts",
+        "./src/services/index.ts"
       ],
       "./src/types/index.ts": [
         "./src/types/nodes.type.ts",
@@ -7290,6 +7336,9 @@
       ],
       "./src/types/tx-bsc.type.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./src/utils/bywise-api.ts": [
+        "./src/types/index.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -7827,10 +7876,12 @@
       "./src/tasks/create-blocks.task.ts",
       "./src/tasks/create-slices.task.ts",
       "./src/tasks/index.ts",
+      "./src/tasks/p2p.task.ts",
       "./src/types/index.ts",
       "./src/types/nodes.type.ts",
       "./src/types/transactions.type.ts",
       "./src/types/tx-bsc.type.ts",
+      "./src/utils/bywise-api.ts",
       "./src/utils/helper.ts"
     ]
   },

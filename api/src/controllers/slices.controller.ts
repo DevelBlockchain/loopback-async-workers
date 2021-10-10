@@ -44,7 +44,7 @@ export class SlicesController {
       'application/json': {
         schema: {
           type: 'array',
-          items: getModelSchemaRef(Slices, {includeRelations: true}),
+          items: getModelSchemaRef(Slices),
         },
       },
     },
@@ -60,14 +60,13 @@ export class SlicesController {
     description: 'Slices model instance',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Slices, {includeRelations: true}),
+        schema: getModelSchemaRef(Slices),
       },
     },
   })
   async findById(
     @param.path.string('id') id: string,
-    @param.filter(Slices, {exclude: 'where'}) filter?: FilterExcludingWhere<Slices>
   ): Promise<Slices> {
-    return this.slicesRepository.findById(id, filter);
+    return this.slicesRepository.findById(id);
   }
 }
