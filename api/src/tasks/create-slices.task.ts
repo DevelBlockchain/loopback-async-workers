@@ -3,8 +3,9 @@ import { CronJob, cronJob } from '@loopback/cron';
 import { repository } from '@loopback/repository';
 import { TransactionsStatus } from '../models';
 import { TransactionsRepository } from '../repositories';
-import { BlocksProvider, SlicesProvider } from '../services';
+import { BlocksProvider, NodesProvider, SlicesProvider } from '../services';
 import { SimulateSliceDTO } from '../types';
+import { BywiseAPI } from '../utils/bywise-api';
 
 @cronJob()
 export class CreateSlices extends CronJob {
@@ -12,6 +13,7 @@ export class CreateSlices extends CronJob {
   constructor(
     @service(SlicesProvider) private slicesProvider: SlicesProvider,
     @service(BlocksProvider) private blocksProvider: BlocksProvider,
+    @service(NodesProvider) private nodesProvider: NodesProvider,
     @repository(TransactionsRepository) private transactionsRepository: TransactionsRepository,
   ) {
     super({
@@ -19,7 +21,7 @@ export class CreateSlices extends CronJob {
       onTick: async () => {
         await this.stop();
         try {
-          if(`${process.env.CREATE_SLICES}`.toLowerCase() === 'true') {
+          if (`${process.env.CREATE_SLICES}`.toLowerCase() === 'true') {
             await this.runProcess();
           }
         } catch (err) {
@@ -51,7 +53,13 @@ export class CreateSlices extends CronJob {
       }
       if (ctx.transactionsModels.length > 0) {
         let slice = await this.slicesProvider.createNewSlice(lastHash, ctx.transactionsModels);
-        await this.slicesProvider.addSlice(lastHash, slice);
+        let added = await this.slicesProvider.addSlice(lastHash, slice);
+        if (added) {
+          let nodes = this.nodesProvider.getNodes();
+          for (let i = 0; i < nodes.length; i++) {
+            BywiseAPI.publishNewSlice(nodes[i], slice);
+          }
+        }
       }
     }
   }

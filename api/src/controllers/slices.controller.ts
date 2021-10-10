@@ -1,3 +1,4 @@
+import { service } from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -18,19 +19,48 @@ import {
   response,
   HttpErrors,
 } from '@loopback/rest';
-import {Slices} from '../models';
-import {SlicesRepository} from '../repositories';
+import { Slices } from '../models';
+import { SlicesRepository } from '../repositories';
+import { BlocksProvider, NodesProvider, SlicesProvider } from '../services';
+import { SliceDTO } from '../types';
+import { BywiseAPI } from '../utils/bywise-api';
 
 export class SlicesController {
   constructor(
-    @repository(SlicesRepository)
-    public slicesRepository : SlicesRepository,
-  ) {}
+    @repository(SlicesRepository) public slicesRepository: SlicesRepository,
+    @service(BlocksProvider) private blocksProvider: BlocksProvider,
+    @service(SlicesProvider) private slicesProvider: SlicesProvider,
+    @service(NodesProvider) private nodesProvider: NodesProvider,
+  ) { }
+
+  @post('/slices')
+  @response(204, {
+    description: 'Accepted Slices',
+  })
+  async create(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(SliceDTO),
+        },
+      },
+    })
+    slice: SliceDTO,
+  ): Promise<void> {
+    let lastHash = (await this.blocksProvider.getLastHashAndHeight()).lastHash;
+    let added = await this.slicesProvider.addSlice(lastHash, slice);
+    if (added) {
+      let nodes = this.nodesProvider.getNodes();
+      for (let i = 0; i < nodes.length; i++) {
+        BywiseAPI.publishNewSlice(nodes[i], slice);
+      }
+    }
+  }
 
   @get('/slices/count')
   @response(200, {
     description: 'Slices model count',
-    content: {'application/json': {schema: CountSchema}},
+    content: { 'application/json': { schema: CountSchema } },
   })
   async count(
     @param.where(Slices) where?: Where<Slices>,
