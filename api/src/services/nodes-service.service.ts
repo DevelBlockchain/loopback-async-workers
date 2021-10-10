@@ -64,6 +64,10 @@ export class NodesProvider {
     }
   }
 
+  removeNode(node: NodeDTO) {
+    NodesProvider.nodes = NodesProvider.nodes.filter(node => node.host !== node.host);
+  }
+
   async addNode(node: NodeDTO): Promise<NodeDTO> {
     if (node.isFullNode) {
       let remoteInfo = await BywiseAPI.tryToken(node);

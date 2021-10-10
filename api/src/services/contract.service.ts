@@ -88,13 +88,11 @@ export class ContractProvider {
   }
 
   getAccount(): ethers.Wallet {
-    let seed: string | undefined = '';
-    if (ContractProvider.isMainNet()) {
-      seed = process.env.MAINNET_SEED;
-    } else {
-      seed = process.env.TESTNET_SEED;
+    let seed = process.env.SEED;
+    if (!seed) {
+      let newSeed = ethers.Wallet.createRandom().mnemonic.phrase;
+      throw new Error(`SEED not found - suggestion "${newSeed}"`);
     }
-    if (!seed) throw new Error('SEED not found');
     return ethers.Wallet.fromMnemonic(seed);
   }
 

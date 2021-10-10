@@ -2382,7 +2382,7 @@
         "affectsGlobalScope": false
       },
       "./src/services/contract.service.ts": {
-        "version": "ad345965c59d2ce0c0d0a28b9a7521270dd054b87a31a9e61f2c328bbfbe5414",
+        "version": "667a92993c6e0f3d0c93f9a7c06e337246fa69d06861681055479dbed0d0cfcc",
         "signature": "2084098df73b5effb2db0e2ddd636c797ea52e02536f564ba2e1efa29b4db4b1",
         "affectsGlobalScope": false
       },
@@ -2477,8 +2477,8 @@
         "affectsGlobalScope": false
       },
       "./src/tasks/p2p.task.ts": {
-        "version": "59dfd9ef6f0b1d333bbb4663d406d6d6e1987ad50c19621de7c992c53dc3da31",
-        "signature": "39b81b2a69834408cd736029a5fe2c9b5fd9dd902f1599a89a2406bde8dfe719",
+        "version": "09cdab17c8e622909349760740c2a010432b31db1f5d84b30f0bd9a4d9be23e7",
+        "signature": "57b4c988608f952aea3dfb7126716fb671a134bcf4bad79e721865b919b69fbf",
         "affectsGlobalScope": false
       },
       "./src/tasks/index.ts": {
@@ -2492,7 +2492,7 @@
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "7b56bab1b400904155165bc89a2ca4aa275e9aac619ffb39c76f404450d61f93",
+        "version": "7e10600f760b22ef6ba35d1071f739116fac77a19308959d8a3bb6c64ce3ed79",
         "signature": "cea31907992a2f6c447e22de2d13573d4708d4113eeaf29ef8214e70f6dd439e",
         "affectsGlobalScope": false
       },
@@ -2632,7 +2632,7 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/nodes.controller.ts": {
-        "version": "8f56c4f4af0cfa4332acb73c45e4c3e028fcb2e1c4bab03df8ccab5a9a108607",
+        "version": "bd4453f2ee641e62126288dfbc1fc5d66a5184cb456c46bd2bef282e99d2bd07",
         "signature": "d03ce1664b2c918d2fd7959083bfa12ea8d632393ecd80d909756418b74b9c5b",
         "affectsGlobalScope": false
       },
@@ -4814,12 +4814,10 @@
       ],
       "./src/controllers/nodes.controller.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
-        "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
         "./src/services/index.ts",
-        "./src/types/index.ts",
-        "./src/utils/bywise-api.ts"
+        "./src/types/index.ts"
       ],
       "./src/controllers/ping.controller.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",

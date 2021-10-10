@@ -11,7 +11,7 @@ export class P2PConnection extends CronJob {
     @service(NodesProvider) private nodesProvider: NodesProvider,
   ) {
     super({
-      name: 'task-p2p',
+      name: 'task-connection-p2p',
       onTick: async () => {
         await this.stop();
         try {
@@ -69,5 +69,38 @@ export class P2PConnection extends CronJob {
       }
     }
     return false;
+  }
+}
+
+@cronJob()
+export class P2PCheckSignOfLife extends CronJob {
+
+  constructor(
+    @service(NodesProvider) private nodesProvider: NodesProvider,
+  ) {
+    super({
+      name: 'task-life-p2p',
+      onTick: async () => {
+        await this.stop();
+        try {
+          await this.runProcess();
+        } catch (err) {
+          console.error(`${this.name} ${JSON.stringify(err)}`, err);
+        }
+        await this.start();
+      },
+      cronTime: '*/1 * * * *',
+    });
+  }
+
+  runProcess = async () => {
+    let nodes = this.nodesProvider.getNodes();
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      let req = await BywiseAPI.tryToken(node);
+      if (req.error) {
+        this.nodesProvider.removeNode(node);
+      }
+    }
   }
 }
