@@ -47,7 +47,7 @@ export class BywiseAPI {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                ...(token ? { 'authorization': `Basic ${token}` } : {})
+                ...(token ? { 'authorization': `Bearer ${token}` } : {})
             },
         });
     }
@@ -57,7 +57,7 @@ export class BywiseAPI {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                ...(token ? { 'authorization': `Basic ${token}` } : {})
+                ...(token ? { 'authorization': `Bearer ${token}` } : {})
             },
             body: JSON.stringify(parameters)
         });
