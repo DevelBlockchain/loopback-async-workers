@@ -127,6 +127,7 @@ export class TransactionsProvider {
         let newTx = new Transactions(tx);
         newTx.status = TransactionsStatus.TX_MEMPOOL;
         await this.transactionsRepository.create(newTx);
+        console.log('add new transaction');
         return true;
       } else {
         return false;

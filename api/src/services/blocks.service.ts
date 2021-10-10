@@ -39,6 +39,7 @@ export class BlocksProvider {
   async addNewBLock(block: BlockDTO) {
     await this.validadeBlock(block);
     await this.slicesProvider.consolidateSlices(block);
+    console.log('add new block');
   }
 
   async validadeBlock(block: BlockDTO) {
