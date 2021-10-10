@@ -32,9 +32,11 @@ export class SyncBlockchain extends CronJob {
   }
 
   runProcess = async () => {
+    console.log('init sync task')
     let nodes = this.nodesProvider.getNodes();
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
+      console.log('try sync node', node.host)
       let lastBlockParams = await this.blocksProvider.getLastHashAndHeight();
       let lastBlock = await BywiseAPI.getBlocks(node, {
         filter: {
@@ -47,6 +49,7 @@ export class SyncBlockchain extends CronJob {
       });
       if (!lastBlock.error) {
         let blocks: BlockDTO[] = lastBlock.data;
+        console.log('try sync blocks', blocks.length)
         for (let j = 0; j < blocks.length; j++) {
           await this.addBlock(node, blocks[j]);
         }
