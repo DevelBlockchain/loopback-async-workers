@@ -1,6 +1,10 @@
 # Logs
 api/logs
 
+# SSL
+api/*.crt
+api/*.key
+
 # Runtime data
 api/pids
 api/*.pid
