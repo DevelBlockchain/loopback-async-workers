@@ -17,6 +17,7 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
 import { Transactions } from '../models';
 import { TransactionsRepository } from '../repositories';
@@ -75,7 +76,7 @@ export class TransactionsController {
     return this.transactionsRepository.find(filter);
   }
 
-  @get('/transactions/{id}')
+  @get('/transactions/{hash}')
   @response(200, {
     description: 'Transactions model instance',
     content: {
@@ -85,8 +86,12 @@ export class TransactionsController {
     },
   })
   async findById(
-    @param.path.string('id') id: string
+    @param.path.string('hash') hash: string
   ): Promise<Transactions> {
-    return this.transactionsRepository.findById(id);
+    let value = await this.transactionsRepository.findOne({ where: { hash } });
+    if (!value) {
+      throw new HttpErrors.NotFound();
+    }
+    return value;
   }
 }

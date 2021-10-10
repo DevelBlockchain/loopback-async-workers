@@ -2,8 +2,9 @@ import { service } from '@loopback/core';
 import { CronJob, cronJob } from '@loopback/cron';
 import { repository } from '@loopback/repository';
 import { BlocksRepository } from '../repositories';
-import { SlicesProvider, BlocksProvider, NodesProvider } from '../services';
-import { SimulateSliceDTO, SliceDTO } from '../types';
+import { SlicesProvider, BlocksProvider, NodesProvider, TransactionsProvider } from '../services';
+import { BlockDTO, NodeDTO, SimulateSliceDTO, SliceDTO, TransactionsDTO } from '../types';
+import { BywiseAPI } from '../utils/bywise-api';
 
 @cronJob()
 export class SyncBlockchain extends CronJob {
@@ -12,6 +13,7 @@ export class SyncBlockchain extends CronJob {
     @service(NodesProvider) private nodesProvider: NodesProvider,
     @service(SlicesProvider) private slicesProvider: SlicesProvider,
     @service(BlocksProvider) private blocksProvider: BlocksProvider,
+    @service(TransactionsProvider) private transactionsProvider: TransactionsProvider,
     @repository(BlocksRepository) public blocksRepository: BlocksRepository,
   ) {
     super({
@@ -30,28 +32,50 @@ export class SyncBlockchain extends CronJob {
   }
 
   runProcess = async () => {
-    
-    let lastBlockParams = await this.blocksProvider.getLastHashAndHeight();
-    let slices = await this.slicesProvider.getMempoolSlices();
-
-    let selectedSlices: SliceDTO[] = []
-    if (slices.length > 0) {
-      slices = slices.sort((a, b) => b.numberOfTransactions - a.numberOfTransactions);
-      for (let i = 0; i < slices.length && selectedSlices.length === 0; i++) {
-        let slice = slices[i];
-        try {
-          let ctx = new SimulateSliceDTO();
-          await this.slicesProvider.validadeSlice(lastBlockParams.lastHash, slice);
-          await this.slicesProvider.simulateBlock([slice.hash], ctx);
-          selectedSlices.push(slice);
-        } catch (err: any) {
-          console.log('create new blocks task - ' + err.message)
+    let nodes = this.nodesProvider.getNodes();
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      let lastBlockParams = await this.blocksProvider.getLastHashAndHeight();
+      let lastBlock = await BywiseAPI.getBlocks(node, {
+        filter: {
+          order: "height ASC",
+          limit: 10,
+          where: {
+            gt: lastBlockParams.lastHeight
+          }
+        }
+      });
+      if (!lastBlock.error) {
+        let blocks: BlockDTO[] = lastBlock.data;
+        for (let j = 0; j < blocks.length; j++) {
+          await this.addBlock(node, blocks[j]);
         }
       }
     }
-    let block = await this.blocksProvider.createNewBlock(selectedSlices);
-    await this.blocksProvider.addNewBLock(block);
-    console.log('created block', block.height);
   }
 
+  async addBlock(node: NodeDTO, block: BlockDTO) {
+    let lastHash = (await this.blocksProvider.getLastHashAndHeight()).lastHash;
+    let slices: SliceDTO[] = [];
+    for (let i = 0; i < block.slices.length; i++) {
+      let sliceHash = block.slices[i];
+      let req = await BywiseAPI.getSlice(node, sliceHash);
+      if (req.error) {
+        throw new Error(`cant sync slice ${sliceHash}`);
+      }
+      let slice: SliceDTO = req.data;
+      slices.push(slice);
+      req = await BywiseAPI.getTransactionFromSlice(node, sliceHash);
+      if (req.error) {
+        throw new Error(`cant sync slice ${sliceHash}`);
+      }
+      let txs: TransactionsDTO[] = req.data;
+      for (let j = 0; j < txs.length; j++) {
+        let tx = txs[j];
+        await this.transactionsProvider.saveTransaction(tx);
+      }
+      await this.slicesProvider.addSlice(lastHash, slice);
+    }
+    await this.blocksProvider.addNewBLock(block);
+  }
 }

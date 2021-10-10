@@ -16,6 +16,7 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
 import {Wallets} from '../models';
 import {WalletsRepository} from '../repositories';
@@ -55,7 +56,7 @@ export class WalletsController {
     return this.walletsRepository.find(filter);
   }
 
-  @get('/wallets/{id}')
+  @get('/wallets/{address}')
   @response(200, {
     description: 'Wallets model instance',
     content: {
@@ -65,8 +66,12 @@ export class WalletsController {
     },
   })
   async findById(
-    @param.path.string('id') id: string
+    @param.path.string('address') address: string
   ): Promise<Wallets> {
-    return this.walletsRepository.findById(id);
+    let value = await this.walletsRepository.findOne({ where: { address } });
+    if (!value) {
+      throw new HttpErrors.NotFound();
+    }
+    return value;
   }
 }

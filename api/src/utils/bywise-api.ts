@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 
 export class BywiseAPI {
 
-    private static async makeRequest(url: string, requestInit: RequestInit) {
+    private static async makeRequest(url: string, requestInit: RequestInit): Promise<{ data: any, error: string }> {
         let response = {
             data: {},
             error: '',
@@ -21,13 +21,13 @@ export class BywiseAPI {
             let text = await req.text();
             if (!req.ok) {
                 response.error = 'bywise-api error: HTTP-CODE ' + req.status;
-                if(text) {
+                if (text) {
                     let json = JSON.parse(text);
                     response.data = json;
                     response.error = 'bywise-api error: ' + json.error.message;
                 }
             } else {
-                if(text) {
+                if (text) {
                     let json = JSON.parse(text);
                     response.data = json;
                 }
@@ -41,7 +41,9 @@ export class BywiseAPI {
     private static async get(url: string, token: string | undefined, parameters: any = {}) {
         let params = ''
         if (parameters) {
-            params = '?' + encodeURI(JSON.stringify(params));
+            params = '?' + (Object.entries(parameters).map(([key, value]) => {
+                return `${key}=${encodeURI(JSON.stringify(value))}`;
+            })).join('&');
         }
         return await BywiseAPI.makeRequest(url + params, {
             method: 'GET',
@@ -63,6 +65,18 @@ export class BywiseAPI {
         });
     }
 
+    static getBlocks(node: NodeDTO, filter: any) {
+        return BywiseAPI.get(`${node.host}/nodes/try-token`, node.token, filter);
+    }
+
+    static getSlice(node: NodeDTO, sliceHash: string) {
+        return BywiseAPI.get(`${node.host}/slices/${sliceHash}`, node.token);
+    }
+    
+    static getTransactionFromSlice(node: NodeDTO, sliceHash: string) {
+        return BywiseAPI.get(`${node.host}/slices/${sliceHash}/transactions`, node.token);
+    }
+
     static tryToken(node: NodeDTO) {
         return BywiseAPI.get(`${node.host}/nodes/try-token`, node.token);
     }
@@ -70,7 +84,7 @@ export class BywiseAPI {
     static getInfo(host: string) {
         return BywiseAPI.get(`${host}/nodes/info`, undefined);
     }
-    
+
     static getNodes(host: string) {
         return BywiseAPI.get(`${host}/nodes`, undefined);
     }

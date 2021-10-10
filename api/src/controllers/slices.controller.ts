@@ -16,6 +16,7 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
 import {Slices} from '../models';
 import {SlicesRepository} from '../repositories';
@@ -55,7 +56,7 @@ export class SlicesController {
     return this.slicesRepository.find(filter);
   }
 
-  @get('/slices/{id}')
+  @get('/slices/{hash}')
   @response(200, {
     description: 'Slices model instance',
     content: {
@@ -65,8 +66,12 @@ export class SlicesController {
     },
   })
   async findById(
-    @param.path.string('id') id: string,
+    @param.path.string('hash') hash: string,
   ): Promise<Slices> {
-    return this.slicesRepository.findById(id);
+    let value = await this.slicesRepository.findOne({ where: { hash } });
+    if (!value) {
+      throw new HttpErrors.NotFound();
+    }
+    return value;
   }
 }

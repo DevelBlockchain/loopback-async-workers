@@ -16,16 +16,17 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
-import {Blocks} from '../models';
-import {BlocksRepository} from '../repositories';
+import { Blocks } from '../models';
+import { BlocksRepository } from '../repositories';
 import { BlockDTO, PackageDTO } from '../types';
 
 export class BlocksController {
   constructor(
     @repository(BlocksRepository)
-    public blocksRepository : BlocksRepository,
-  ) {}
+    public blocksRepository: BlocksRepository,
+  ) { }
 
   @post('/blocks')
   @response(204, {
@@ -47,7 +48,7 @@ export class BlocksController {
   @get('/blocks/count')
   @response(200, {
     description: 'Blocks model count',
-    content: {'application/json': {schema: CountSchema}},
+    content: { 'application/json': { schema: CountSchema } },
   })
   async count(
     @param.where(Blocks) where?: Where<Blocks>,
@@ -73,7 +74,7 @@ export class BlocksController {
     return this.blocksRepository.find(filter);
   }
 
-  @get('/blocks/{id}')
+  @get('/blocks/{hash}')
   @response(200, {
     description: 'Blocks model instance',
     content: {
@@ -83,8 +84,12 @@ export class BlocksController {
     },
   })
   async findById(
-    @param.path.string('id') id: string,
+    @param.path.string('hash') hash: string,
   ): Promise<Blocks> {
-    return this.blocksRepository.findById(id);
+    let value = await this.blocksRepository.findOne({ where: { hash } });
+    if (!value) {
+      throw new HttpErrors.NotFound();
+    }
+    return value;
   }
 }

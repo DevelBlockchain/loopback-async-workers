@@ -10,6 +10,7 @@ import {
   get,
   getModelSchemaRef,
   getWhereSchemaFor,
+  HttpErrors,
   param,
   patch,
   post,
@@ -26,7 +27,7 @@ export class BlocksSlicesController {
     @repository(BlocksRepository) protected blocksRepository: BlocksRepository,
   ) { }
 
-  @get('/blocks/{id}/slices', {
+  @get('/blocks/{hash}/slices', {
     responses: {
       '200': {
         description: 'Array of Blocks has many Slices',
@@ -39,8 +40,12 @@ export class BlocksSlicesController {
     },
   })
   async find(
-    @param.path.string('id') id: string,
+    @param.path.string('hash') hash: string,
   ): Promise<Slices[]> {
-    return this.blocksRepository.slicesArray(id).find();
+    let value = await this.blocksRepository.findOne({ where: { hash } });
+    if (!value) {
+      throw new HttpErrors.NotFound();
+    }
+    return this.blocksRepository.slicesArray(value.id).find();
   }
 }
