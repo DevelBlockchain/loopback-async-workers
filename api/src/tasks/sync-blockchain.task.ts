@@ -42,11 +42,9 @@ export class SyncBlockchain extends CronJob {
       let lastBlockParams = await this.blocksProvider.getLastHashAndHeight();
       let lastBlock = await BywiseAPI.getBlocks(node, {
         filter: {
-          order: "height ASC",
           limit: 10,
-          where: {
-            gt: lastBlockParams.lastHeight
-          }
+          order: "height ASC",
+          where: { height: { gt: lastBlockParams.lastHeight } }
         }
       });
       if (!lastBlock.error) {
@@ -58,7 +56,7 @@ export class SyncBlockchain extends CronJob {
       }
     }
   }
-  
+
   async addBlock(node: NodeDTO, block: BlockDTO) {
     console.log('try sync block', block)
     let lastHash = (await this.blocksProvider.getLastHashAndHeight()).lastHash;
