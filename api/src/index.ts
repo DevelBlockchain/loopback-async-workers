@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs';
 import { ApplicationConfig, BlockineNodeApplication } from './application';
 
 export * from './application';
@@ -30,6 +31,12 @@ if (require.main === module) {
         // useful when used with OpenAPI-to-GraphQL to locate your application
         setServersFromRequest: true,
       },
+      // Enable HTTPS
+      ...(process.env.KEY_PATH === undefined ? {} : {
+        protocol: 'https',
+        key: readFileSync(process.env.KEY_PATH + ''),
+        cert: readFileSync(process.env.CERT_PATH + '')
+      })
     },
   };
   main(config).catch(err => {
