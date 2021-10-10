@@ -21,7 +21,9 @@ export class SyncBlockchain extends CronJob {
       onTick: async () => {
         await this.stop();
         try {
-          await this.runProcess();
+          if (`${process.env.CREATE_BLOCKS}`.toLowerCase() !== 'true') {
+            await this.runProcess();
+          }
         } catch (err) {
           console.error(`${this.name} ${JSON.stringify(err)}`, err);
         }

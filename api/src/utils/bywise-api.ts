@@ -45,6 +45,7 @@ export class BywiseAPI {
                 return `${key}=${encodeURI(JSON.stringify(value))}`;
             })).join('&');
         }
+        console.log('make get', url + params)
         return await BywiseAPI.makeRequest(url + params, {
             method: 'GET',
             headers: {
