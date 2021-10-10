@@ -21,6 +21,7 @@ export class JWTStrategy implements AuthenticationStrategy {
     if (!this.nodesProvider.isValidToken(token)) {
       throw new HttpErrors.Forbidden("Don't have permission");
     }
+    return token;
   }
 
   extractCredentials(request: any): string {
