@@ -27,7 +27,7 @@ export class SyncBlockchain extends CronJob {
         }
         await this.start();
       },
-      cronTime: '*/5 * * * *',
+      cronTime: '*/5 * * * * *',
     });
   }
 
