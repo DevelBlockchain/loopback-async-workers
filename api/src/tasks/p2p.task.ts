@@ -89,7 +89,7 @@ export class P2PCheckSignOfLife extends CronJob {
         }
         await this.start();
       },
-      cronTime: '*/1 * * * *',
+      cronTime: '*/30 * * * * *',
     });
   }
 
@@ -100,6 +100,8 @@ export class P2PCheckSignOfLife extends CronJob {
       let req = await BywiseAPI.tryToken(node);
       if (req.error) {
         this.nodesProvider.removeNode(node);
+      } else {
+        node.updated = (new Date()).toISOString();
       }
     }
   }

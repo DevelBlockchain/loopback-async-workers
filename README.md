@@ -5,11 +5,11 @@
 DB_NAME=blockine
 DB_USER=blockine
 DB_PASS=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-PORT=8080
-MY_HOST=http://vps34497.publiccloud.com.br:8080
-LIST_HOSTS=["http://vps34407.publiccloud.com.br:8080","http://vps34469.publiccloud.com.br:8080","http://vps34496.publiccloud.com.br:8080","http://vps34497.publiccloud.com.br:8080"]
+MY_HOST=https://n0.bywise.org
+LIST_HOSTS=["https://n0.bywise.org","https://n1.bywise.org","https://n2.bywise.org","https://n3.bywise.org"]
 KEY_PATH=./server.key
 CERT_PATH=./server.crt
+PORT=443
 BSCSCAN_API=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 GAS_PRICE=10000000000
 API_RPC=XXXXXXXXXXXXXXXXXXX

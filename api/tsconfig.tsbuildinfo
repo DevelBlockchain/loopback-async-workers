@@ -1186,104 +1186,44 @@
         "signature": "5a70edee273369556aaa889ccbc15754792c5bf819fc668ad2c958ada875fca7",
         "affectsGlobalScope": false
       },
-      "./node_modules/moment/ts3.1-typings/moment.d.ts": {
-        "version": "f97edc4d3b4dd0b32766e9633086497565c37657fb591cc84a35864db4bc2fc5",
-        "signature": "f97edc4d3b4dd0b32766e9633086497565c37657fb591cc84a35864db4bc2fc5",
+      "./node_modules/@types/range-parser/index.d.ts": {
+        "version": "16d51f964ec125ad2024cf03f0af444b3bc3ec3614d9345cc54d09bab45c9a4c",
+        "signature": "16d51f964ec125ad2024cf03f0af444b3bc3ec3614d9345cc54d09bab45c9a4c",
         "affectsGlobalScope": false
       },
-      "./node_modules/@types/cron/index.d.ts": {
-        "version": "bbf9ee0a77a0b3e2fdd39a598561f3b0317fc8e939a878e04b2c2c19c6f23db7",
-        "signature": "bbf9ee0a77a0b3e2fdd39a598561f3b0317fc8e939a878e04b2c2c19c6f23db7",
+      "./node_modules/@types/qs/index.d.ts": {
+        "version": "ba601641fac98c229ccd4a303f747de376d761babb33229bb7153bed9356c9cc",
+        "signature": "ba601641fac98c229ccd4a303f747de376d761babb33229bb7153bed9356c9cc",
         "affectsGlobalScope": false
       },
-      "./node_modules/@loopback/cron/dist/types.d.ts": {
-        "version": "8e2ec6677e32371dafb072920a247374f6feb4f9ec720eadc5458d6b8b41e8b8",
-        "signature": "8e2ec6677e32371dafb072920a247374f6feb4f9ec720eadc5458d6b8b41e8b8",
+      "./node_modules/@types/express-serve-static-core/index.d.ts": {
+        "version": "61b60d145059c3c8e3c7b484713191b6d0b70999bcb11f2b26286b15926a2b5f",
+        "signature": "61b60d145059c3c8e3c7b484713191b6d0b70999bcb11f2b26286b15926a2b5f",
+        "affectsGlobalScope": true
+      },
+      "./node_modules/@types/mime/index.d.ts": {
+        "version": "84e3bbd6f80983d468260fdbfeeb431cc81f7ea98d284d836e4d168e36875e86",
+        "signature": "84e3bbd6f80983d468260fdbfeeb431cc81f7ea98d284d836e4d168e36875e86",
         "affectsGlobalScope": false
       },
-      "./node_modules/@loopback/cron/dist/cron.component.d.ts": {
-        "version": "ce7aaad8d9a39fe66ece9b4a8b9d2aa3ecb3871525e7a01b57c64d91a672aae0",
-        "signature": "ce7aaad8d9a39fe66ece9b4a8b9d2aa3ecb3871525e7a01b57c64d91a672aae0",
+      "./node_modules/@types/serve-static/index.d.ts": {
+        "version": "3b02517f9be71f255eadab9892406055d069167891f1e1ea16c96c4ff1ddda01",
+        "signature": "3b02517f9be71f255eadab9892406055d069167891f1e1ea16c96c4ff1ddda01",
         "affectsGlobalScope": false
       },
-      "./node_modules/@loopback/cron/dist/decorators/cron-job.decorator.d.ts": {
-        "version": "17cc4846de2a0357f7565972ef7f7f93c893d5b53e1c901bba88246f86827315",
-        "signature": "17cc4846de2a0357f7565972ef7f7f93c893d5b53e1c901bba88246f86827315",
+      "./node_modules/@types/connect/index.d.ts": {
+        "version": "6d829824ead8999f87b6df21200df3c6150391b894b4e80662caa462bd48d073",
+        "signature": "6d829824ead8999f87b6df21200df3c6150391b894b4e80662caa462bd48d073",
         "affectsGlobalScope": false
       },
-      "./node_modules/@loopback/cron/dist/decorators/index.d.ts": {
-        "version": "b9cb3d3d2a0a859688a671332cdd663b3900c8774d06df84153b9c18cc29c926",
-        "signature": "b9cb3d3d2a0a859688a671332cdd663b3900c8774d06df84153b9c18cc29c926",
+      "./node_modules/@types/body-parser/index.d.ts": {
+        "version": "65cfd1c0bc729fbc2b49fe66bc5ebddba5aa3a978c748e1d2e0d07f502238ce2",
+        "signature": "65cfd1c0bc729fbc2b49fe66bc5ebddba5aa3a978c748e1d2e0d07f502238ce2",
         "affectsGlobalScope": false
       },
-      "./node_modules/@loopback/cron/dist/keys.d.ts": {
-        "version": "c4d2c4e6e5ddf4896a0f0a00918e01b55795dc83567f9647e0a797c648f154aa",
-        "signature": "c4d2c4e6e5ddf4896a0f0a00918e01b55795dc83567f9647e0a797c648f154aa",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/cron/dist/index.d.ts": {
-        "version": "cffb987f8ee9c5beeb0b7881e73adee1e4708d0dd79758503d747f34a1c06197",
-        "signature": "cffb987f8ee9c5beeb0b7881e73adee1e4708d0dd79758503d747f34a1c06197",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/logging/dist/decorators/logging.decorator.d.ts": {
-        "version": "b41174f2fac34bec2138705ff5c8dc7d93612d5ebfde6326e54bfef0c5be770d",
-        "signature": "b41174f2fac34bec2138705ff5c8dc7d93612d5ebfde6326e54bfef0c5be770d",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/logging/dist/decorators/index.d.ts": {
-        "version": "3ad1865fd328c1498a8d715152d0b21cc622ca69adf8221239110f570e671252",
-        "signature": "3ad1865fd328c1498a8d715152d0b21cc622ca69adf8221239110f570e671252",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/fluent-logger/lib/index.d.ts": {
-        "version": "a60128614d5bde1175b2948fd88d19328d392e30a7c4be54fb8c6c9868c19792",
-        "signature": "a60128614d5bde1175b2948fd88d19328d392e30a7c4be54fb8c6c9868c19792",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/logform/index.d.ts": {
-        "version": "89c631193ed616083e1ee16611dae34d719029b77274680d0f00dbf3bb8ba998",
-        "signature": "89c631193ed616083e1ee16611dae34d719029b77274680d0f00dbf3bb8ba998",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/winston-transport/index.d.ts": {
-        "version": "d667ec244bc8f65d0ac176f7ea91ef9e2904e7aa10923fbbe843d19f1270593b",
-        "signature": "d667ec244bc8f65d0ac176f7ea91ef9e2904e7aa10923fbbe843d19f1270593b",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/logging/dist/logging.component.d.ts": {
-        "version": "b3aa8d6b5a80e787d61f74e16b846a3570ba3882676ed0a59bf682e4f0d708ee",
-        "signature": "b3aa8d6b5a80e787d61f74e16b846a3570ba3882676ed0a59bf682e4f0d708ee",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/winston/lib/winston/config/index.d.ts": {
-        "version": "e9c33c05be71c17c3b08988fe6755605632a09c5cdd267cede8de5558ec80027",
-        "signature": "e9c33c05be71c17c3b08988fe6755605632a09c5cdd267cede8de5558ec80027",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/winston/lib/winston/transports/index.d.ts": {
-        "version": "3fb6de4789fba0473c4877a4ef4ee002902ccef2b04f620caf2313e4d1b2aecc",
-        "signature": "3fb6de4789fba0473c4877a4ef4ee002902ccef2b04f620caf2313e4d1b2aecc",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/winston/index.d.ts": {
-        "version": "e7c0503e5da78c978e6b9c43dc5728312fa9e19943fd392eca047739e348f283",
-        "signature": "e7c0503e5da78c978e6b9c43dc5728312fa9e19943fd392eca047739e348f283",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/logging/dist/winston.d.ts": {
-        "version": "0994ef871e9203b2600d4ad61fb6ba913a8c19c4ea9983fd86ef536bfc700141",
-        "signature": "0994ef871e9203b2600d4ad61fb6ba913a8c19c4ea9983fd86ef536bfc700141",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/logging/dist/keys.d.ts": {
-        "version": "f1be01c15fe60fe5e22ab19ce55de3c6aad5abb38ca36aef345be30c510613af",
-        "signature": "f1be01c15fe60fe5e22ab19ce55de3c6aad5abb38ca36aef345be30c510613af",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@loopback/logging/dist/index.d.ts": {
-        "version": "08346d5d40fcd22d5c1c15a3456bc187d90a25393d3e88c05588c630538fa07d",
-        "signature": "08346d5d40fcd22d5c1c15a3456bc187d90a25393d3e88c05588c630538fa07d",
+      "./node_modules/@types/express/index.d.ts": {
+        "version": "15c88bfd1b8dc7231ff828ae8df5d955bae5ebca4cf2bcb417af5821e52299ae",
+        "signature": "15c88bfd1b8dc7231ff828ae8df5d955bae5ebca4cf2bcb417af5821e52299ae",
         "affectsGlobalScope": false
       },
       "./node_modules/@loopback/repository-json-schema/dist/build-schema.d.ts": {
@@ -1429,46 +1369,6 @@
       "./node_modules/@loopback/openapi-v3/dist/index.d.ts": {
         "version": "3e11c9a1d1a58ab2fab15a3a17813d3e32f7edd086a75c6b9f235a84b6b4e78f",
         "signature": "3e11c9a1d1a58ab2fab15a3a17813d3e32f7edd086a75c6b9f235a84b6b4e78f",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/range-parser/index.d.ts": {
-        "version": "16d51f964ec125ad2024cf03f0af444b3bc3ec3614d9345cc54d09bab45c9a4c",
-        "signature": "16d51f964ec125ad2024cf03f0af444b3bc3ec3614d9345cc54d09bab45c9a4c",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/qs/index.d.ts": {
-        "version": "ba601641fac98c229ccd4a303f747de376d761babb33229bb7153bed9356c9cc",
-        "signature": "ba601641fac98c229ccd4a303f747de376d761babb33229bb7153bed9356c9cc",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/express-serve-static-core/index.d.ts": {
-        "version": "61b60d145059c3c8e3c7b484713191b6d0b70999bcb11f2b26286b15926a2b5f",
-        "signature": "61b60d145059c3c8e3c7b484713191b6d0b70999bcb11f2b26286b15926a2b5f",
-        "affectsGlobalScope": true
-      },
-      "./node_modules/@types/mime/index.d.ts": {
-        "version": "84e3bbd6f80983d468260fdbfeeb431cc81f7ea98d284d836e4d168e36875e86",
-        "signature": "84e3bbd6f80983d468260fdbfeeb431cc81f7ea98d284d836e4d168e36875e86",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/serve-static/index.d.ts": {
-        "version": "3b02517f9be71f255eadab9892406055d069167891f1e1ea16c96c4ff1ddda01",
-        "signature": "3b02517f9be71f255eadab9892406055d069167891f1e1ea16c96c4ff1ddda01",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/connect/index.d.ts": {
-        "version": "6d829824ead8999f87b6df21200df3c6150391b894b4e80662caa462bd48d073",
-        "signature": "6d829824ead8999f87b6df21200df3c6150391b894b4e80662caa462bd48d073",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/body-parser/index.d.ts": {
-        "version": "65cfd1c0bc729fbc2b49fe66bc5ebddba5aa3a978c748e1d2e0d07f502238ce2",
-        "signature": "65cfd1c0bc729fbc2b49fe66bc5ebddba5aa3a978c748e1d2e0d07f502238ce2",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/@types/express/index.d.ts": {
-        "version": "15c88bfd1b8dc7231ff828ae8df5d955bae5ebca4cf2bcb417af5821e52299ae",
-        "signature": "15c88bfd1b8dc7231ff828ae8df5d955bae5ebca4cf2bcb417af5821e52299ae",
         "affectsGlobalScope": false
       },
       "./node_modules/strong-error-handler/index.d.ts": {
@@ -1796,39 +1696,259 @@
         "signature": "be4dbc47afac5f25848839f43d0b6e3438b7ec739b97e453c8cf71c9123b01b3",
         "affectsGlobalScope": false
       },
-      "./node_modules/@loopback/rest-explorer/dist/rest-explorer.types.d.ts": {
-        "version": "a8ca2fe0f47daf4c82b6b990c804b76ad087d7a8039ac76691d15e35e9a842bd",
-        "signature": "a8ca2fe0f47daf4c82b6b990c804b76ad087d7a8039ac76691d15e35e9a842bd",
+      "./node_modules/@loopback/security/dist/types.d.ts": {
+        "version": "3a5169af64a9cd4b950cfee7aacd42b1af277ab6ba427150dd508960f38ba180",
+        "signature": "3a5169af64a9cd4b950cfee7aacd42b1af277ab6ba427150dd508960f38ba180",
         "affectsGlobalScope": false
       },
-      "./node_modules/@loopback/rest-explorer/dist/rest-explorer.component.d.ts": {
-        "version": "bd31fafa74c805eb74619f8c46f6b611ae3d517293b401f972806afc650450c0",
-        "signature": "bd31fafa74c805eb74619f8c46f6b611ae3d517293b401f972806afc650450c0",
+      "./node_modules/@loopback/security/dist/keys.d.ts": {
+        "version": "8b27ac3c86af4cb7536ff93478778533b17fd7af5d1fa97bf5224f763323e7db",
+        "signature": "8b27ac3c86af4cb7536ff93478778533b17fd7af5d1fa97bf5224f763323e7db",
         "affectsGlobalScope": false
       },
-      "./node_modules/@loopback/rest-explorer/dist/rest-explorer.keys.d.ts": {
-        "version": "015f8a18048a91971da64b6f075a593eea852baef6053be49b57c626473c41ca",
-        "signature": "015f8a18048a91971da64b6f075a593eea852baef6053be49b57c626473c41ca",
+      "./node_modules/@loopback/security/dist/index.d.ts": {
+        "version": "f14c23f85eda06df795e1be8b54645537df3d47d1b8a61ce031e3886bf4c8f76",
+        "signature": "f14c23f85eda06df795e1be8b54645537df3d47d1b8a61ce031e3886bf4c8f76",
         "affectsGlobalScope": false
       },
-      "./node_modules/@loopback/rest-explorer/dist/index.d.ts": {
-        "version": "f4da102653f8ce4ffda0b1c25f1240ae216e19df10fd32e747fc46b3fcd4642c",
-        "signature": "f4da102653f8ce4ffda0b1c25f1240ae216e19df10fd32e747fc46b3fcd4642c",
+      "./node_modules/@loopback/authentication/dist/types.d.ts": {
+        "version": "4bbb63dff60cc990037497151b6a0c73160fb6e54b5215bcd673c360fef5e019",
+        "signature": "4bbb63dff60cc990037497151b6a0c73160fb6e54b5215bcd673c360fef5e019",
         "affectsGlobalScope": false
       },
-      "./src/sequence.ts": {
-        "version": "12e8af986d85cdf521b2aecda816a9f8c6707e47c7e722cb545a42e20555076b",
-        "signature": "4399c2b2ec8004633d4c5a6aca0d491f461af2631ba9157ea54a6b7b2993d0a6",
+      "./node_modules/@loopback/authentication/dist/providers/auth-action.provider.d.ts": {
+        "version": "d51d86c26e431dd4411d0e797847d4a43180d4ad8052756c0cb8fd617ced8247",
+        "signature": "d51d86c26e431dd4411d0e797847d4a43180d4ad8052756c0cb8fd617ced8247",
         "affectsGlobalScope": false
       },
-      "./src/datasources/blockchain.datasource.ts": {
-        "version": "8964f14d5c3982a716738ae448488b79c013325417aa437dc29006ad373f67b5",
-        "signature": "51f745b789435d0ecd9aaad14760a63d951cfe80c20062f15e0074a83748d1c1",
+      "./node_modules/@loopback/authentication/dist/providers/auth-metadata.provider.d.ts": {
+        "version": "e8e3e8d58cb561b2443c050dced8944c8d75586dd2f848c770103fdd63f89cb2",
+        "signature": "e8e3e8d58cb561b2443c050dced8944c8d75586dd2f848c770103fdd63f89cb2",
         "affectsGlobalScope": false
       },
-      "./src/datasources/index.ts": {
-        "version": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
-        "signature": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
+      "./node_modules/@loopback/authentication/dist/providers/auth-strategy.provider.d.ts": {
+        "version": "381ea3241a572a1ccdf61872cb72c4cb914afbb4a61e1e923262c2e16a764482",
+        "signature": "381ea3241a572a1ccdf61872cb72c4cb914afbb4a61e1e923262c2e16a764482",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/providers/index.d.ts": {
+        "version": "9e950c8d19ce1c4a0f9f4767106cc959833573aa8481cd6f98293c0601500770",
+        "signature": "9e950c8d19ce1c4a0f9f4767106cc959833573aa8481cd6f98293c0601500770",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/authentication.component.d.ts": {
+        "version": "1628b7801e78690f0ea79bf047d27ce7fc38050f9f76dad6d08682a1e26fbac7",
+        "signature": "1628b7801e78690f0ea79bf047d27ce7fc38050f9f76dad6d08682a1e26fbac7",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/decorators/authenticate.decorator.d.ts": {
+        "version": "eddde2b49d5ea8df3871c6333d3d50c13e0dc63c130a8883a356ebbe5fc91e35",
+        "signature": "eddde2b49d5ea8df3871c6333d3d50c13e0dc63c130a8883a356ebbe5fc91e35",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/decorators/index.d.ts": {
+        "version": "58b55855b9c93765717d3238a61d94f3653c8c1ba777c389b78ca81723f438bd",
+        "signature": "58b55855b9c93765717d3238a61d94f3653c8c1ba777c389b78ca81723f438bd",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/keys.d.ts": {
+        "version": "746c9f1c52a968867a3744ad8e9ed56b47f66f5876009228539803d7c20d3162",
+        "signature": "746c9f1c52a968867a3744ad8e9ed56b47f66f5876009228539803d7c20d3162",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/services/token.service.d.ts": {
+        "version": "111cbf4bffd2e58f63b39f344a5b94e2f8beb6e6106c5d48ada87feb0a181bf0",
+        "signature": "111cbf4bffd2e58f63b39f344a5b94e2f8beb6e6106c5d48ada87feb0a181bf0",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/services/user.service.d.ts": {
+        "version": "de1df65e112ed48181e8edea7e419efcb1ab9d2038f04c0ca8d5f40efe7ad7d2",
+        "signature": "de1df65e112ed48181e8edea7e419efcb1ab9d2038f04c0ca8d5f40efe7ad7d2",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/services/user-identity.service.d.ts": {
+        "version": "dd4b5b8d4f6b96d572b87800b6252b0b08e5f2bd797a2d7c830679d2574e327e",
+        "signature": "dd4b5b8d4f6b96d572b87800b6252b0b08e5f2bd797a2d7c830679d2574e327e",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/services/index.d.ts": {
+        "version": "31de26d7e2951d374fdfbb5be76383ff767cdde245ee5bc12649e9da06be2212",
+        "signature": "31de26d7e2951d374fdfbb5be76383ff767cdde245ee5bc12649e9da06be2212",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication/dist/index.d.ts": {
+        "version": "202c6be737a013f5f393cb338ac6e53f6b228fc7745f209f24889d9c3ec7a9a2",
+        "signature": "202c6be737a013f5f393cb338ac6e53f6b228fc7745f209f24889d9c3ec7a9a2",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/jwt-authentication-component.d.ts": {
+        "version": "385d35cdcb3e558fc012dd7a44d5882c6bbbcb635fb91943d641efdb95b119c4",
+        "signature": "385d35cdcb3e558fc012dd7a44d5882c6bbbcb635fb91943d641efdb95b119c4",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/models/user-credentials.model.d.ts": {
+        "version": "3baff32625f3adc98412232739f7c3ecf605f70b0f884cc673437dbf814c702e",
+        "signature": "3baff32625f3adc98412232739f7c3ecf605f70b0f884cc673437dbf814c702e",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/models/user.model.d.ts": {
+        "version": "88ab6f2f01318b039b30030f96c159c7c5c8629f350a833b44b6995db646ad0f",
+        "signature": "88ab6f2f01318b039b30030f96c159c7c5c8629f350a833b44b6995db646ad0f",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/models/refresh-token.model.d.ts": {
+        "version": "d4621f648772fd2b9c658e9bb326635cc5c446e77408d94fff5ede6d2f918110",
+        "signature": "d4621f648772fd2b9c658e9bb326635cc5c446e77408d94fff5ede6d2f918110",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts": {
+        "version": "217ad2d4ab068aa1b745e23ed646662fd332ad7618533cce11c9a319e1e7fc35",
+        "signature": "217ad2d4ab068aa1b745e23ed646662fd332ad7618533cce11c9a319e1e7fc35",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/user-credentials.repository.d.ts": {
+        "version": "f043260471467244615f24512b0375c50226589c4e41b92d038d642dc58198cc",
+        "signature": "f043260471467244615f24512b0375c50226589c4e41b92d038d642dc58198cc",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/user.repository.d.ts": {
+        "version": "c8030ae3b5ac0f65cb1d90fba48138ee8e226427ff612ce245f4985d79c04749",
+        "signature": "c8030ae3b5ac0f65cb1d90fba48138ee8e226427ff612ce245f4985d79c04749",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/refresh-token.repository.d.ts": {
+        "version": "c6131f773158c4ee14f2cf96b53b9bc7f697bc0dd002b53d0df463225f51b01e",
+        "signature": "c6131f773158c4ee14f2cf96b53b9bc7f697bc0dd002b53d0df463225f51b01e",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts": {
+        "version": "8f2a4c8123f9b2f657c7afa25c6e0479aa91ef8ae1d013335cc544252f7c85b8",
+        "signature": "8f2a4c8123f9b2f657c7afa25c6e0479aa91ef8ae1d013335cc544252f7c85b8",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts": {
+        "version": "3a934b2f3141f4ac1ec9598bb4962705a684b9fcb4fc97b39e0e713e37f873f1",
+        "signature": "3a934b2f3141f4ac1ec9598bb4962705a684b9fcb4fc97b39e0e713e37f873f1",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/types.d.ts": {
+        "version": "9f1c0924b4220f4ffe8b1762308d08f53ecec61815a74fa97b6f32a1527b6ec6",
+        "signature": "9f1c0924b4220f4ffe8b1762308d08f53ecec61815a74fa97b6f32a1527b6ec6",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/keys.d.ts": {
+        "version": "b263d55a2627810cba41d278c4ac84487ac06cda8a48c4b51707561ae44efc2d",
+        "signature": "b263d55a2627810cba41d278c4ac84487ac06cda8a48c4b51707561ae44efc2d",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/services/jwt.auth.strategy.d.ts": {
+        "version": "4590028175d654474a5ab08001da4965fe357c428e977c59b9bd5a7335ecfbb2",
+        "signature": "4590028175d654474a5ab08001da4965fe357c428e977c59b9bd5a7335ecfbb2",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/services/jwt.service.d.ts": {
+        "version": "095b55cadd266fd5fab72a622c74ea74ab29246e4e7a4b8e0f24ac1795a64c5c",
+        "signature": "095b55cadd266fd5fab72a622c74ea74ab29246e4e7a4b8e0f24ac1795a64c5c",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/services/security.spec.enhancer.d.ts": {
+        "version": "711a193554891398a4de6eaf20d386ada9dec0f3c7df1d25e66cb5bf6504012b",
+        "signature": "711a193554891398a4de6eaf20d386ada9dec0f3c7df1d25e66cb5bf6504012b",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/services/refreshtoken.service.d.ts": {
+        "version": "f065cb9df53a694f9a290490ce0c846f7dc49e0696152528fee091aefa2a86bf",
+        "signature": "f065cb9df53a694f9a290490ce0c846f7dc49e0696152528fee091aefa2a86bf",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/services/index.d.ts": {
+        "version": "285975668f6fa551c4de499b0b4ea74c70d7b3e6f10227fde35f5a9bfbe7c28e",
+        "signature": "285975668f6fa551c4de499b0b4ea74c70d7b3e6f10227fde35f5a9bfbe7c28e",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/authentication-jwt/dist/index.d.ts": {
+        "version": "13c0f1a78e4513a651084e8132adcefcc83c7837c6cbfaa2c89950a32624e861",
+        "signature": "13c0f1a78e4513a651084e8132adcefcc83c7837c6cbfaa2c89950a32624e861",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/logging/dist/decorators/logging.decorator.d.ts": {
+        "version": "b41174f2fac34bec2138705ff5c8dc7d93612d5ebfde6326e54bfef0c5be770d",
+        "signature": "b41174f2fac34bec2138705ff5c8dc7d93612d5ebfde6326e54bfef0c5be770d",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/logging/dist/decorators/index.d.ts": {
+        "version": "3ad1865fd328c1498a8d715152d0b21cc622ca69adf8221239110f570e671252",
+        "signature": "3ad1865fd328c1498a8d715152d0b21cc622ca69adf8221239110f570e671252",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/fluent-logger/lib/index.d.ts": {
+        "version": "a60128614d5bde1175b2948fd88d19328d392e30a7c4be54fb8c6c9868c19792",
+        "signature": "a60128614d5bde1175b2948fd88d19328d392e30a7c4be54fb8c6c9868c19792",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/logform/index.d.ts": {
+        "version": "89c631193ed616083e1ee16611dae34d719029b77274680d0f00dbf3bb8ba998",
+        "signature": "89c631193ed616083e1ee16611dae34d719029b77274680d0f00dbf3bb8ba998",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/winston-transport/index.d.ts": {
+        "version": "d667ec244bc8f65d0ac176f7ea91ef9e2904e7aa10923fbbe843d19f1270593b",
+        "signature": "d667ec244bc8f65d0ac176f7ea91ef9e2904e7aa10923fbbe843d19f1270593b",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/logging/dist/logging.component.d.ts": {
+        "version": "b3aa8d6b5a80e787d61f74e16b846a3570ba3882676ed0a59bf682e4f0d708ee",
+        "signature": "b3aa8d6b5a80e787d61f74e16b846a3570ba3882676ed0a59bf682e4f0d708ee",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/winston/lib/winston/config/index.d.ts": {
+        "version": "e9c33c05be71c17c3b08988fe6755605632a09c5cdd267cede8de5558ec80027",
+        "signature": "e9c33c05be71c17c3b08988fe6755605632a09c5cdd267cede8de5558ec80027",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/winston/lib/winston/transports/index.d.ts": {
+        "version": "3fb6de4789fba0473c4877a4ef4ee002902ccef2b04f620caf2313e4d1b2aecc",
+        "signature": "3fb6de4789fba0473c4877a4ef4ee002902ccef2b04f620caf2313e4d1b2aecc",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/winston/index.d.ts": {
+        "version": "e7c0503e5da78c978e6b9c43dc5728312fa9e19943fd392eca047739e348f283",
+        "signature": "e7c0503e5da78c978e6b9c43dc5728312fa9e19943fd392eca047739e348f283",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/logging/dist/winston.d.ts": {
+        "version": "0994ef871e9203b2600d4ad61fb6ba913a8c19c4ea9983fd86ef536bfc700141",
+        "signature": "0994ef871e9203b2600d4ad61fb6ba913a8c19c4ea9983fd86ef536bfc700141",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/logging/dist/keys.d.ts": {
+        "version": "f1be01c15fe60fe5e22ab19ce55de3c6aad5abb38ca36aef345be30c510613af",
+        "signature": "f1be01c15fe60fe5e22ab19ce55de3c6aad5abb38ca36aef345be30c510613af",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/logging/dist/index.d.ts": {
+        "version": "08346d5d40fcd22d5c1c15a3456bc187d90a25393d3e88c05588c630538fa07d",
+        "signature": "08346d5d40fcd22d5c1c15a3456bc187d90a25393d3e88c05588c630538fa07d",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/event-target-shim/index.d.ts": {
+        "version": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
+        "signature": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/abort-controller/dist/abort-controller.d.ts": {
+        "version": "655ed305e8f4cb95d3f578040301a4e4d6ace112b1bd8824cd32bda66c3677d1",
+        "signature": "655ed305e8f4cb95d3f578040301a4e4d6ace112b1bd8824cd32bda66c3677d1",
+        "affectsGlobalScope": false
+      },
+      "./src/types/tx-bsc.type.ts": {
+        "version": "714c22c9802d7ce6ed67b9ef8c874644b5a0f7458139bb62fc10b17fc65e631c",
+        "signature": "68ee5d93def93aff96b71cca5bbd9fe5bff4b6e05a86d45fb1ec2c248af6a9d1",
+        "affectsGlobalScope": false
+      },
+      "./src/types/nodes.type.ts": {
+        "version": "49ab3a368ccdfca594da9a96b221d96af615d06f8b71afe35b03332980c1bfe7",
+        "signature": "9f25b7b8dce03277cd4851b95d2de7090980f20f441ac3c502ec6b0094f90c9e",
         "affectsGlobalScope": false
       },
       "./src/models/transactions.model.ts": {
@@ -1854,51 +1974,6 @@
       "./src/models/index.ts": {
         "version": "d68ded109508056279ecc8b464b418069f029334297a77ebdb27e67b5af443bd",
         "signature": "d68ded109508056279ecc8b464b418069f029334297a77ebdb27e67b5af443bd",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/transactions.repository.ts": {
-        "version": "32846fa8113e2e2114fc17f7bed528162b7b427c309070b16440c415d72d9de4",
-        "signature": "2d95895729eb5d4ec0637d5c8ea7466c2dbb141734f4f60bb914f5fd0d7e95d5",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/slices.repository.ts": {
-        "version": "494db214e25c90724cecf173bb2aee3892ea74e1c37b1aa4758f40aca17d9a83",
-        "signature": "e83a85826a85719d0bd3e3ec8a834706c67ef84966d23013089e829d2eb9d30c",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/blocks.repository.ts": {
-        "version": "a80b50a6949999fc61ae6aac17ae1add4224cbf33c665566d44f71247ef06dc7",
-        "signature": "02cb5bf102cb62c947ef7d3237f5c41ceaa27322adf7a3efc864b842778b5d8f",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/wallets.repository.ts": {
-        "version": "545b83e224fe97cba22391eef6e9d25b4a79a9136dd7ecc4aa97edc9a9b847c0",
-        "signature": "a3ba784e6611677a500e5624a0f944fa52e1c26940ed92268ecb3c240a0edbdc",
-        "affectsGlobalScope": false
-      },
-      "./src/repositories/index.ts": {
-        "version": "907484ea4a1fa1c51ea383d004fc6b9db047e5272e1f8f22d5392ec6d78104ad",
-        "signature": "907484ea4a1fa1c51ea383d004fc6b9db047e5272e1f8f22d5392ec6d78104ad",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/event-target-shim/index.d.ts": {
-        "version": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
-        "signature": "2859adaa4f2db3d4f0fc37ad86f056045341496b58fba0dbc16a222f9d5d55b1",
-        "affectsGlobalScope": false
-      },
-      "./node_modules/abort-controller/dist/abort-controller.d.ts": {
-        "version": "655ed305e8f4cb95d3f578040301a4e4d6ace112b1bd8824cd32bda66c3677d1",
-        "signature": "655ed305e8f4cb95d3f578040301a4e4d6ace112b1bd8824cd32bda66c3677d1",
-        "affectsGlobalScope": false
-      },
-      "./src/types/tx-bsc.type.ts": {
-        "version": "714c22c9802d7ce6ed67b9ef8c874644b5a0f7458139bb62fc10b17fc65e631c",
-        "signature": "68ee5d93def93aff96b71cca5bbd9fe5bff4b6e05a86d45fb1ec2c248af6a9d1",
-        "affectsGlobalScope": false
-      },
-      "./src/types/nodes.type.ts": {
-        "version": "274d70e4488fc601d113079a1292346e4038865a500fe916053381cfff4741e1",
-        "signature": "4207b08b3954be8924aa9c99bcaded270839d17c92424fd6f693899157ca51fc",
         "affectsGlobalScope": false
       },
       "./src/types/transactions.type.ts": {
@@ -2397,8 +2472,8 @@
         "affectsGlobalScope": false
       },
       "./src/services/nodes-service.service.ts": {
-        "version": "df64be692e99c5d2f1be5d4db1e67c2048a99fff6fd88c9988a59e0fe87c03ff",
-        "signature": "a448ed2721918f63ff7e066ec487999b1b652a15ed583687a6c20962f55b5da9",
+        "version": "1f3cd93cb62ab079c412a483239db71f1a9a3d1df6f8c96cbf23676738a7f51e",
+        "signature": "7504b3d3f7f95d87a9b87ee48a3b699b663938fa94acf1e9a854ba0dfd2c740b",
         "affectsGlobalScope": false
       },
       "./node_modules/@waves/ts-lib-crypto/crypto/seed-words-list.d.ts": {
@@ -2436,6 +2511,41 @@
         "signature": "3d858edce04b692913cc04f955422f902071deee2d29fc57ae54efc8885e385c",
         "affectsGlobalScope": false
       },
+      "./src/datasources/blockchain.datasource.ts": {
+        "version": "8964f14d5c3982a716738ae448488b79c013325417aa437dc29006ad373f67b5",
+        "signature": "51f745b789435d0ecd9aaad14760a63d951cfe80c20062f15e0074a83748d1c1",
+        "affectsGlobalScope": false
+      },
+      "./src/datasources/index.ts": {
+        "version": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
+        "signature": "aef500ccde2ae348013c82819e5b77b6ce1b31ee628ddd0b6879187c568adbb7",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/transactions.repository.ts": {
+        "version": "32846fa8113e2e2114fc17f7bed528162b7b427c309070b16440c415d72d9de4",
+        "signature": "2d95895729eb5d4ec0637d5c8ea7466c2dbb141734f4f60bb914f5fd0d7e95d5",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/slices.repository.ts": {
+        "version": "494db214e25c90724cecf173bb2aee3892ea74e1c37b1aa4758f40aca17d9a83",
+        "signature": "e83a85826a85719d0bd3e3ec8a834706c67ef84966d23013089e829d2eb9d30c",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/blocks.repository.ts": {
+        "version": "a80b50a6949999fc61ae6aac17ae1add4224cbf33c665566d44f71247ef06dc7",
+        "signature": "02cb5bf102cb62c947ef7d3237f5c41ceaa27322adf7a3efc864b842778b5d8f",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/wallets.repository.ts": {
+        "version": "545b83e224fe97cba22391eef6e9d25b4a79a9136dd7ecc4aa97edc9a9b847c0",
+        "signature": "a3ba784e6611677a500e5624a0f944fa52e1c26940ed92268ecb3c240a0edbdc",
+        "affectsGlobalScope": false
+      },
+      "./src/repositories/index.ts": {
+        "version": "907484ea4a1fa1c51ea383d004fc6b9db047e5272e1f8f22d5392ec6d78104ad",
+        "signature": "907484ea4a1fa1c51ea383d004fc6b9db047e5272e1f8f22d5392ec6d78104ad",
+        "affectsGlobalScope": false
+      },
       "./src/services/wallet.service.ts": {
         "version": "0556d69e0844ffe684da9ee3a4b67df35e67c4868935d38e7fc80684ac5dc122",
         "signature": "fa748fb84d07e7c6a1e01f239a88f0a221575cb73a1f93f87dd74c2e9478cce5",
@@ -2466,6 +2576,81 @@
         "signature": "d35bd1144d57f79e14c9a4bd66a4a1b2002042e2c13816550bdf139feff7cd48",
         "affectsGlobalScope": false
       },
+      "./src/authorization/JWT.strategy.ts": {
+        "version": "a4e74cce61e6afee943896e3ea7e81d5fc67d722b9202d872353277a3d8f1aca",
+        "signature": "dc891b5827364fe4511878f5d24bd801e179b7f840cc456d03f79c9366661e14",
+        "affectsGlobalScope": false
+      },
+      "./src/authorization/index.ts": {
+        "version": "03ad824a7375876d4ec6d466da05a80bb91f3ba1528071eea1d73beb108775f1",
+        "signature": "9d21010f2fa74a4d6095d7e9b8f3135299803dfc9e4fa65e348c994786b8eec7",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/moment/ts3.1-typings/moment.d.ts": {
+        "version": "f97edc4d3b4dd0b32766e9633086497565c37657fb591cc84a35864db4bc2fc5",
+        "signature": "f97edc4d3b4dd0b32766e9633086497565c37657fb591cc84a35864db4bc2fc5",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/cron/index.d.ts": {
+        "version": "bbf9ee0a77a0b3e2fdd39a598561f3b0317fc8e939a878e04b2c2c19c6f23db7",
+        "signature": "bbf9ee0a77a0b3e2fdd39a598561f3b0317fc8e939a878e04b2c2c19c6f23db7",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/cron/dist/types.d.ts": {
+        "version": "8e2ec6677e32371dafb072920a247374f6feb4f9ec720eadc5458d6b8b41e8b8",
+        "signature": "8e2ec6677e32371dafb072920a247374f6feb4f9ec720eadc5458d6b8b41e8b8",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/cron/dist/cron.component.d.ts": {
+        "version": "ce7aaad8d9a39fe66ece9b4a8b9d2aa3ecb3871525e7a01b57c64d91a672aae0",
+        "signature": "ce7aaad8d9a39fe66ece9b4a8b9d2aa3ecb3871525e7a01b57c64d91a672aae0",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/cron/dist/decorators/cron-job.decorator.d.ts": {
+        "version": "17cc4846de2a0357f7565972ef7f7f93c893d5b53e1c901bba88246f86827315",
+        "signature": "17cc4846de2a0357f7565972ef7f7f93c893d5b53e1c901bba88246f86827315",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/cron/dist/decorators/index.d.ts": {
+        "version": "b9cb3d3d2a0a859688a671332cdd663b3900c8774d06df84153b9c18cc29c926",
+        "signature": "b9cb3d3d2a0a859688a671332cdd663b3900c8774d06df84153b9c18cc29c926",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/cron/dist/keys.d.ts": {
+        "version": "c4d2c4e6e5ddf4896a0f0a00918e01b55795dc83567f9647e0a797c648f154aa",
+        "signature": "c4d2c4e6e5ddf4896a0f0a00918e01b55795dc83567f9647e0a797c648f154aa",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/cron/dist/index.d.ts": {
+        "version": "cffb987f8ee9c5beeb0b7881e73adee1e4708d0dd79758503d747f34a1c06197",
+        "signature": "cffb987f8ee9c5beeb0b7881e73adee1e4708d0dd79758503d747f34a1c06197",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/rest-explorer/dist/rest-explorer.types.d.ts": {
+        "version": "a8ca2fe0f47daf4c82b6b990c804b76ad087d7a8039ac76691d15e35e9a842bd",
+        "signature": "a8ca2fe0f47daf4c82b6b990c804b76ad087d7a8039ac76691d15e35e9a842bd",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/rest-explorer/dist/rest-explorer.component.d.ts": {
+        "version": "bd31fafa74c805eb74619f8c46f6b611ae3d517293b401f972806afc650450c0",
+        "signature": "bd31fafa74c805eb74619f8c46f6b611ae3d517293b401f972806afc650450c0",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/rest-explorer/dist/rest-explorer.keys.d.ts": {
+        "version": "015f8a18048a91971da64b6f075a593eea852baef6053be49b57c626473c41ca",
+        "signature": "015f8a18048a91971da64b6f075a593eea852baef6053be49b57c626473c41ca",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@loopback/rest-explorer/dist/index.d.ts": {
+        "version": "f4da102653f8ce4ffda0b1c25f1240ae216e19df10fd32e747fc46b3fcd4642c",
+        "signature": "f4da102653f8ce4ffda0b1c25f1240ae216e19df10fd32e747fc46b3fcd4642c",
+        "affectsGlobalScope": false
+      },
+      "./src/sequence.ts": {
+        "version": "12e8af986d85cdf521b2aecda816a9f8c6707e47c7e722cb545a42e20555076b",
+        "signature": "4399c2b2ec8004633d4c5a6aca0d491f461af2631ba9157ea54a6b7b2993d0a6",
+        "affectsGlobalScope": false
+      },
       "./src/tasks/create-blocks.task.ts": {
         "version": "17cc810f7446ab07cf6171a17686c02fd533c3312bc477a7e7617615d68e6c8c",
         "signature": "4403198ea456c6c183076b2b0c417f46feee3b705422af412ab9751621e264a0",
@@ -2477,8 +2662,8 @@
         "affectsGlobalScope": false
       },
       "./src/tasks/p2p.task.ts": {
-        "version": "09cdab17c8e622909349760740c2a010432b31db1f5d84b30f0bd9a4d9be23e7",
-        "signature": "57b4c988608f952aea3dfb7126716fb671a134bcf4bad79e721865b919b69fbf",
+        "version": "099e6d3a37a3c08130de922b566981e6fa95e18f99794a51cdbdd1b112b4e1ac",
+        "signature": "9ea5c8a15bad01ed0333c16a7a0510434417895d90ecff69e70441495194daf6",
         "affectsGlobalScope": false
       },
       "./src/tasks/index.ts": {
@@ -2487,12 +2672,12 @@
         "affectsGlobalScope": false
       },
       "./src/application.ts": {
-        "version": "36b7d407e31ed4db140666514eeb9ad0d878cf8637c5d27acac602e66b7528e5",
+        "version": "57a3ecdb1e8add13ca245419abf1bb443cd74304e9d1cf592586a5b504620fea",
         "signature": "8bc3e3eb34d55db8e255fb18283b7626c038f10c7cb2532821a5ba4dc3eab8da",
         "affectsGlobalScope": false
       },
       "./src/index.ts": {
-        "version": "7e10600f760b22ef6ba35d1071f739116fac77a19308959d8a3bb6c64ce3ed79",
+        "version": "c2f27ae5caff0ade66d67a609824707fab8e846744af6b07dde87230a4d4e9d3",
         "signature": "cea31907992a2f6c447e22de2d13573d4708d4113eeaf29ef8214e70f6dd439e",
         "affectsGlobalScope": false
       },
@@ -2632,8 +2817,8 @@
         "affectsGlobalScope": false
       },
       "./src/controllers/nodes.controller.ts": {
-        "version": "bd4453f2ee641e62126288dfbc1fc5d66a5184cb456c46bd2bef282e99d2bd07",
-        "signature": "d03ce1664b2c918d2fd7959083bfa12ea8d632393ecd80d909756418b74b9c5b",
+        "version": "c0b292ac2bdaa9bb4ea1549f149a7bdf43a0a1a333b518a1a3d2c1ec189c6358",
+        "signature": "67c24afe784ce46d42be36a75bd1046abf1b4dc81a0d90db08552cc9a211aac1",
         "affectsGlobalScope": false
       },
       "./src/controllers/transactions.controller.ts": {
@@ -2666,6 +2851,16 @@
         "signature": "6c99a8bc16da910c7cbe6bf3fea25055b1047cf5f8234642f8fd792e456cd2b6",
         "affectsGlobalScope": false
       },
+      "./src/tasks/sync-blockchain.task.ts": {
+        "version": "30fe9b4eae5f1a7f62570e8ed4ee2205a718540e2eb1d218a17703bf7113cad6",
+        "signature": "867448976ac4123315136d533e2de9adf9c358345f7c1795596d2dca644765e0",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/bcryptjs/index.d.ts": {
+        "version": "9dfe431ab1485e17a6055e186c49da9d23af74b965f2e99f8acc6c958778608f",
+        "signature": "9dfe431ab1485e17a6055e186c49da9d23af74b965f2e99f8acc6c958778608f",
+        "affectsGlobalScope": false
+      },
       "./node_modules/@types/fs-extra/index.d.ts": {
         "version": "6435575b4feae200831d37df9f871de6e695c64d3148611fe1b4d714d648ea24",
         "signature": "6435575b4feae200831d37df9f871de6e695c64d3148611fe1b4d714d648ea24",
@@ -2680,6 +2875,71 @@
         "version": "725b884357ba84171341a8e4cc08edf11417854fd069842ca6d22afb2e340e45",
         "signature": "725b884357ba84171341a8e4cc08edf11417854fd069842ca6d22afb2e340e45",
         "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/common.d.ts": {
+        "version": "675e702f2032766a91eeadee64f51014c64688525da99dccd8178f0c599f13a8",
+        "signature": "675e702f2032766a91eeadee64f51014c64688525da99dccd8178f0c599f13a8",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/array.d.ts": {
+        "version": "378df8bbbb9e3f6fca05d58f644aab538e1062eab5e778fb0b83d41125df246d",
+        "signature": "378df8bbbb9e3f6fca05d58f644aab538e1062eab5e778fb0b83d41125df246d",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/collection.d.ts": {
+        "version": "d88a479cccf787b4aa82362150fbeba5211a32dbfafa7b92ba6995ecaf9a1a89",
+        "signature": "d88a479cccf787b4aa82362150fbeba5211a32dbfafa7b92ba6995ecaf9a1a89",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/date.d.ts": {
+        "version": "187119ff4f9553676a884e296089e131e8cc01691c546273b1d0089c3533ce42",
+        "signature": "187119ff4f9553676a884e296089e131e8cc01691c546273b1d0089c3533ce42",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/function.d.ts": {
+        "version": "c24ad9be9adf28f0927e3d9d9e9cec1c677022356f241ccbbfb97bfe8fb3d1a1",
+        "signature": "c24ad9be9adf28f0927e3d9d9e9cec1c677022356f241ccbbfb97bfe8fb3d1a1",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/lang.d.ts": {
+        "version": "0ec0998e2d085e8ea54266f547976ae152c9dd6cdb9ac4d8a520a230f5ebae84",
+        "signature": "0ec0998e2d085e8ea54266f547976ae152c9dd6cdb9ac4d8a520a230f5ebae84",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/math.d.ts": {
+        "version": "9364c7566b0be2f7b70ff5285eb34686f83ccb01bda529b82d23b2a844653bfb",
+        "signature": "9364c7566b0be2f7b70ff5285eb34686f83ccb01bda529b82d23b2a844653bfb",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/number.d.ts": {
+        "version": "00baffbe8a2f2e4875367479489b5d43b5fc1429ecb4a4cc98cfc3009095f52a",
+        "signature": "00baffbe8a2f2e4875367479489b5d43b5fc1429ecb4a4cc98cfc3009095f52a",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/object.d.ts": {
+        "version": "82251920b05f30981c9a4109cb5f3169dce4b477effc845c6d781044a30e7672",
+        "signature": "82251920b05f30981c9a4109cb5f3169dce4b477effc845c6d781044a30e7672",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/seq.d.ts": {
+        "version": "3c92b6dfd43cc1c2485d9eba5ff0b74a19bb8725b692773ef1d66dac48cda4bd",
+        "signature": "3c92b6dfd43cc1c2485d9eba5ff0b74a19bb8725b692773ef1d66dac48cda4bd",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/string.d.ts": {
+        "version": "3e59f00ab03c33717b3130066d4debb272da90eeded4935ff0604c2bc25a5cae",
+        "signature": "3e59f00ab03c33717b3130066d4debb272da90eeded4935ff0604c2bc25a5cae",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/common/util.d.ts": {
+        "version": "9fa6b83a35e897f340858995ca5d77e901d89fd18644cd4c9e8a4afe0b2e6363",
+        "signature": "9fa6b83a35e897f340858995ca5d77e901d89fd18644cd4c9e8a4afe0b2e6363",
+        "affectsGlobalScope": false
+      },
+      "./node_modules/@types/lodash/index.d.ts": {
+        "version": "0714e2046df66c0e93c3330d30dbc0565b3e8cd3ee302cf99e4ede6220e5fec8",
+        "signature": "0714e2046df66c0e93c3330d30dbc0565b3e8cd3ee302cf99e4ede6220e5fec8",
+        "affectsGlobalScope": true
       },
       "./node_modules/@types/mocha/index.d.ts": {
         "version": "5f186a758a616c107c70e8918db4630d063bd782f22e6e0b17573b125765b40b",
@@ -3009,6 +3269,158 @@
       ],
       "./node_modules/@ethersproject/wordlists/lib/wordlists.d.ts": [
         "./node_modules/@ethersproject/wordlists/lib/wordlist.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/index.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/jwt-authentication-component.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/keys.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/types.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/jwt-authentication-component.d.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/keys.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/types.d.ts",
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/refresh-token.model.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/models/user-credentials.model.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/models/user.model.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/models/refresh-token.model.d.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/models/user-credentials.model.d.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/models/user.model.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/user-credentials.model.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/refresh-token.repository.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/user-credentials.repository.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/user.repository.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/refresh-token.repository.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/user-credentials.repository.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/user.repository.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/user-credentials.repository.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/index.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/services/jwt.auth.strategy.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/jwt.service.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/refreshtoken.service.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/security.spec.enhancer.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/jwt.auth.strategy.d.ts": [
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts",
+        "./node_modules/@types/express/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/jwt.service.d.ts": [
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/refreshtoken.service.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/types.d.ts",
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/security.spec.enhancer.d.ts": [
+        "./node_modules/@loopback/rest/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts",
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/types.d.ts": [
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/authentication.component.d.ts": [
+        "./node_modules/@loopback/authentication/dist/providers/index.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/decorators/authenticate.decorator.d.ts": [
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/decorators/index.d.ts": [
+        "./node_modules/@loopback/authentication/dist/decorators/authenticate.decorator.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/index.d.ts": [
+        "./node_modules/@loopback/authentication/dist/authentication.component.d.ts",
+        "./node_modules/@loopback/authentication/dist/decorators/index.d.ts",
+        "./node_modules/@loopback/authentication/dist/keys.d.ts",
+        "./node_modules/@loopback/authentication/dist/providers/index.d.ts",
+        "./node_modules/@loopback/authentication/dist/services/index.d.ts",
+        "./node_modules/@loopback/authentication/dist/types.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/keys.d.ts": [
+        "./node_modules/@loopback/authentication/dist/authentication.component.d.ts",
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/providers/auth-action.provider.d.ts": [
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts",
+        "./node_modules/@types/express/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/providers/auth-metadata.provider.d.ts": [
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/providers/auth-strategy.provider.d.ts": [
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/providers/index.d.ts": [
+        "./node_modules/@loopback/authentication/dist/providers/auth-action.provider.d.ts",
+        "./node_modules/@loopback/authentication/dist/providers/auth-metadata.provider.d.ts",
+        "./node_modules/@loopback/authentication/dist/providers/auth-strategy.provider.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/services/index.d.ts": [
+        "./node_modules/@loopback/authentication/dist/services/token.service.d.ts",
+        "./node_modules/@loopback/authentication/dist/services/user-identity.service.d.ts",
+        "./node_modules/@loopback/authentication/dist/services/user.service.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/services/token.service.d.ts": [
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/services/user.service.d.ts": [
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/types.d.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts",
+        "./node_modules/@types/express/index.d.ts"
       ],
       "./node_modules/@loopback/boot/dist/boot.component.d.ts": [
         "./node_modules/@loopback/boot/dist/booters/index.d.ts",
@@ -4211,6 +4623,14 @@
         "./node_modules/@loopback/rest/dist/types.d.ts",
         "./node_modules/@types/express/index.d.ts"
       ],
+      "./node_modules/@loopback/security/dist/index.d.ts": [
+        "./node_modules/@loopback/security/dist/keys.d.ts",
+        "./node_modules/@loopback/security/dist/types.d.ts"
+      ],
+      "./node_modules/@loopback/security/dist/keys.d.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/types.d.ts"
+      ],
       "./node_modules/@loopback/service-proxy/dist/decorators/service.decorator.d.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/service-proxy/dist/index.d.ts"
@@ -4316,6 +4736,188 @@
         "./node_modules/@types/minimatch/index.d.ts",
         "./node_modules/@types/node/events.d.ts",
         "./node_modules/@types/node/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/array.d.ts": [
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/collection.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/common.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/date.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/function.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/lang.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/math.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/number.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/object.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/seq.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/string.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/util.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/index.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts"
       ],
       "./node_modules/@types/node/base.d.ts": [
         "./node_modules/@types/node/assert.d.ts",
@@ -4773,6 +5375,8 @@
         "./src/index.ts"
       ],
       "./src/application.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/index.d.ts",
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
         "./node_modules/@loopback/boot/dist/index.d.ts",
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/cron/dist/index.d.ts",
@@ -4783,8 +5387,20 @@
         "./node_modules/@loopback/service-proxy/dist/index.d.ts",
         "./node_modules/@types/node/path.d.ts",
         "./node_modules/tslib/tslib.d.ts",
+        "./src/authorization/index.ts",
         "./src/sequence.ts",
         "./src/tasks/index.ts"
+      ],
+      "./src/authorization/JWT.strategy.ts": [
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/services/index.ts"
+      ],
+      "./src/authorization/index.ts": [
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/authorization/JWT.strategy.ts"
       ],
       "./src/controllers/blocks-slices.controller.ts": [
         "./node_modules/@loopback/repository/dist/index.d.ts",
@@ -4813,6 +5429,7 @@
         "./src/controllers/wallets.controller.ts"
       ],
       "./src/controllers/nodes.controller.ts": [
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/rest/dist/index.d.ts",
         "./node_modules/tslib/tslib.d.ts",
@@ -4870,6 +5487,7 @@
         "./src/datasources/blockchain.datasource.ts"
       ],
       "./src/index.ts": [
+        "./node_modules/@types/node/fs.d.ts",
         "./node_modules/tslib/tslib.d.ts",
         "./src/application.ts"
       ],
@@ -5073,6 +5691,15 @@
         "./src/services/index.ts",
         "./src/types/index.ts",
         "./src/utils/bywise-api.ts"
+      ],
+      "./src/tasks/sync-blockchain.task.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/cron/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts",
+        "./node_modules/tslib/tslib.d.ts",
+        "./src/repositories/index.ts",
+        "./src/services/index.ts",
+        "./src/types/index.ts"
       ],
       "./src/types/index.ts": [
         "./node_modules/tslib/tslib.d.ts",
@@ -5381,6 +6008,158 @@
       ],
       "./node_modules/@ethersproject/wordlists/lib/wordlists.d.ts": [
         "./node_modules/@ethersproject/wordlists/lib/wordlist.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/index.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/jwt-authentication-component.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/keys.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/types.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/jwt-authentication-component.d.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/keys.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/types.d.ts",
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/refresh-token.model.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/models/user-credentials.model.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/models/user.model.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/models/refresh-token.model.d.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/models/user-credentials.model.d.ts": [
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/models/user.model.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/user-credentials.model.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/refresh-token.repository.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/user-credentials.repository.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/user.repository.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/refresh-token.repository.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/user-credentials.repository.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/user.repository.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/user-credentials.repository.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/repository/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/index.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/services/jwt.auth.strategy.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/jwt.service.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/refreshtoken.service.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/security.spec.enhancer.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/jwt.auth.strategy.d.ts": [
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts",
+        "./node_modules/@types/express/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/jwt.service.d.ts": [
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/refreshtoken.service.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/types.d.ts",
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/security.spec.enhancer.d.ts": [
+        "./node_modules/@loopback/rest/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts": [
+        "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+        "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts",
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication-jwt/dist/types.d.ts": [
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/authentication.component.d.ts": [
+        "./node_modules/@loopback/authentication/dist/providers/index.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/decorators/authenticate.decorator.d.ts": [
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/decorators/index.d.ts": [
+        "./node_modules/@loopback/authentication/dist/decorators/authenticate.decorator.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/index.d.ts": [
+        "./node_modules/@loopback/authentication/dist/authentication.component.d.ts",
+        "./node_modules/@loopback/authentication/dist/decorators/index.d.ts",
+        "./node_modules/@loopback/authentication/dist/keys.d.ts",
+        "./node_modules/@loopback/authentication/dist/providers/index.d.ts",
+        "./node_modules/@loopback/authentication/dist/services/index.d.ts",
+        "./node_modules/@loopback/authentication/dist/types.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/keys.d.ts": [
+        "./node_modules/@loopback/authentication/dist/authentication.component.d.ts",
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/providers/auth-action.provider.d.ts": [
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts",
+        "./node_modules/@types/express/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/providers/auth-metadata.provider.d.ts": [
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/providers/auth-strategy.provider.d.ts": [
+        "./node_modules/@loopback/authentication/dist/types.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/providers/index.d.ts": [
+        "./node_modules/@loopback/authentication/dist/providers/auth-action.provider.d.ts",
+        "./node_modules/@loopback/authentication/dist/providers/auth-metadata.provider.d.ts",
+        "./node_modules/@loopback/authentication/dist/providers/auth-strategy.provider.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/services/index.d.ts": [
+        "./node_modules/@loopback/authentication/dist/services/token.service.d.ts",
+        "./node_modules/@loopback/authentication/dist/services/user-identity.service.d.ts",
+        "./node_modules/@loopback/authentication/dist/services/user.service.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/services/token.service.d.ts": [
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/services/user.service.d.ts": [
+        "./node_modules/@loopback/security/dist/index.d.ts"
+      ],
+      "./node_modules/@loopback/authentication/dist/types.d.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/rest/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/index.d.ts",
+        "./node_modules/@types/express/index.d.ts"
       ],
       "./node_modules/@loopback/boot/dist/boot.component.d.ts": [
         "./node_modules/@loopback/boot/dist/booters/index.d.ts",
@@ -6583,6 +7362,14 @@
         "./node_modules/@loopback/rest/dist/types.d.ts",
         "./node_modules/@types/express/index.d.ts"
       ],
+      "./node_modules/@loopback/security/dist/index.d.ts": [
+        "./node_modules/@loopback/security/dist/keys.d.ts",
+        "./node_modules/@loopback/security/dist/types.d.ts"
+      ],
+      "./node_modules/@loopback/security/dist/keys.d.ts": [
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./node_modules/@loopback/security/dist/types.d.ts"
+      ],
       "./node_modules/@loopback/service-proxy/dist/decorators/service.decorator.d.ts": [
         "./node_modules/@loopback/core/dist/index.d.ts",
         "./node_modules/@loopback/service-proxy/dist/index.d.ts"
@@ -6688,6 +7475,188 @@
         "./node_modules/@types/minimatch/index.d.ts",
         "./node_modules/@types/node/events.d.ts",
         "./node_modules/@types/node/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/array.d.ts": [
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/collection.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/common.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/date.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/function.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/lang.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/math.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/number.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/object.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/seq.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/string.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/common/util.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/index.d.ts"
+      ],
+      "./node_modules/@types/lodash/index.d.ts": [
+        "./node_modules/@types/lodash/common/array.d.ts",
+        "./node_modules/@types/lodash/common/collection.d.ts",
+        "./node_modules/@types/lodash/common/common.d.ts",
+        "./node_modules/@types/lodash/common/date.d.ts",
+        "./node_modules/@types/lodash/common/function.d.ts",
+        "./node_modules/@types/lodash/common/lang.d.ts",
+        "./node_modules/@types/lodash/common/math.d.ts",
+        "./node_modules/@types/lodash/common/number.d.ts",
+        "./node_modules/@types/lodash/common/object.d.ts",
+        "./node_modules/@types/lodash/common/seq.d.ts",
+        "./node_modules/@types/lodash/common/string.d.ts",
+        "./node_modules/@types/lodash/common/util.d.ts"
       ],
       "./node_modules/@types/node/base.d.ts": [
         "./node_modules/@types/node/assert.d.ts",
@@ -7137,6 +8106,14 @@
         "./node_modules/@loopback/repository/dist/index.d.ts",
         "./node_modules/@loopback/rest/dist/index.d.ts"
       ],
+      "./src/authorization/JWT.strategy.ts": [
+        "./node_modules/@loopback/authentication/dist/index.d.ts",
+        "./node_modules/@loopback/core/dist/index.d.ts",
+        "./src/services/index.ts"
+      ],
+      "./src/authorization/index.ts": [
+        "./src/authorization/JWT.strategy.ts"
+      ],
       "./src/controllers/blocks-slices.controller.ts": [
         "./src/models/index.ts",
         "./src/repositories/index.ts"
@@ -7320,6 +8297,11 @@
         "./node_modules/@loopback/cron/dist/index.d.ts",
         "./src/services/index.ts"
       ],
+      "./src/tasks/sync-blockchain.task.ts": [
+        "./node_modules/@loopback/cron/dist/index.d.ts",
+        "./src/repositories/index.ts",
+        "./src/services/index.ts"
+      ],
       "./src/types/index.ts": [
         "./src/types/nodes.type.ts",
         "./src/types/transactions.type.ts",
@@ -7412,6 +8394,38 @@
       "./node_modules/@ethersproject/wordlists/lib/index.d.ts",
       "./node_modules/@ethersproject/wordlists/lib/wordlist.d.ts",
       "./node_modules/@ethersproject/wordlists/lib/wordlists.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/index.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/jwt-authentication-component.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/keys.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/models/index.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/models/refresh-token.model.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/models/user-credentials.model.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/models/user.model.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/index.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/refresh-token.repository.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/user-credentials.repository.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/repositories/user.repository.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/services/index.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/services/jwt.auth.strategy.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/services/jwt.service.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/services/refreshtoken.service.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/services/security.spec.enhancer.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/services/user.service.d.ts",
+      "./node_modules/@loopback/authentication-jwt/dist/types.d.ts",
+      "./node_modules/@loopback/authentication/dist/authentication.component.d.ts",
+      "./node_modules/@loopback/authentication/dist/decorators/authenticate.decorator.d.ts",
+      "./node_modules/@loopback/authentication/dist/decorators/index.d.ts",
+      "./node_modules/@loopback/authentication/dist/index.d.ts",
+      "./node_modules/@loopback/authentication/dist/keys.d.ts",
+      "./node_modules/@loopback/authentication/dist/providers/auth-action.provider.d.ts",
+      "./node_modules/@loopback/authentication/dist/providers/auth-metadata.provider.d.ts",
+      "./node_modules/@loopback/authentication/dist/providers/auth-strategy.provider.d.ts",
+      "./node_modules/@loopback/authentication/dist/providers/index.d.ts",
+      "./node_modules/@loopback/authentication/dist/services/index.d.ts",
+      "./node_modules/@loopback/authentication/dist/services/token.service.d.ts",
+      "./node_modules/@loopback/authentication/dist/services/user-identity.service.d.ts",
+      "./node_modules/@loopback/authentication/dist/services/user.service.d.ts",
+      "./node_modules/@loopback/authentication/dist/types.d.ts",
       "./node_modules/@loopback/boot/dist/boot.component.d.ts",
       "./node_modules/@loopback/boot/dist/booters/application-metadata.booter.d.ts",
       "./node_modules/@loopback/boot/dist/booters/base-artifact.booter.d.ts",
@@ -7639,6 +8653,9 @@
       "./node_modules/@loopback/rest/dist/types.d.ts",
       "./node_modules/@loopback/rest/dist/validation/request-body.validator.d.ts",
       "./node_modules/@loopback/rest/dist/writer.d.ts",
+      "./node_modules/@loopback/security/dist/index.d.ts",
+      "./node_modules/@loopback/security/dist/keys.d.ts",
+      "./node_modules/@loopback/security/dist/types.d.ts",
       "./node_modules/@loopback/service-proxy/dist/decorators/service.decorator.d.ts",
       "./node_modules/@loopback/service-proxy/dist/index.d.ts",
       "./node_modules/@loopback/service-proxy/dist/legacy-juggler-bridge.d.ts",
@@ -7658,6 +8675,7 @@
       "./node_modules/@loopback/testlab/dist/validate-api-spec.d.ts",
       "./node_modules/@loopback/testlab/should-as-function.d.ts",
       "./node_modules/@sinonjs/fake-timers/types/fake-timers-src.d.ts",
+      "./node_modules/@types/bcryptjs/index.d.ts",
       "./node_modules/@types/bn.js/index.d.ts",
       "./node_modules/@types/body-parser/index.d.ts",
       "./node_modules/@types/connect/index.d.ts",
@@ -7671,6 +8689,19 @@
       "./node_modules/@types/glob/index.d.ts",
       "./node_modules/@types/http-errors/index.d.ts",
       "./node_modules/@types/json-schema/index.d.ts",
+      "./node_modules/@types/lodash/common/array.d.ts",
+      "./node_modules/@types/lodash/common/collection.d.ts",
+      "./node_modules/@types/lodash/common/common.d.ts",
+      "./node_modules/@types/lodash/common/date.d.ts",
+      "./node_modules/@types/lodash/common/function.d.ts",
+      "./node_modules/@types/lodash/common/lang.d.ts",
+      "./node_modules/@types/lodash/common/math.d.ts",
+      "./node_modules/@types/lodash/common/number.d.ts",
+      "./node_modules/@types/lodash/common/object.d.ts",
+      "./node_modules/@types/lodash/common/seq.d.ts",
+      "./node_modules/@types/lodash/common/string.d.ts",
+      "./node_modules/@types/lodash/common/util.d.ts",
+      "./node_modules/@types/lodash/index.d.ts",
       "./node_modules/@types/mime/index.d.ts",
       "./node_modules/@types/minimatch/index.d.ts",
       "./node_modules/@types/mocha/index.d.ts",
@@ -7837,6 +8868,8 @@
       "./src/__tests__/acceptance/ping.controller.acceptance.ts",
       "./src/__tests__/acceptance/test-helper.ts",
       "./src/application.ts",
+      "./src/authorization/JWT.strategy.ts",
+      "./src/authorization/index.ts",
       "./src/controllers/blocks-slices.controller.ts",
       "./src/controllers/blocks.controller.ts",
       "./src/controllers/index.ts",
@@ -7875,6 +8908,7 @@
       "./src/tasks/create-slices.task.ts",
       "./src/tasks/index.ts",
       "./src/tasks/p2p.task.ts",
+      "./src/tasks/sync-blockchain.task.ts",
       "./src/types/index.ts",
       "./src/types/nodes.type.ts",
       "./src/types/transactions.type.ts",

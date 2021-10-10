@@ -1,3 +1,4 @@
+import { authenticate } from "@loopback/authentication";
 import { service } from '@loopback/core';
 import {
   post,
@@ -8,29 +9,13 @@ import {
   HttpErrors,
 } from '@loopback/rest';
 import { ContractProvider, NodesProvider, WalletProvider } from '../services';
-import { InfoDTO, NodeDTO, TokenDTO } from '../types';
+import { InfoDTO, NodeDTO } from '../types';
 
 export class NodesController {
   constructor(
     @service(NodesProvider) private nodesProvider: NodesProvider,
     @service(ContractProvider) private contractProvider: ContractProvider,
   ) { }
-
-  @get('/nodes')
-  @response(200, {
-    description: 'Array of Nodes',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(NodeDTO),
-        },
-      },
-    },
-  })
-  async find(): Promise<NodeDTO[]> {
-    return this.nodesProvider.getNodes();
-  }
 
   @get('/nodes/debug')
   async debug(): Promise<any> {
@@ -41,12 +26,16 @@ export class NodesController {
     }
   }
 
-  @post('/nodes/handshake')
-  @response(200, {
-    description: 'My node',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(NodeDTO),
+  @post('/nodes/handshake', {
+    security: [],
+    responses: {
+      '200': {
+        description: 'My node',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(NodeDTO),
+          }
+        },
       },
     },
   })
@@ -67,6 +56,7 @@ export class NodesController {
     }
   }
 
+  @authenticate('basic')
   @get('/nodes/try-token')
   @response(204, {
     description: 'Token is valid',
@@ -74,12 +64,16 @@ export class NodesController {
   async tryToken(): Promise<void> {
   }
 
-  @get('/nodes/info')
-  @response(200, {
-    description: 'Info of Node',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(InfoDTO),
+  @get('/nodes/info', {
+    security: [],
+    responses: {
+      '200': {
+        description: 'Info of Node',
+        content: {
+          'application/json': {
+            schema: getModelSchemaRef(InfoDTO),
+          }
+        },
       },
     },
   })
@@ -88,9 +82,9 @@ export class NodesController {
     let address = WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
     return new InfoDTO({
       address,
-      host: process.env.HOST,
+      host: process.env.MY_HOST,
       version: '1',
-      timestamp: (new Date()).getTime(),
+      timestamp: (new Date()).toISOString(),
       isFullNode: true,
       nodesLimit: this.nodesProvider.getNodeLimit(),
       nodes: this.nodesProvider.getNodes(),

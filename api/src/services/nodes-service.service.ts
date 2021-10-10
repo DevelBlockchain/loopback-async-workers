@@ -28,10 +28,23 @@ export class NodesProvider {
       isFullNode: true,
       host: process.env.MY_HOST,
       version: '1',
-      updated: (new Date()).getTime(),
+      updated: (new Date()).toISOString(),
       token,
     });
     return myNode;
+  }
+
+  isValidToken(token: string): boolean {
+    if (token === NodesProvider.tempToken) {
+      return true;
+    } else {
+      for (let i = 0; i < NodesProvider.nodes.length; i++) {
+        if (NodesProvider.nodes[i].token === token) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   getNodeLimit() {

@@ -1,4 +1,14 @@
 import {BootMixin} from '@loopback/boot';
+import {
+  AuthenticationComponent,
+  registerAuthenticationStrategy
+} from '@loopback/authentication';
+import {
+  JWTAuthenticationComponent
+} from '@loopback/authentication-jwt';
+import {
+  JWTStrategy,
+} from './authorization';
 import {ApplicationConfig, createBindingFromClass} from '@loopback/core';
 import {CronComponent} from '@loopback/cron';
 import {
@@ -58,6 +68,11 @@ export class BlockineNodeApplication extends BootMixin(
       ]
     });
     this.component(LoggingComponent);
+
+    // Mount authentication system
+    this.component(AuthenticationComponent);
+    this.component(JWTAuthenticationComponent);
+    registerAuthenticationStrategy(this as any, JWTStrategy);
 
     // Set up the custom sequence
     this.sequence(MySequence);

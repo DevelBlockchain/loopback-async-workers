@@ -24,13 +24,13 @@ export class NodeDTO extends Model {
   version: string;
 
   @property({
-    type: 'number',
+    type: 'string',
   })
-  updated: number;
+  updated: string;
 
   @property({
     type: 'string',
-    hidden: true,
+    //hidden: true,
   })
   token: string;
 
@@ -58,9 +58,9 @@ export class InfoDTO extends Model {
   version: string;
 
   @property({
-    type: 'number',
+    type: 'string',
   })
-  timestamp: number;
+  timestamp: string;
   
   @property({
     type: 'boolean',
@@ -79,19 +79,6 @@ export class InfoDTO extends Model {
   nodes: NodeDTO[];
 
   constructor(data?: Partial<InfoDTO>) {
-    super(data);
-  }
-}
-
-@model()
-export class TokenDTO extends Model {
-
-  @property({
-    type: 'string',
-  })
-  token: string;
-
-  constructor(data?: Partial<TokenDTO>) {
     super(data);
   }
 }
