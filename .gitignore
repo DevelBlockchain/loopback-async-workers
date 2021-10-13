@@ -61,4 +61,4 @@ api/.yarn-integrity
 api/dist
 
 # Cache used by TypeScript's incremental build
-api/*.tsbuildinfo
+api/tsconfig.tsbuildinfo
