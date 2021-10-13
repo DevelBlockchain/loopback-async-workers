@@ -287,3 +287,41 @@ export class CommandDTO extends Model {
     super(data);
   }
 }
+
+@model()
+export class WalletInfoDTO extends Model {
+
+  @property({
+    type: 'string',
+    default: '',
+  })
+  photo: string;
+  
+  @property({
+    type: 'string',
+    default: '',
+  })
+  name: string;
+
+  @property({
+    type: 'string',
+    default: '',
+  })
+  url: string;
+
+  @property({
+    type: 'string',
+    default: '',
+  })
+  bio: string;
+  
+  @property({
+    type: 'string',
+    default: '',
+  })
+  publicKey: string;
+
+  constructor(data?: Partial<WalletInfoDTO>) {
+    super(data);
+  }
+}

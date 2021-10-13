@@ -11,7 +11,7 @@ import { ContractsVars } from '../models/contracts-vars.model';
 import { WalletsRepository } from '../repositories';
 import { ContractsEnvRepository } from '../repositories/contracts-env.repository';
 import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
-import { CommandDTO, SimulateSliceDTO } from '../types/transactions.type';
+import { CommandDTO, SimulateSliceDTO, WalletInfoDTO } from '../types/transactions.type';
 import { ConfigProvider } from './configs.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
@@ -185,6 +185,19 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       } else {
         throw new Error(`invalid address ${address}`);
       }
+    } else if (cmd.name == 'setInfo' && cmd.input.length === 2) {
+      let key = cmd.input[0];
+      let value = cmd.input[1];
+      if ((!ctx.tx)) {
+        throw new Error(`setInfo forbidden`);
+      }
+      let wallet = await this.getWallet(ctx.tx.from, ctx);
+      if(key === 'name') wallet.name = value;
+      if(key === 'url') wallet.url = value;
+      if(key === 'bio') wallet.bio = value;
+      if(key === 'photo') wallet.photo = value;
+      if(key === 'publicKey') wallet.publicKey = value;
+      return;
     }
     throw new Error("Method not implemented.");
   }

@@ -14,6 +14,12 @@ export enum TransactionsType {
   TX_CONTRACT_EXE = 'contract-exe',
   TX_FILE = 'file',
   TX_STRING = 'string',
+  TX_EN_JSON = 'json-encrypt',
+  TX_EN_COMMAND = 'command-encrypt',
+  TX_EN_CONTRACT = 'contract-encrypt',
+  TX_EN_CONTRACT_EXE = 'contract-exe-encrypt',
+  TX_EN_FILE = 'file-encrypt',
+  TX_EN_STRING = 'string-encrypt',
 }
 
 @model()

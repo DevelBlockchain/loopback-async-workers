@@ -14,12 +14,42 @@ export class Wallets extends Entity {
     default: '0',
   })
   balance: string;
-
+  
   @property({
     type: 'string',
     required: true,
   })
   address: string;
+
+  @property({
+    type: 'string',
+    default: '',
+  })
+  name?: string;
+
+  @property({
+    type: 'string',
+    default: '',
+  })
+  photo?: string;
+  
+  @property({
+    type: 'string',
+    default: '',
+  })
+  url?: string;
+
+  @property({
+    type: 'string',
+    default: '',
+  })
+  bio?: string;
+  
+  @property({
+    type: 'string',
+    default: '',
+  })
+  publicKey?: string;
 
   constructor(data?: Partial<Wallets>) {
     super(data);
