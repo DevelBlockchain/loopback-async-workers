@@ -23,10 +23,6 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     @service(ConfigProvider) public configProvider: ConfigProvider,
   ) { }
 
-  async calcFee() {
-
-  }
-
   async getWallet(address: string, ctx: SimulateSliceDTO): Promise<Wallets> {
     for (let i = 0; i < ctx.walletsModels.length; i++) {
       let updatedWallet = ctx.walletsModels[i];
@@ -104,7 +100,11 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     recipient.balance = recipientBalance.toString();
   }
 
-  async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO) {
+  async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO, simulate = false): Promise<string> {
+    let cost = 0;
+    let amount = tx.amount;
+    let size = tx.data.length;
+
     ctx.tx = tx;
     await this.send(tx.from, tx.validator, tx.fee, ctx);
     await this.send(tx.from, tx.to, tx.amount, ctx);
@@ -118,13 +118,16 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       }
       let isMainnet = ContractProvider.isMainNet();
       let executeLimit = await this.configProvider.getByName('executeLimit');
-      contractEnv.env = await BywiseVirtualMachine.exec(
+
+      let output = await BywiseVirtualMachine.exec(
         ctx,
         isMainnet,
         executeLimit.getNumber().toNumber(),
         contract,
         this
       );
+      contractEnv.env = output.env;
+      cost = output.cost;
     } else if (tx.type === TransactionsType.TX_CONTRACT_EXE) {
       let contractEnv = await this.getContractEnv(tx.to, ctx);
       if (!contractEnv.env) {
@@ -134,7 +137,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       let isMainnet = ContractProvider.isMainNet();
       let executeLimit = await this.configProvider.getByName('executeLimit');
       let cmd = new CommandDTO(JSON.parse(tx.data));
-      await BywiseVirtualMachine.execFunction(
+      let output = await BywiseVirtualMachine.execFunction(
         ctx,
         isMainnet,
         executeLimit.getNumber().toNumber(),
@@ -144,15 +147,34 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         cmd.name,
         cmd.input,
       );
+      cost = output.cost;
     } else if (tx.type === TransactionsType.TX_COMMAND) {
       let cmd = new CommandDTO(JSON.parse(tx.data));
       await this.setConfig(ctx, cmd);
     }
+
+    let configFee = await this.configProvider.getByName('fee');
+    let code = '';
+    code += `const BigNumber = require("bignumber.js");\n`;
+    //code += `import BigNumber from "bignumber.js";\n`;
+    code += `let size = new BigNumber('${size}');\n`;
+    code += `let amount = new BigNumber('${amount}');\n`;
+    code += `let cost = new BigNumber('${cost}');\n`;
+    code += `${configFee.value}`;
+    (new BigNumber(2)).toFixed()
+    console.log('code')
+    console.log(code)
+    let fee = eval(code);
+    fee = `${fee}`;
+    if (fee !== tx.fee && !simulate) {
+      throw new Error(`Invalid fee`);
+    }
+    return fee;
   }
 
   async checkAdminAddress(ctx: SimulateSliceDTO) {
     let adminAddress = await this.configProvider.getByName('adminAddress');
-    if (adminAddress.value !== '' && (!ctx.tx || adminAddress.value !== ctx.tx.from)) {
+    if (adminAddress.value !== WalletProvider.ZERO_ADDRESS && (!ctx.tx || adminAddress.value !== ctx.tx.from)) {
       throw new Error(`setConfig forbidden`);
     }
   }
@@ -185,6 +207,31 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       } else {
         throw new Error(`invalid address ${address}`);
       }
+    } else if (cmd.name == 'addBalance' && cmd.input.length === 2) {
+      await this.checkAdminAddress(ctx);
+      let address = cmd.input[0];
+      let amount = cmd.input[1];
+      if (WalletProvider.isValidAddress(address)) {
+        let wallet = await this.getWallet(address, ctx);
+        wallet.balance = new BigNumber(wallet.balance).plus(new BigNumber(amount)).toString();
+        return;
+      } else {
+        throw new Error(`invalid address ${address}`);
+      }
+    } else if (cmd.name == 'subBalance' && cmd.input.length === 2) {
+      await this.checkAdminAddress(ctx);
+      let address = cmd.input[0];
+      let amount = cmd.input[1];
+      if (WalletProvider.isValidAddress(address)) {
+        let wallet = await this.getWallet(address, ctx);
+        wallet.balance = new BigNumber(wallet.balance).minus(new BigNumber(amount)).toString();
+        if (new BigNumber(wallet.balance).isLessThan(new BigNumber(0))) {
+          wallet.balance = "0";
+        }
+        return;
+      } else {
+        throw new Error(`invalid address ${address}`);
+      }
     } else if (cmd.name == 'setInfo' && cmd.input.length === 2) {
       let key = cmd.input[0];
       let value = cmd.input[1];
@@ -192,11 +239,11 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         throw new Error(`setInfo forbidden`);
       }
       let wallet = await this.getWallet(ctx.tx.from, ctx);
-      if(key === 'name') wallet.name = value;
-      if(key === 'url') wallet.url = value;
-      if(key === 'bio') wallet.bio = value;
-      if(key === 'photo') wallet.photo = value;
-      if(key === 'publicKey') wallet.publicKey = value;
+      if (key === 'name') wallet.name = value;
+      if (key === 'url') wallet.url = value;
+      if (key === 'bio') wallet.bio = value;
+      if (key === 'photo') wallet.photo = value;
+      if (key === 'publicKey') wallet.publicKey = value;
       return;
     }
     throw new Error("Method not implemented.");

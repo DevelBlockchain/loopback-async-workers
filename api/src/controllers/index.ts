@@ -12,3 +12,4 @@ export * from './partners.controller';
 export * from './access-tokens.controller';
 export * from './my-wallets-users.controller';
 export * from './configs.controller';
+export * from './users-transactions.controller';

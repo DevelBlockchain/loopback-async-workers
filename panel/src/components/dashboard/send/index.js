@@ -9,35 +9,10 @@ import SendMensage from './text';
 import SendFile from './file';
 import SendCommand from './command';
 import SendJSON from './json';
-import { sha256, base16Decode, base16Encode } from '@waves/ts-lib-crypto';
-const ethers = require('ethers');
 
 const TX_TYPES_NAMES = ['TEXT', 'JSON', 'FILE', 'COMMAND'];
 const TX_TYPES = ['string', 'json', 'file', 'command'];
-const getHashFromTransaction = (tx) => {
-    let version = '1';
-    let bytes = '';
-    bytes += Buffer.from(version, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.from, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.to, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.amount, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.fee, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.type, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.data, 'utf-8').toString('hex');
-    if (tx.foreignKeys) {
-        tx.foreignKeys.forEach(key => {
-            bytes += key;
-        })
-    }
-    bytes += Buffer.from(tx.created, 'utf-8').toString('hex');
-    bytes = base16Encode(sha256(base16Decode(bytes))).substring(2).toLowerCase();
-    return bytes;
-}
-const signTransaction = async (seed, tx) => {
-    tx.hash = getHashFromTransaction(tx);
-    let account = ethers.Wallet.fromMnemonic(seed);
-    return (await account.signMessage(Buffer.from(tx.hash, 'hex')));
-}
+
 
 export default class Send extends React.Component {
 
@@ -52,7 +27,7 @@ export default class Send extends React.Component {
             data: null,
             form: {
                 account: '',
-                to: '',
+                to: 'BWS0000000000000000000000000000000000000000000',
                 type: '',
             }
         }
@@ -87,16 +62,6 @@ export default class Send extends React.Component {
 
     trySend = async (data = '') => {
         let [accountName, address] = this.state.form.account.split(' - ');
-        let account = null;
-        this.state.wallets.forEach(wallet => {
-            if (wallet.address === address) {
-                account = wallet;
-            }
-        });
-        if (!account) {
-            toast.error('select from address');
-            return;
-        }
         let type = '';
         TX_TYPES_NAMES.forEach((name, i) => {
             if (this.state.form.type === name) {
@@ -108,41 +73,17 @@ export default class Send extends React.Component {
             return;
         }
         let to = this.state.form.to;
-        if (to === '') {
-            to = 'BWS0000000000000000000000000000000000000000000';
-        }
-        let req = await BywiseAPI.get(`/my-wallets/${account.id}/seed`);
-        if (req.error) return;
-        let seed = req.data.value
         let tx = {
-            version: "1",
-            validator: '',
             from: address,
             to,
-            tag: '',
             amount: "0",
-            fee: "0",
             type,
             data,
-            created: new Date().toISOString(),
-            hash: "",
-            validatorSign: "",
-            sign: ""
         };
-        req = await BywiseAPI.get(`/configs`);
-        if (req.error) return;
-        req.data.forEach(config => {
-            if (config.name == 'adminAddress') {
-                tx.validator = config.value
-            } else if (config.name === 'fee') {
-                tx.fee = config.value;
-            }
-        })
-        tx.sign = await signTransaction(seed, tx);
-        req = await BywiseAPI.post(`/transactions`, tx);
+        let req = await BywiseAPI.post(`/users-transactions`, tx);
         if (req.error) return;
         this.dialog.show('Transaction send!', <>
-            <span>TxId: <a target="_blank" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${tx.hash}`} >{tx.hash}</a></span>
+            <span>TxId: <a target="_blank" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
         </>)
     }
 

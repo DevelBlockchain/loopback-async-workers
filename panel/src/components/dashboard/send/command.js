@@ -1,78 +1,82 @@
 import React, { Component } from "react";
-import { Form } from "react-bootstrap";
 
 export default class SendCommand extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            name: 'setInfo',
+            load: false,
             inputs: [],
-            text: '',
+            form: {
+                name: '',
+                text: '',
+            }
         };
     }
 
-    formChange = (event) => {
-        const state = this.state;
-        if (event.target.type === 'checkbox') {
-            state[event.target.name] = event.target.checked;
-        } else {
-            state[event.target.name] = event.target.value;
-        }
-        this.setState({ ...state });
-        this.props.setData({
-            name: state.name,
-            input: state.inputs,
-        })
+    handleChange = (event) => {
+        let form = this.state.form
+        let value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
+        form[event.target.name] = value
+        this.setState({ form })
     }
 
     addInput = (e) => {
         if (e.key === 'Enter') {
             const state = this.state;
-            state.inputs.push(this.state.text);
+            state.inputs.push(this.state.form.text);
+            this.state.form.text = '';
             this.setState({ ...state });
-            this.props.setData({
-                name: state.name,
-                input: state.inputs,
-            })
         }
     }
-    
+
     removeInput = (text) => {
         const state = this.state;
         state.inputs = state.inputs.filter(input => text !== input);
         this.setState({ ...state });
-        this.props.setData({
-            name: state.name,
+    }
+    
+    trySend = async () => {
+        await this.setState({ load: true });
+        const state = this.state;
+        await this.props.trySend(JSON.stringify({
+            name: state.form.name,
             input: state.inputs,
-        })
+        }));
+        await this.setState({ load: false });
     }
 
     render = () => {
         return (<>
-            <Form.Group>
-                <Form.Label className="mr-3">Command</Form.Label>
-                <select onChange={this.formChange} name="name">
+            <div className="form-group">
+                <label>Command</label>
+                <select className="form-control digits"
+                    name="name"
+                    value={this.state.form.name}
+                    onChange={this.handleChange}>
+                    <option></option>
                     <option>setInfo</option>
                     <option>setBalance</option>
                     <option>setConfig</option>
                 </select>
-            </Form.Group>
+            </div>
             {this.state.inputs.map((input, i) => <p
                 key={`input-${i}`}
                 className="text-muted"
                 style={{ cursor: 'pointer' }}
                 onClick={() => this.removeInput(input)}
             >-&gt; {input}</p>)}
-            <Form.Group className="mt-3 mb-5">
-                <Form.Label>New Input</Form.Label>
-                <Form.Control
-                    onChange={this.formChange}
-                    onKeyDown={this.addInput}
+            <div className="form-group">
+                <label>New Input</label>
+                <input className="form-control"
+                    type="text"
+                    placeholder=""
                     name="text"
-                    value={this.state.text}
-                    type="text" />
-            </Form.Group>
+                    value={this.state.form.text}
+                    onKeyDown={this.addInput}
+                    onChange={this.handleChange} />
+            </div>
+            <button className="btn btn-primary" disabled={this.state.load} onClick={this.trySend}>{this.state.load ? 'Loading...' : 'Try Send'}</button>
         </>);
     }
 }

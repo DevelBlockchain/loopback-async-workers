@@ -27,6 +27,7 @@ export async function Populate(someRepository: UsersRepository) {
     await jsonToSql('users', someRepository);
     await jsonToSql('roles', someRepository);
     await jsonToSql('permissions', someRepository);
+    await jsonToSql('configs', someRepository);
 
     console.log("Populating Successful!");
   } catch (error) {

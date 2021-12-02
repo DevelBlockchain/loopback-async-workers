@@ -8,6 +8,7 @@ import { TransactionsRepository } from '../repositories';
 import { ContractProvider } from './contract.service';
 import { SimulateSliceDTO, TransactionsDTO } from '../types/transactions.type';
 import { VirtualMachineProvider } from './virtual-machine.service';
+import { ConfigProvider } from './configs.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class TransactionsProvider {
@@ -17,6 +18,7 @@ export class TransactionsProvider {
   constructor(
     @repository(TransactionsRepository) private transactionsRepository: TransactionsRepository,
     @service(ContractProvider) private contractProvider: ContractProvider,
+    @service(ConfigProvider) public configProvider: ConfigProvider,
     @service(VirtualMachineProvider) private virtualMachineProvider: VirtualMachineProvider,
   ) {
 
@@ -93,7 +95,14 @@ export class TransactionsProvider {
     return tx;
   }
 
-  async saveTransaction(tx: TransactionsDTO): Promise<void> {
+  async simulateFee(tx: TransactionsDTO): Promise<string> {
+    let ctx = new SimulateSliceDTO();
+    let newTx = new Transactions(tx);
+    let fee = await this.virtualMachineProvider.executeTransaction(newTx, ctx, true);
+    return fee;
+  }
+
+  async saveTransaction(tx: TransactionsDTO): Promise<Transactions> {
     TransactionsProvider.validadeTransaction(tx);
 
     let hash = Buffer.from(TransactionsProvider.getHashFromTransaction(tx), 'hex');
@@ -102,13 +111,21 @@ export class TransactionsProvider {
     if (recoveredAddress !== decodeAddress.ethAddress) {
       throw new Error('Invalid sender signature');
     }
+    let validatorConfig = await this.configProvider.getByName('validator');
+    if (tx.validator !== validatorConfig.value) {
+      throw new Error('Invalid validator');
+    }
+    let sizeLimit = await this.configProvider.getByName('sizeLimit');
+    if (tx.data.length > parseInt(sizeLimit.value)) {
+      throw new Error('tx.data field exceeded the size limit');
+    }
     if (tx.validatorSign) {
       let recoveredValidatorAddress = ethers.utils.verifyMessage(hash, tx.validatorSign);
       let decodeValidatorAddress = WalletProvider.decodeBWSAddress(tx.validator);
       if (recoveredValidatorAddress !== decodeValidatorAddress.ethAddress) {
         throw new Error('Invalid validator signature');
       }
-    } else if(tx.validator !== WalletProvider.ZERO_ADDRESS) {
+    } else if (tx.validator !== WalletProvider.ZERO_ADDRESS) {
       throw new Error('Validator signature not found');
     }
     let registeredTx = await this.transactionsRepository.findOne({
@@ -123,7 +140,7 @@ export class TransactionsProvider {
 
       newTx.status = TransactionsStatus.TX_MEMPOOL;
       await this.transactionsRepository.create(newTx);
-      console.log('add new transaction');
+      return newTx;
     } else {
       throw new Error('Transaction already registered');
     }

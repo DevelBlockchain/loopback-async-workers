@@ -5,12 +5,6 @@ import { Configs } from '../models';
 import { ConfigsRepository } from '../repositories';
 import { WalletProvider } from './wallet.service';
 
-const defaultConfigs: Configs[] = [
-  new Configs({ name: 'executeLimit', value: '100000', type: 'number' }),
-  new Configs({ name: 'adminAddress', value: WalletProvider.ZERO_ADDRESS, type: 'address' }),
-  new Configs({ name: 'fee', value: '0', type: 'string' }),
-]
-
 @injectable({ scope: BindingScope.TRANSIENT })
 export class ConfigProvider {
 
@@ -21,17 +15,6 @@ export class ConfigProvider {
 
   async getAll(): Promise<Configs[]> {
     let configs: Configs[] = await this.configsRepository.find();
-    defaultConfigs.forEach(cfg => {
-      let found = false;
-      configs.forEach(savedCfg => {
-        if (savedCfg.name === cfg.name) {
-          found = true;
-        }
-      })
-      if (!found) {
-        configs.push(cfg);
-      }
-    })
     return configs;
   }
 

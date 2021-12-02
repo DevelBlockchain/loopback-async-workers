@@ -1,0 +1,32 @@
+[
+    {
+        "id": "f1915543-5015-45c6-959d-e5d9417d2051",
+        "name": "sizeLimit",
+        "value": "10000000",
+        "type": "number"
+    },
+    {
+        "id": "f1915543-5015-45c6-959d-e5d9417d2052",
+        "name": "executeLimit",
+        "value": "100000",
+        "type": "number"
+    },
+    {
+        "id": "f1915543-5015-45c6-959d-e5d9417d2053",
+        "name": "validator",
+        "value": "BWS0000000000000000000000000000000000000000000",
+        "type": "address"
+    },
+    {
+        "id": "f1915543-5015-45c6-959d-e5d9417d2054",
+        "name": "adminAddress",
+        "value": "BWS0000000000000000000000000000000000000000000",
+        "type": "address"
+    },
+    {
+        "id": "f1915543-5015-45c6-959d-e5d9417d2055",
+        "name": "fee",
+        "value": "0",
+        "type": "string"
+    }
+]

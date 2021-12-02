@@ -22,7 +22,7 @@ export default class BywiseVirtualMachine {
         this.initializeOperators();
     }
 
-    static async exec(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number, contract: ContractABI, bywiseBlockchain: BywiseBlockchainInterface): Promise<string> {
+    static async exec(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number, contract: ContractABI, bywiseBlockchain: BywiseBlockchainInterface): Promise<{ cost: number, env: string }> {
         let vm = new BywiseVirtualMachine(contract, bywiseBlockchain);
         return await vm.exec(ctx, isMainnet, limiteCost);
     }
@@ -33,7 +33,7 @@ export default class BywiseVirtualMachine {
         return await vm.execFunction(ctx, limiteCost, isPaid, name, inputsValues);
     }
 
-    private async exec(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number): Promise<string> {
+    private async exec(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number): Promise<{ cost: number, env: string }> {
         try {
             if (this.env.contract.address !== Compiler.getBywiseAddress(isMainnet, this.env.contract.nonce, this.env.contract.bytecode)) throw new Error(`invalid address of contract`);
             let code = this.decodeBytecode(this.env.contract.bytecode);
@@ -54,7 +54,7 @@ export default class BywiseVirtualMachine {
                     await this.executeCommand(ctx, limiteCost, cmd);
                 }
             }
-            return JSON.stringify(this.env.toJSON());
+            return { cost: this.env.cost, env: JSON.stringify(this.env.toJSON()) };
         } catch (err: any) {
             if (this.env.contract.debug) {
                 if (this.env.contract.names) {
