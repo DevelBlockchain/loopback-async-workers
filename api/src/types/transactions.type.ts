@@ -259,6 +259,19 @@ export class ValueDTO extends Model {
 }
 
 @model()
+export class ValueBooleanDTO extends Model {
+
+  @property({
+    type: 'boolean',
+  })
+  value: boolean;
+
+  constructor(data?: Partial<ValueBooleanDTO>) {
+    super(data);
+  }
+}
+
+@model()
 export class SimulateSliceDTO extends Model {
   tx: Transactions | undefined;
   slicesModels: SliceDTO[] = [];

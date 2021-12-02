@@ -1,0 +1,10 @@
+@import 'assets/scss/app.scss';
+
+.a {
+    color: $primary-color;
+    cursor: pointer;
+    &:hover{
+        text-decoration: underline;
+        color: $primary-color;
+    }
+}

@@ -3,7 +3,6 @@ import {
   Count,
   CountSchema,
   Filter,
-  FilterExcludingWhere,
   repository,
   Where,
 } from '@loopback/repository';
@@ -12,9 +11,6 @@ import {
   param,
   get,
   getModelSchemaRef,
-  patch,
-  put,
-  del,
   requestBody,
   response,
   HttpErrors,
@@ -33,7 +29,7 @@ export class SlicesController {
     @service(NodesProvider) private nodesProvider: NodesProvider,
   ) { }
 
-  @post('/slices')
+  @post('/api/v1/slices')
   @response(204, {
     description: 'Accepted Slices',
   })
@@ -57,7 +53,7 @@ export class SlicesController {
     }
   }
 
-  @get('/slices/count')
+  @get('/api/v1/slices/count')
   @response(200, {
     description: 'Slices model count',
     content: { 'application/json': { schema: CountSchema } },
@@ -68,7 +64,7 @@ export class SlicesController {
     return this.slicesRepository.count(where);
   }
 
-  @get('/slices')
+  @get('/api/v1/slices')
   @response(200, {
     description: 'Array of Slices model instances',
     content: {
@@ -86,7 +82,7 @@ export class SlicesController {
     return this.slicesRepository.find(filter);
   }
 
-  @get('/slices/{hash}')
+  @get('/api/v1/slices/{hash}')
   @response(200, {
     description: 'Slices model instance',
     content: {

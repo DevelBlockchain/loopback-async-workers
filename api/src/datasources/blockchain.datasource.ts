@@ -6,7 +6,7 @@ const config = {
   name: 'db',
   connector: 'postgresql',
   url: '',
-  host: 'blockine-db',
+  host: 'bywise-db',
   port: '5432',
   user: process.env.DB_USER,
   password: process.env.DB_PASS,

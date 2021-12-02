@@ -27,7 +27,7 @@ export class BlocksSlicesController {
     @repository(BlocksRepository) protected blocksRepository: BlocksRepository,
   ) { }
 
-  @get('/blocks/{hash}/slices', {
+  @get('/api/v1/blocks/{hash}/slices', {
     responses: {
       '200': {
         description: 'Array of Blocks has many Slices',

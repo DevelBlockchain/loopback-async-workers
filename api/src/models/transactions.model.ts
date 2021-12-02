@@ -114,9 +114,8 @@ export class Transactions extends Entity {
   
   @property({
     type: 'string',
-    required: true,
   })
-  validatorSign: string;
+  validatorSign?: string;
 
   @property({
     type: 'string',

@@ -1,18 +1,13 @@
 import { injectable, BindingScope, service } from '@loopback/core';
 import { repository } from '@loopback/repository';
-import { base16Decode, base16Encode, sha256 } from '@waves/ts-lib-crypto';
-import { ethers } from 'ethers';
-import { WalletProvider } from '.';
 import { Types, Variable } from '../compiler/vm/data';
 import { Configs } from '../models';
 import { ConfigsRepository } from '../repositories';
-import { BlockDTO, SliceDTO } from '../types/transactions.type';
-import { numberToHex } from '../utils/helper';
-import { ContractProvider } from './contract.service';
+import { WalletProvider } from './wallet.service';
 
 const defaultConfigs: Configs[] = [
   new Configs({ name: 'executeLimit', value: '100000', type: 'number' }),
-  new Configs({ name: 'adminAddress', value: '', type: 'address' }),
+  new Configs({ name: 'adminAddress', value: WalletProvider.ZERO_ADDRESS, type: 'address' }),
   new Configs({ name: 'fee', value: '0', type: 'string' }),
 ]
 

@@ -21,7 +21,7 @@ export class Types {
     static string = new Type('string', '""', false);
     static number = new Type('number', '0', true);
     static integer = new Type('integer', '0', true);
-    static address = new Type('address', 'BWSooooooooooooooooooooooooooooooooo', false);
+    static address = new Type('address', 'BWS0000000000000000000000000000000000000000000', false);
     static binary = new Type('binary', '0x', false);
     static boolean = new Type('boolean', 'false', false);
     static array = new Type('array', 'array', false);

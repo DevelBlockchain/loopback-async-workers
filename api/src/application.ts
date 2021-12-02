@@ -1,4 +1,4 @@
-import {BootMixin} from '@loopback/boot';
+import { BootMixin } from '@loopback/boot';
 import {
   AuthenticationComponent,
   registerAuthenticationStrategy
@@ -9,28 +9,30 @@ import {
 import {
   JWTStrategy,
 } from './authorization';
-import {ApplicationConfig, createBindingFromClass} from '@loopback/core';
-import {CronComponent} from '@loopback/cron';
+import { ApplicationConfig, createBindingFromClass } from '@loopback/core';
+import { CronComponent } from '@loopback/cron';
 import {
   LoggingBindings,
   LoggingComponent
 } from '@loopback/logging';
-import {RepositoryMixin} from '@loopback/repository';
-import {RestApplication} from '@loopback/rest';
+import { RepositoryMixin, SchemaMigrationOptions } from '@loopback/repository';
+import { RestApplication, Router } from '@loopback/rest';
 import {
   RestExplorerBindings,
   RestExplorerComponent
 } from '@loopback/rest-explorer';
-import {ServiceMixin} from '@loopback/service-proxy';
+import { ServiceMixin } from '@loopback/service-proxy';
 import path from 'path';
-import {MySequence} from './sequence';
+import { MySequence } from './sequence';
+import {Populate} from './scripts';
 import * as tasks from './tasks';
+import { UsersRepository } from './repositories';
 
 require('dotenv').config()
 const winston = require('winston');
 require('winston-daily-rotate-file');
 
-export {ApplicationConfig};
+export { ApplicationConfig };
 
 export class BlockineNodeApplication extends BootMixin(
   ServiceMixin(RepositoryMixin(RestApplication)),
@@ -51,7 +53,7 @@ export class BlockineNodeApplication extends BootMixin(
           zippedArchive: true,
           maxSize: '20m',
           maxFiles: '14d',
-          format: winston.format.combine(winston.format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}), winston.format.json()),
+          format: winston.format.combine(winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), winston.format.json()),
         }),
         new (winston.transports.DailyRotateFile)({
           filename: './logs/node-error-%DATE%.log',
@@ -60,7 +62,7 @@ export class BlockineNodeApplication extends BootMixin(
           maxSize: '20m',
           maxFiles: '14d',
           level: 'error',
-          format: winston.format.combine(winston.format.timestamp({format: 'YYYY-MM-DD HH:mm:ss'}), winston.format.json()),
+          format: winston.format.combine(winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }), winston.format.json()),
         }),
         new winston.transports.Console({
           format: winston.format.combine(winston.format.colorize(), winston.format.simple()),
@@ -85,6 +87,11 @@ export class BlockineNodeApplication extends BootMixin(
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
+    const router = Router();
+    router.get('/panel/*', async (req: any, res: any, next: any) => {
+      res.sendFile(path.join(__dirname, '../public', 'index.html'));
+    });
+    this.expressMiddleware('middleware.express.panel', router);
 
     // Customize @loopback/rest-explorer configuration here
     this.configure(RestExplorerBindings.COMPONENT).to({
@@ -102,5 +109,10 @@ export class BlockineNodeApplication extends BootMixin(
         nested: true,
       },
     };
+  }
+
+  async migrateSchema(options?: SchemaMigrationOptions) {
+    await super.migrateSchema(options);
+    await Populate(await this.getRepository(UsersRepository));
   }
 }

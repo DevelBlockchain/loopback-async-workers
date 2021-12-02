@@ -12,7 +12,6 @@ import {
 } from '@loopback/rest';
 import Compiler from '../compiler/vm/compiler';
 import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
-import { TransactionsType } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { ContractProvider, WalletProvider } from '../services';
 import { TransactionsProvider } from '../services/transactions.service';
@@ -52,7 +51,7 @@ export class PingController {
     @repository(TransactionsRepository) private transactionsRepository: TransactionsRepository,
   ) { }
 
-  @get('/ping')
+  @get('/api/v1/ping')
   @response(200, PING_RESPONSE)
   ping(): object {
     return {
@@ -63,7 +62,7 @@ export class PingController {
     };
   }
 
-  @post('/compiler')
+  @post('/api/v1/compiler')
   async compiler(
     @requestBody({
       content: {
@@ -81,7 +80,7 @@ export class PingController {
     });
   }
 
-  @post('/debug-transaction')
+  @post('/api/v1/debug-transaction')
   async create(
     @requestBody({
       content: {

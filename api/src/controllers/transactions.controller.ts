@@ -3,7 +3,6 @@ import {
   Count,
   CountSchema,
   Filter,
-  FilterExcludingWhere,
   repository,
   Where,
 } from '@loopback/repository';
@@ -12,9 +11,6 @@ import {
   param,
   get,
   getModelSchemaRef,
-  patch,
-  put,
-  del,
   requestBody,
   response,
   HttpErrors,
@@ -32,7 +28,7 @@ export class TransactionsController {
     @service(NodesProvider) private nodesProvider: NodesProvider,
   ) { }
 
-  @post('/transactions')
+  @post('/api/v1/transactions')
   @response(204, {
     description: 'Accepted transaction',
   })
@@ -46,16 +42,18 @@ export class TransactionsController {
     })
     tx: TransactionsDTO,
   ): Promise<void> {
-    let added = await this.transactionsProvider.saveTransaction(tx);
-    if(added) {
+    try {
+      await this.transactionsProvider.saveTransaction(tx);
       let nodes = this.nodesProvider.getNodes();
       for (let i = 0; i < nodes.length; i++) {
         BywiseAPI.publishNewTransaction(nodes[i], tx);
       }
+    } catch (err: any) {
+      throw new HttpErrors.BadRequest(err.message);
     }
   }
 
-  @get('/transactions/count')
+  @get('/api/v1/transactions/count')
   @response(200, {
     description: 'Transactions model count',
     content: { 'application/json': { schema: CountSchema } },
@@ -66,7 +64,7 @@ export class TransactionsController {
     return this.transactionsRepository.count(where);
   }
 
-  @get('/transactions')
+  @get('/api/v1/transactions')
   @response(200, {
     description: 'Array of Transactions model instances',
     content: {
@@ -84,7 +82,7 @@ export class TransactionsController {
     return this.transactionsRepository.find(filter);
   }
 
-  @get('/transactions/{hash}')
+  @get('/api/v1/transactions/{hash}')
   @response(200, {
     description: 'Transactions model instance',
     content: {

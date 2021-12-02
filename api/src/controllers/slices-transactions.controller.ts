@@ -1,23 +1,13 @@
 import {
-  Count,
-  CountSchema,
-  Filter,
   repository,
-  Where,
 } from '@loopback/repository';
 import {
-  del,
   get,
   getModelSchemaRef,
-  getWhereSchemaFor,
   HttpErrors,
   param,
-  patch,
-  post,
-  requestBody,
 } from '@loopback/rest';
 import {
-  Slices,
   Transactions,
 } from '../models';
 import {SlicesRepository} from '../repositories';
@@ -27,7 +17,7 @@ export class SlicesTransactionsController {
     @repository(SlicesRepository) protected slicesRepository: SlicesRepository,
   ) { }
 
-  @get('/slices/{hash}/transactions', {
+  @get('/api/v1/slices/{hash}/transactions', {
     responses: {
       '200': {
         description: 'Array of Slices has many Transactions',

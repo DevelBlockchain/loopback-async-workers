@@ -1,10 +1,7 @@
 import { injectable, BindingScope } from '@loopback/core';
 import { repository } from '@loopback/repository';
-import BigNumber from "bignumber.js";
 import { sha256, base16Decode, base16Encode } from '@waves/ts-lib-crypto';
-import { Transactions, Wallets } from '../models';
 import { WalletsRepository } from '../repositories';
-import { SimulateSliceDTO } from '../types';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class WalletProvider {
@@ -33,7 +30,7 @@ export class WalletProvider {
   }
 
   static isValidAddress = (address: string) => {
-    return address === WalletProvider.ZERO_ADDRESS || !/ˆBWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0, 43}$/.test(address);
+    return address === WalletProvider.ZERO_ADDRESS || /^BWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0,43}$/.test(address);
   }
 
   static decodeBWSAddress = (address: string): { isMainnet: boolean, isContract: boolean, ethAddress: string, tag: string } => {

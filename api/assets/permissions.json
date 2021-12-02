@@ -1,0 +1,56 @@
+[
+    {
+        "id": "f1915543-5000-45c6-959c-e5d9417d2000",
+        "rolesid": "f1915543-5015-45c6-959c-e5d9417d2054",
+        "write": true,
+        "name": "node"
+    },
+    {
+        "id": "f1915543-5000-45c6-959c-e5d9417d2001",
+        "rolesid": "f1915543-5015-45c6-959c-e5d9417d2051",
+        "write": true,
+        "name": "admin"
+    },
+    {
+        "id": "f1915543-5000-45c6-959c-e5d9417d2002",
+        "rolesid": "f1915543-5015-45c6-959c-e5d9417d2052",
+        "write": true,
+        "name": "wallet"
+    },
+    {
+        "id": "f1915543-5000-45c6-959c-e5d9417d2003",
+        "rolesid": "f1915543-5015-45c6-959c-e5d9417d2052",
+        "write": true,
+        "name": "tokens"
+    },
+    {
+        "id": "f1915543-5000-45c6-959c-e5d9417d2004",
+        "rolesid": "f1915543-5015-45c6-959c-e5d9417d2052",
+        "write": true,
+        "name": "user"
+    },
+    {
+        "id": "f1915543-5000-45c6-959c-e5d9417d2005",
+        "rolesid": "f1915543-5015-45c6-959c-e5d9417d2052",
+        "write": true,
+        "name": "transactions"
+    },
+    {
+        "id": "f1915543-5000-45c6-959c-e5d9417d2012",
+        "rolesid": "f1915543-5015-45c6-959c-e5d9417d2053",
+        "write": true,
+        "name": "wallet"
+    },
+    {
+        "id": "f1915543-5000-45c6-959c-e5d9417d2013",
+        "rolesid": "f1915543-5015-45c6-959c-e5d9417d2053",
+        "write": true,
+        "name": "tokens"
+    },
+    {
+        "id": "f1915543-5000-45c6-959c-e5d9417d2015",
+        "rolesid": "f1915543-5015-45c6-959c-e5d9417d2053",
+        "write": true,
+        "name": "transactions"
+    }
+]

@@ -93,51 +93,39 @@ export class TransactionsProvider {
     return tx;
   }
 
-  async saveTransaction(tx: TransactionsDTO): Promise<boolean> {
+  async saveTransaction(tx: TransactionsDTO): Promise<void> {
     TransactionsProvider.validadeTransaction(tx);
 
-    if (!tx.validatorSign) {
-      for (let i = 0; i < TransactionsProvider.mempoolNotValidatedTransactions.length; i++) {
-        let mempoolTx = TransactionsProvider.mempoolNotValidatedTransactions[i];
-        if(tx.hash === mempoolTx.hash) {
-          return false;
-        }
+    let hash = Buffer.from(TransactionsProvider.getHashFromTransaction(tx), 'hex');
+    let recoveredAddress = ethers.utils.verifyMessage(hash, tx.sign);
+    let decodeAddress = WalletProvider.decodeBWSAddress(tx.from);
+    if (recoveredAddress !== decodeAddress.ethAddress) {
+      throw new Error('Invalid sender signature');
+    }
+    if (tx.validatorSign) {
+      let recoveredValidatorAddress = ethers.utils.verifyMessage(hash, tx.validatorSign);
+      let decodeValidatorAddress = WalletProvider.decodeBWSAddress(tx.validator);
+      if (recoveredValidatorAddress !== decodeValidatorAddress.ethAddress) {
+        throw new Error('Invalid validator signature');
       }
-      TransactionsProvider.mempoolNotValidatedTransactions.push(tx);
-      if(TransactionsProvider.mempoolNotValidatedTransactions.length > 1000) {
-        TransactionsProvider.mempoolNotValidatedTransactions = TransactionsProvider.mempoolNotValidatedTransactions.slice(1);
+    } else if(tx.validator !== WalletProvider.ZERO_ADDRESS) {
+      throw new Error('Validator signature not found');
+    }
+    let registeredTx = await this.transactionsRepository.findOne({
+      where: {
+        hash: tx.hash
       }
-      return true;
+    })
+    if (!registeredTx) {
+      let ctx = new SimulateSliceDTO();
+      let newTx = new Transactions(tx);
+      await this.virtualMachineProvider.executeTransaction(newTx, ctx);
+
+      newTx.status = TransactionsStatus.TX_MEMPOOL;
+      await this.transactionsRepository.create(newTx);
+      console.log('add new transaction');
     } else {
-      let hash = Buffer.from(TransactionsProvider.getHashFromTransaction(tx), 'hex');
-      let recoveredAddress = ethers.utils.verifyMessage(hash, tx.sign);
-      let decodeAddress = WalletProvider.decodeBWSAddress(tx.from);
-      if (recoveredAddress !== decodeAddress.ethAddress) {
-        throw new Error('invalid sender signature');
-      }
-      recoveredAddress = ethers.utils.verifyMessage(hash, tx.validatorSign);
-      decodeAddress = WalletProvider.decodeBWSAddress(tx.validator);
-      if (recoveredAddress !== decodeAddress.ethAddress) {
-        throw new Error('invalid validator signature');
-      }
-      let registeredTx = await this.transactionsRepository.findOne({
-        where: {
-          hash: tx.hash
-        }
-      })
-      if (!registeredTx) {
-
-        let ctx = new SimulateSliceDTO();
-        let newTx = new Transactions(tx);
-        await this.virtualMachineProvider.executeTransaction(newTx, ctx);
-
-        newTx.status = TransactionsStatus.TX_MEMPOOL;
-        await this.transactionsRepository.create(newTx);
-        console.log('add new transaction');
-        return true;
-      } else {
-        return false;
-      }
+      throw new Error('Transaction already registered');
     }
   }
 }

@@ -19,7 +19,7 @@ export class NodesController {
     @service(ConfigProvider) private configProvider: ConfigProvider,
   ) { }
 
-  @get('/nodes/debug')
+  @get('/api/v1/nodes/debug')
   async debug(): Promise<any> {
     try {
       return await this.nodesProvider.tryConnectNode('http://localhost:8080');
@@ -28,7 +28,7 @@ export class NodesController {
     }
   }
 
-  @post('/nodes/handshake', {
+  @post('/api/v1/nodes/handshake', {
     security: [],
     responses: {
       '200': {
@@ -59,14 +59,14 @@ export class NodesController {
   }
 
   @authenticate('basic')
-  @get('/nodes/try-token')
+  @get('/api/v1/nodes/try-token')
   @response(204, {
     description: 'Token is valid',
   })
   async tryToken(): Promise<void> {
   }
 
-  @get('/nodes/info', {
+  @get('/api/v1/nodes/info', {
     security: [],
     responses: {
       '200': {

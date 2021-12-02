@@ -27,7 +27,7 @@ export class BlocksController {
     public blocksRepository: BlocksRepository,
   ) { }
 
-  @get('/blocks/count')
+  @get('/api/v1/blocks/count')
   @response(200, {
     description: 'Blocks model count',
     content: { 'application/json': { schema: CountSchema } },
@@ -38,7 +38,7 @@ export class BlocksController {
     return this.blocksRepository.count(where);
   }
 
-  @get('/blocks')
+  @get('/api/v1/blocks')
   @response(200, {
     description: 'Array of Blocks model instances',
     content: {
@@ -56,7 +56,7 @@ export class BlocksController {
     return this.blocksRepository.find(filter);
   }
 
-  @get('/blocks/{hash}')
+  @get('/api/v1/blocks/{hash}')
   @response(200, {
     description: 'Blocks model instance',
     content: {

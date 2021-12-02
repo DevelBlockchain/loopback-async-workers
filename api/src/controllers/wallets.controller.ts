@@ -2,19 +2,13 @@ import {
   Count,
   CountSchema,
   Filter,
-  FilterExcludingWhere,
   repository,
   Where,
 } from '@loopback/repository';
 import {
-  post,
   param,
   get,
   getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
   response,
   HttpErrors,
 } from '@loopback/rest';
@@ -27,7 +21,7 @@ export class WalletsController {
     public walletsRepository : WalletsRepository,
   ) {}
 
-  @get('/wallets/count')
+  @get('/api/v1/wallets/count')
   @response(200, {
     description: 'Wallets model count',
     content: {'application/json': {schema: CountSchema}},
@@ -38,7 +32,7 @@ export class WalletsController {
     return this.walletsRepository.count(where);
   }
 
-  @get('/wallets')
+  @get('/api/v1/wallets')
   @response(200, {
     description: 'Array of Wallets model instances',
     content: {
@@ -56,7 +50,7 @@ export class WalletsController {
     return this.walletsRepository.find(filter);
   }
 
-  @get('/wallets/{address}')
+  @get('/api/v1/wallets/{address}')
   @response(200, {
     description: 'Wallets model instance',
     content: {

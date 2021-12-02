@@ -3,7 +3,7 @@ import { CronJob, cronJob } from '@loopback/cron';
 import { repository } from '@loopback/repository';
 import { BlocksRepository } from '../repositories';
 import { SlicesProvider, BlocksProvider, NodesProvider, TransactionsProvider } from '../services';
-import { BlockDTO, NodeDTO, SimulateSliceDTO, SliceDTO, TransactionsDTO } from '../types';
+import { BlockDTO, NodeDTO, SliceDTO, TransactionsDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
 
 @cronJob()

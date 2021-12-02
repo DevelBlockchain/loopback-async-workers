@@ -1,20 +1,20 @@
 version: '3'
 services:
-  blockine-node:
-    container_name: blockine-node
+  bywise-node:
+    container_name: bywise-node
     build: './api'
     env_file: .env
     volumes:
       - ./api:/home/node/app
     depends_on:
-      - blockine-db
+      - bywise-db
     networks:
       - app-connect
     ports:
       - '${PORT}:8080'
 
-  blockine-db:
-    container_name: blockine-db
+  bywise-db:
+    container_name: bywise-db
     image: postgres:12.8
     restart: always
     environment:
@@ -24,11 +24,11 @@ services:
     networks:
       - app-connect
     volumes:
-      - blockine-db:/data/postgres
+      - bywise-db:/data/postgres
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  blockine-pgadmin:
-    container_name: blockine-pgadmin
+  bywise-pgadmin:
+    container_name: bywise-pgadmin
     image: dpage/pgadmin4
     restart: always
     environment:
@@ -41,11 +41,11 @@ services:
     networks:
       - app-connect
     volumes:
-      - blockine-pgadmin:/var/lib/pgadmin
+      - bywise-pgadmin:/var/lib/pgadmin
 
 volumes:
-    blockine-db:
-    blockine-pgadmin:
+    bywise-db:
+    bywise-pgadmin:
 
 networks:
   app-connect:

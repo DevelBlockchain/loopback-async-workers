@@ -1,6 +1,8 @@
 import { injectable, BindingScope, Provider, service } from '@loopback/core';
 import { ContractProvider, WalletProvider } from '.';
-import { NodeDTO } from '../types';
+import { RoleTypes } from '../authorization/PermissionsTypes';
+import { Roles } from '../models';
+import { InfoJWT, NodeDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
 
 const randomstring = require('randomstring');
@@ -14,14 +16,14 @@ export class NodesProvider {
     @service(ContractProvider) private contractProvider: ContractProvider
   ) { }
 
-  private getRandomToken() {
+  static getRandomToken() {
     return randomstring.generate({
       length: 40,
     });
   }
 
   createMyNode() {
-    let token = this.getRandomToken();
+    let token = NodesProvider.getRandomToken();
     let account = this.contractProvider.getAccount();
     let myNode = new NodeDTO({
       address: WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address),
@@ -34,17 +36,31 @@ export class NodesProvider {
     return myNode;
   }
 
-  isValidToken(token: string): boolean {
+  isValidToken(token: string): InfoJWT | null {
     if (token === NodesProvider.tempToken) {
-      return true;
+      return new InfoJWT({
+        id: 'tempToken',
+        role: new Roles({
+          id: RoleTypes.NODE,
+          name: 'node'
+        }),
+        permissions: [],
+      });
     } else {
       for (let i = 0; i < NodesProvider.nodes.length; i++) {
         if (NodesProvider.nodes[i].token === token) {
-          return true;
+          return new InfoJWT({
+            id: NodesProvider.nodes[i].host,
+            role: new Roles({
+              id: RoleTypes.NODE,
+              name: 'node'
+            }),
+            permissions: [],
+          });
         }
       }
     }
-    return false;
+    return null;
   }
 
   getNodeLimit() {
