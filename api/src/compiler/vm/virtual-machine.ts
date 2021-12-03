@@ -22,18 +22,18 @@ export default class BywiseVirtualMachine {
         this.initializeOperators();
     }
 
-    static async exec(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number, contract: ContractABI, bywiseBlockchain: BywiseBlockchainInterface): Promise<{ cost: number, env: string }> {
+    static async exec(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number, contract: ContractABI, bywiseBlockchain: BywiseBlockchainInterface): Promise<{ cost: number, env: string, logs: string[] }> {
         let vm = new BywiseVirtualMachine(contract, bywiseBlockchain);
         return await vm.exec(ctx, isMainnet, limiteCost);
     }
 
-    static async execFunction(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number, isPaid: boolean, env: Environment, bywiseBlockchain: BywiseBlockchainInterface, name: string, inputsValues: string[]): Promise<ExecutedFunction> {
+    static async execFunction(ctx: SimulateSliceDTO, limiteCost: number, isPaid: boolean, env: Environment, bywiseBlockchain: BywiseBlockchainInterface, name: string, inputsValues: string[]): Promise<ExecutedFunction> {
         let vm = new BywiseVirtualMachine(env.contract, bywiseBlockchain);
         vm.env = env;
         return await vm.execFunction(ctx, limiteCost, isPaid, name, inputsValues);
     }
 
-    private async exec(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number): Promise<{ cost: number, env: string }> {
+    private async exec(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number): Promise<{ cost: number, env: string, logs: string[] }> {
         try {
             if (this.env.contract.address !== Compiler.getBywiseAddress(isMainnet, this.env.contract.nonce, this.env.contract.bytecode)) throw new Error(`invalid address of contract`);
             let code = this.decodeBytecode(this.env.contract.bytecode);
@@ -54,7 +54,7 @@ export default class BywiseVirtualMachine {
                     await this.executeCommand(ctx, limiteCost, cmd);
                 }
             }
-            return { cost: this.env.cost, env: JSON.stringify(this.env.toJSON()) };
+            return { cost: this.env.cost, env: JSON.stringify(this.env.toJSON()), logs: this.env.logs };
         } catch (err: any) {
             if (this.env.contract.debug) {
                 if (this.env.contract.names) {
@@ -76,9 +76,7 @@ export default class BywiseVirtualMachine {
         for (let i = 0; i < this.env.contract.publicFunctions.length; i++) {
             let func = this.env.contract.publicFunctions[i];
             if (func.name === name) {
-                if (func.isPaid && !isPaid) {
-                    throw new Error(`function ${name} is paid`);
-                } else if (!func.isPaid && isPaid) {
+                if (!func.isPaid && isPaid) {
                     throw new Error(`function ${name} is not paid`);
                 }
                 let inputs = [];
@@ -105,6 +103,7 @@ export default class BywiseVirtualMachine {
                 executed.output = this.outputValues;
                 executed.modifiedGlobalVariables = this.env.modifiedGlobalVariables;
                 executed.cost = this.env.cost;
+                executed.logs = this.env.logs;
                 return executed;
             }
         }
@@ -393,7 +392,7 @@ export default class BywiseVirtualMachine {
         this.addOperator(new Operator(
             'print',
             (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                console.log(inputs.map(word => this.getVar(env.ctx, word).value).join(' '));
+                env.logs.push(inputs.map(word => this.getVar(env.ctx, word).value).join(' '));
             }
         ));
         this.addOperator(new Operator(

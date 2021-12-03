@@ -27,7 +27,6 @@ export class Configs extends Entity {
   })
   type: string;
 
-
   constructor(data?: Partial<Configs>) {
     super(data);
   }

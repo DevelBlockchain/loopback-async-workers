@@ -3,11 +3,10 @@ import { repository } from '@loopback/repository';
 import { base16Decode, base16Encode, sha256, signBytes } from '@waves/ts-lib-crypto';
 import { ethers } from 'ethers';
 import { WalletProvider } from '.';
-import { Blocks, Slices, Transactions, TransactionsStatus, Wallets } from '../models';
 import { BlocksRepository, ConfigsRepository, SlicesRepository, TransactionsRepository, WalletsRepository } from '../repositories';
 import { ContractsEnvRepository } from '../repositories/contracts-env.repository';
 import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
-import { BlockDTO, SimulateSliceDTO, SliceDTO, TransactionsDTO } from '../types/transactions.type';
+import { BlockDTO, SimulateSliceDTO, SliceDTO, TransactionsDTO, TransactionsStatus } from '../types/transactions.type';
 import { numberToHex } from '../utils/helper';
 import { ContractProvider } from './contract.service';
 import { VirtualMachineProvider } from './virtual-machine.service';
@@ -151,21 +150,20 @@ export class SlicesProvider {
       await this.transactionsRepository.update(ctx.transactionsModels[i]);
     }
     for (let i = 0; i < ctx.walletsModels.length; i++) {
-      console.log('save wallet', ctx.walletsModels[i])
       await this.walletsRepository.update(ctx.walletsModels[i]);
     }
     for (let i = 0; i < ctx.contractEnvModels.length; i++) {
+      console.log('save contract env', ctx.contractEnvModels[i])
       await this.contractsEnvRepository.update(ctx.contractEnvModels[i]);
+      console.log('affter', await this.contractsEnvRepository.findById(ctx.contractEnvModels[i].id))
     }
     for (let i = 0; i < ctx.contractVarsModels.length; i++) {
+      console.log('save contract vars', ctx.contractVarsModels[i]);
       await this.contractsVarsRepository.update(ctx.contractVarsModels[i]);
+      console.log('affter', await this.contractsVarsRepository.findById(ctx.contractEnvModels[i].id))
     }
     for (let i = 0; i < ctx.configs.length; i++) {
-      if(ctx.configs[i].id) {
-        await this.configsRepository.update(ctx.configs[i]);
-      } else {
-        await this.configsRepository.create(ctx.configs[i]);
-      }
+      await this.configsRepository.update(ctx.configs[i]);
     }
   }
 

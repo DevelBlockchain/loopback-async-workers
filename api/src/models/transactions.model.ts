@@ -1,26 +1,5 @@
-import {Entity, model, property} from '@loopback/repository';
-
-export enum TransactionsStatus {
-  TX_MEMPOOL = 'mempool',
-  TX_MINED = 'mined',
-  TX_INVALIDATED = 'invalidated',
-}
-
-export enum TransactionsType {
-  TX_NONE = 'none',
-  TX_JSON = 'json',
-  TX_COMMAND = 'command',
-  TX_CONTRACT = 'contract',
-  TX_CONTRACT_EXE = 'contract-exe',
-  TX_FILE = 'file',
-  TX_STRING = 'string',
-  TX_EN_JSON = 'json-encrypt',
-  TX_EN_COMMAND = 'command-encrypt',
-  TX_EN_CONTRACT = 'contract-encrypt',
-  TX_EN_CONTRACT_EXE = 'contract-exe-encrypt',
-  TX_EN_FILE = 'file-encrypt',
-  TX_EN_STRING = 'string-encrypt',
-}
+import { Entity, model, property } from '@loopback/repository';
+import { TransactionOutputDTO, TransactionsStatus, TransactionsType } from '../types';
 
 @model()
 export class Transactions extends Entity {
@@ -111,7 +90,7 @@ export class Transactions extends Entity {
     required: true,
   })
   sign: string;
-  
+
   @property({
     type: 'string',
   })
@@ -125,6 +104,12 @@ export class Transactions extends Entity {
     required: true,
   })
   status: string;
+
+  @property({
+    type: 'object',
+    itemType: TransactionOutputDTO
+  })
+  output: TransactionOutputDTO;
 
   @property({
     type: 'string',

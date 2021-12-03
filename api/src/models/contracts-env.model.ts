@@ -17,9 +17,8 @@ export class ContractsEnv extends Entity {
 
   @property({
     type: 'string',
-    default: '',
   })
-  env: string = '';
+  env: string;
 
   constructor(data?: Partial<ContractsEnv>) {
     super(data);

@@ -204,6 +204,7 @@ export class Environment {
     lastPointer = 0;
     pointer = 0;
     code: string[] = [];
+    logs: string[] = [];
 
     constructor(contract: ContractABI) {
         this.contract = contract;
@@ -362,4 +363,5 @@ export class ExecutedFunction {
     output: Variable[] = [];
     modifiedGlobalVariables = new Map<string, Variable>();
     cost: number = 0;
+    logs: string[] = [];
 }

@@ -127,7 +127,7 @@ class Home extends React.Component {
                 <h3>Login: <a href="/panel/login">/panel/login</a></h3>
             </div>
             <div className="banner-container">
-                <a href="https://develblockchain.com" target="_blank">
+                <a href="https://develblockchain.com" target="_blank" rel="noopener noreferrer">
                     <span className="banner">Powered by</span>
                     <img src={logo} alt="Devel Blockchain logo" />
                 </a>

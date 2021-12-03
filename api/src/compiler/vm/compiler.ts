@@ -262,13 +262,15 @@ export default class Compiler {
                         if (!/^[a-zA-Z_]\w*$/.test(name)) throw new Error(`invalid name ${name}`)
                         this.outputs.push(name);
                     } else if (line[0] === '@description') {
-                        this.description = line.slice(1, -1).join(' ');
+                        let description = line.slice(1, -1).join(' ');
+                        if (!/^".*"$/.test(description)) throw new Error(`description need string`)
+                        this.description = description.substring(1, description.length - 1);
                     } else {
                         let command = this.findDictionary(line[0]);
                         this.compileCommand(lineNumber, line, command, bytecode, debug);
                     }
                 } catch (err: any) {
-                    throw `Error: line ${lineNumber + 1} - ${err.message}`
+                    throw new Error(`Error: line ${lineNumber + 1} - ${err.message}`)
                 }
             }
         }

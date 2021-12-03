@@ -1,10 +1,9 @@
 import { service } from '@loopback/core';
 import { CronJob, cronJob } from '@loopback/cron';
 import { repository } from '@loopback/repository';
-import { TransactionsStatus } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { BlocksProvider, NodesProvider, SlicesProvider } from '../services';
-import { SimulateSliceDTO } from '../types';
+import { SimulateSliceDTO, TransactionsStatus } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
 
 @cronJob()
@@ -29,7 +28,7 @@ export class CreateSlices extends CronJob {
         }
         await this.start();
       },
-      cronTime: '*/10 * * * * *',
+      cronTime: '*/1 * * * * *',
     });
   }
 

@@ -5,13 +5,13 @@ import { ContractProvider, WalletProvider } from '.';
 import { BywiseBlockchainInterface } from '../compiler/bywise/bywise-blockchain';
 import { ContractABI, Environment, Types, Variable } from '../compiler/vm/data';
 import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
-import { Transactions, TransactionsType, Wallets } from '../models';
+import { Transactions, Wallets } from '../models';
 import { ContractsEnv } from '../models/contracts-env.model';
 import { ContractsVars } from '../models/contracts-vars.model';
 import { WalletsRepository } from '../repositories';
 import { ContractsEnvRepository } from '../repositories/contracts-env.repository';
 import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
-import { CommandDTO, SimulateSliceDTO, WalletInfoDTO } from '../types/transactions.type';
+import { CommandDTO, SimulateSliceDTO, TransactionOutputDTO, TransactionsType, VariableDTO, WalletInfoDTO } from '../types/transactions.type';
 import { ConfigProvider } from './configs.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
@@ -48,17 +48,18 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     for (let i = 0; i < ctx.contractEnvModels.length; i++) {
       let contractEnv = ctx.contractEnvModels[i];
       if (contractEnv.address === address) {
+        console.log('##### found env', contractEnv)
         return contractEnv;
       }
     }
-    let contractEnv = null;
+    let contractEnv = await this.contractsEnvRepository.findOne({ where: { address: address } });
     if (!contractEnv) {
-      contractEnv = await this.contractsEnvRepository.findOne({ where: { address: address } });
-    }
-    if (!contractEnv) {
+      console.log('##### create new env', contractEnv)
       contractEnv = await this.contractsEnvRepository.create({
         address: address,
       });
+    } else {
+      console.log('##### get env from database', contractEnv)
     }
     ctx.contractEnvModels.push(contractEnv);
     return contractEnv;
@@ -71,10 +72,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         return contractVars;
       }
     }
-    let contractVars = null;
-    if (!contractVars) {
-      contractVars = await this.contractsVarsRepository.findOne({ where: { address, key } });
-    }
+    let contractVars = await this.contractsVarsRepository.findOne({ where: { address, key } });
     if (!contractVars) {
       contractVars = await this.contractsVarsRepository.create({
         address,
@@ -100,10 +98,10 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     recipient.balance = recipientBalance.toString();
   }
 
-  async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO, simulate = false): Promise<string> {
-    let cost = 0;
-    let amount = tx.amount;
-    let size = tx.data.length;
+  async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO, simulate = false): Promise<TransactionOutputDTO> {
+    let transactionOutput = new TransactionOutputDTO();
+    transactionOutput.cost = 0;
+    transactionOutput.size = tx.data.length;
 
     ctx.tx = tx;
     await this.send(tx.from, tx.validator, tx.fee, ctx);
@@ -113,6 +111,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       let contract = ContractABI.fromJSON(JSON.parse(tx.data));
       await this.getWallet(contract.address, ctx);
       let contractEnv = await this.getContractEnv(contract.address, ctx);
+      console.log('getContractEnv', contractEnv.env)
       if (contractEnv.env) {
         throw new Error(`Contract ${contract.address} already exists`);
       }
@@ -126,28 +125,34 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         contract,
         this
       );
+      console.log('new contract env', contractEnv.address, tx.hash)
       contractEnv.env = output.env;
-      cost = output.cost;
+      transactionOutput.cost = output.cost;
+      transactionOutput.logs = output.logs;
     } else if (tx.type === TransactionsType.TX_CONTRACT_EXE) {
       let contractEnv = await this.getContractEnv(tx.to, ctx);
       if (!contractEnv.env) {
         throw new Error(`Contract ${tx.to} not found`);
       }
-      let env = Environment.fromJSON(contractEnv.env);
-      let isMainnet = ContractProvider.isMainNet();
+      let env = Environment.fromJSON(JSON.parse(contractEnv.env));
       let executeLimit = await this.configProvider.getByName('executeLimit');
       let cmd = new CommandDTO(JSON.parse(tx.data));
       let output = await BywiseVirtualMachine.execFunction(
         ctx,
-        isMainnet,
         executeLimit.getNumber().toNumber(),
-        true,
+        !simulate,
         env,
         this,
         cmd.name,
         cmd.input,
       );
-      cost = output.cost;
+      transactionOutput.output = output.output.map(out => new VariableDTO({
+        type: out.type.name,
+        value: out.value
+      }));
+      contractEnv.env = JSON.stringify(env.toJSON());
+      transactionOutput.cost = output.cost;
+      transactionOutput.logs = output.logs;
     } else if (tx.type === TransactionsType.TX_COMMAND) {
       let cmd = new CommandDTO(JSON.parse(tx.data));
       await this.setConfig(ctx, cmd);
@@ -156,20 +161,17 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     let configFee = await this.configProvider.getByName('fee');
     let code = '';
     code += `const BigNumber = require("bignumber.js");\n`;
-    //code += `import BigNumber from "bignumber.js";\n`;
-    code += `let size = new BigNumber('${size}');\n`;
-    code += `let amount = new BigNumber('${amount}');\n`;
-    code += `let cost = new BigNumber('${cost}');\n`;
+    code += `let size = new BigNumber('${transactionOutput.size}');\n`;
+    code += `let amount = new BigNumber('${tx.amount}');\n`;
+    code += `let cost = new BigNumber('${transactionOutput.cost}');\n`;
     code += `${configFee.value}`;
-    (new BigNumber(2)).toFixed()
-    console.log('code')
-    console.log(code)
-    let fee = eval(code);
-    fee = `${fee}`;
+    let fee = `${eval(code)}`;
     if (fee !== tx.fee && !simulate) {
       throw new Error(`Invalid fee`);
     }
-    return fee;
+    transactionOutput.fee = fee;
+    tx.output = transactionOutput;
+    return transactionOutput;
   }
 
   async checkAdminAddress(ctx: SimulateSliceDTO) {

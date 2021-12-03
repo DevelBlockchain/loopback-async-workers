@@ -61,7 +61,7 @@ export default class Send extends React.Component {
 
 
     trySend = async (data = '') => {
-        let [accountName, address] = this.state.form.account.split(' - ');
+        let address = this.state.form.account.split(' - ')[1];
         let type = '';
         TX_TYPES_NAMES.forEach((name, i) => {
             if (this.state.form.type === name) {
@@ -83,7 +83,7 @@ export default class Send extends React.Component {
         let req = await BywiseAPI.post(`/users-transactions`, tx);
         if (req.error) return;
         this.dialog.show('Transaction send!', <>
-            <span>TxId: <a target="_blank" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
+            <span>TxId: <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
         </>)
     }
 

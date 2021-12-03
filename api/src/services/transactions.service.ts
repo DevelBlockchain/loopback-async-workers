@@ -3,10 +3,10 @@ import { repository } from '@loopback/repository';
 import { ethers } from "ethers";
 import { base16Decode, base16Encode, sha256, signBytes } from '@waves/ts-lib-crypto';
 import { WalletProvider } from '.';
-import { Transactions, TransactionsStatus } from '../models';
+import { Transactions } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { ContractProvider } from './contract.service';
-import { SimulateSliceDTO, TransactionsDTO } from '../types/transactions.type';
+import { SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, TransactionsStatus } from '../types/transactions.type';
 import { VirtualMachineProvider } from './virtual-machine.service';
 import { ConfigProvider } from './configs.service';
 
@@ -95,11 +95,13 @@ export class TransactionsProvider {
     return tx;
   }
 
-  async simulateFee(tx: TransactionsDTO): Promise<string> {
+  async simulateFee(tx: TransactionsDTO): Promise<TransactionOutputDTO> {
     let ctx = new SimulateSliceDTO();
     let newTx = new Transactions(tx);
-    let fee = await this.virtualMachineProvider.executeTransaction(newTx, ctx, true);
-    return fee;
+    let sender = await this.virtualMachineProvider.getWallet(tx.from, ctx);
+    sender.balance = '1000000000000000000000';
+    await this.virtualMachineProvider.executeTransaction(newTx, ctx, true);
+    return newTx.output;
   }
 
   async saveTransaction(tx: TransactionsDTO): Promise<Transactions> {
@@ -137,7 +139,7 @@ export class TransactionsProvider {
       let ctx = new SimulateSliceDTO();
       let newTx = new Transactions(tx);
       await this.virtualMachineProvider.executeTransaction(newTx, ctx);
-
+      
       newTx.status = TransactionsStatus.TX_MEMPOOL;
       await this.transactionsRepository.create(newTx);
       return newTx;

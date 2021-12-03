@@ -52,7 +52,9 @@ export class SecondFactorDTO extends Model {
 @model()
 export class InfoJWT extends Model {
 
-  @property()
+  @property({
+    type: 'string',
+  })
   id: string;
 
   @property({
@@ -75,10 +77,16 @@ export class InfoJWT extends Model {
 @model()
 export class MeDTO extends Model {
 
-  @property()
+  @property({
+    type: 'object',
+    itemType: InfoJWT,
+  })
   infoUser: InfoJWT;
 
-  @property()
+  @property({
+    type: 'object',
+    itemType: Users,
+  })
   user: Users;
 
   constructor(data?: Partial<MeDTO>) {
@@ -94,7 +102,10 @@ export class TokenWithUserDTO extends Model {
   })
   token: string;
 
-  @property()
+  @property({
+    type: 'object',
+    itemType: InfoJWT,
+  })
   infoUser?: InfoJWT;
 
   constructor(data?: Partial<TokenWithUserDTO>) {

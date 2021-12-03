@@ -8,3 +8,19 @@
         color: $primary-color;
     }
 }
+
+.border-none {
+    border-style: none !important;
+}
+
+.box-log {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: gray;
+    width: 100%;
+    min-height: 50px;
+    padding: 5px;
+    background-color: #DDD;
+    color: #313131;
+}

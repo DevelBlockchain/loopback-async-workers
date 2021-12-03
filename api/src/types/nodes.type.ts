@@ -1,5 +1,30 @@
 import { Model, model, property } from '@loopback/repository';
-import { Configs } from '../models';
+
+@model()
+export class ConfigDTO extends Model {
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  name: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  value: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  type: string;
+
+  constructor(data?: Partial<ConfigDTO>) {
+    super(data);
+  }
+}
 
 @model()
 export class NodeDTO extends Model {
@@ -31,7 +56,7 @@ export class NodeDTO extends Model {
 
   @property({
     type: 'string',
-    //hidden: true,
+    hidden: true,
   })
   token: string;
 
@@ -73,17 +98,11 @@ export class InfoDTO extends Model {
   })
   nodesLimit: number;
 
-  @property({
-    type: 'array',
-    itemType: NodeDTO,
-  })
+  @property.array(NodeDTO)
   nodes: NodeDTO[];
 
-  @property({
-    type: 'array',
-    itemType: Configs,
-  })
-  configs: Configs[];
+  @property.array(ConfigDTO)
+  configs: ConfigDTO[];
 
   constructor(data?: Partial<InfoDTO>) {
     super(data);

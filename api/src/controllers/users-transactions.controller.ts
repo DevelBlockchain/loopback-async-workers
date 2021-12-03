@@ -13,12 +13,14 @@ import {
 import { PermissionsTypes } from '../authorization/PermissionsTypes';
 import { MyWallets, Transactions, Wallets } from '../models';
 import { MyWalletsRepository, TransactionsRepository } from '../repositories';
-import { InfoJWT, TransactionsDTO, ValueDTO } from '../types';
+import { InfoJWT, TransactionOutputDTO, TransactionsDTO, TryCompile, ValueDTO } from '../types';
 import { ethers } from "ethers";
 import { ContractProvider, NodesProvider, TransactionsProvider, WalletProvider } from '../services';
 import { ConfigProvider } from '../services/configs.service';
 import { BywiseAPI } from '../utils/bywise-api';
 import { sha256, base16Decode, base16Encode } from '@waves/ts-lib-crypto';
+import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
+import Compiler from '../compiler/vm/compiler';
 
 const getHashFromTransaction = (tx: TransactionsDTO) => {
   let version = '1';
@@ -56,6 +58,46 @@ export class UsersTransactionsController {
   ) { }
 
   @authenticate({ strategy: 'basic', options: [PermissionsTypes.WALLET, true] })
+  @post('/api/v1/users-transactions/simulate')
+  @response(200, {
+    description: 'Accepted transaction',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(TransactionOutputDTO),
+      },
+    },
+  })
+  async simulate(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(TransactionsDTO, {
+            exclude: ['created', 'fee', 'hash', 'tag', 'validator', 'validatorSign', 'version', 'sign'],
+            optional: ['from']
+          }),
+        },
+      },
+    })
+    tx: TransactionsDTO,
+  ): Promise<TransactionOutputDTO> {
+    try {
+      (await this.configProvider.getAll()).forEach(config => {
+        if (config.name == 'validator') {
+          tx.validator = config.value
+        }
+      })
+      tx.from = tx.from ? tx.from : WalletProvider.ZERO_ADDRESS;
+      tx.version = '1';
+      tx.created = new Date().toISOString();
+      let output = await this.transactionsProvider.simulateFee(tx);
+      return output;
+    } catch (err: any) {
+      console.error(err);
+      throw new HttpErrors.BadRequest(err.message);
+    }
+  }
+
+  @authenticate({ strategy: 'basic', options: [PermissionsTypes.WALLET, true] })
   @post('/api/v1/users-transactions')
   @response(200, {
     description: 'Accepted transaction',
@@ -65,7 +107,7 @@ export class UsersTransactionsController {
       },
     },
   })
-  async simulateFee(
+  async publish(
     @requestBody({
       content: {
         'application/json': {
@@ -94,7 +136,7 @@ export class UsersTransactionsController {
       })
       tx.version = '1';
       tx.created = new Date().toISOString();
-      tx.fee = await this.transactionsProvider.simulateFee(tx);
+      tx.fee = (await this.transactionsProvider.simulateFee(tx)).fee;
       tx.sign = await signTransaction(wallet.seed, tx);
 
       let newTx = await this.transactionsProvider.saveTransaction(tx);
@@ -104,7 +146,41 @@ export class UsersTransactionsController {
       }
       return newTx;
     } catch (err: any) {
+      console.error(err);
       throw new HttpErrors.BadRequest(err.message);
+    }
+  }
+
+  @post('/api/v1/compiler')
+  @response(200, {
+    description: 'Try compile',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(TryCompile),
+      },
+    },
+  })
+  async compiler(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(ValueDTO),
+        },
+      },
+    })
+    valueDTO: ValueDTO,
+  ): Promise<TryCompile> {
+    try {
+      let compiler = new Compiler(BywiseVirtualMachine.getDictionary());
+      let isMainnet = ContractProvider.isMainNet();
+      return new TryCompile({
+        contract: (compiler.compilerASM(isMainnet, valueDTO.value).toJSON())
+      });
+    } catch (err: any) {
+      console.error(err);
+      return new TryCompile({
+        error: err.message
+      });
     }
   }
 }

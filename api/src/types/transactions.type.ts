@@ -1,8 +1,31 @@
 
 import { Model, model, property } from '@loopback/repository';
-import { Configs, Transactions, TransactionsType, Wallets } from '../models';
+import { Variable } from '../compiler/vm/data';
+import { Configs, Transactions, Wallets } from '../models';
 import { ContractsEnv } from '../models/contracts-env.model';
 import { ContractsVars } from '../models/contracts-vars.model';
+
+export enum TransactionsStatus {
+  TX_MEMPOOL = 'mempool',
+  TX_MINED = 'mined',
+  TX_INVALIDATED = 'invalidated',
+}
+
+export enum TransactionsType {
+  TX_NONE = 'none',
+  TX_JSON = 'json',
+  TX_COMMAND = 'command',
+  TX_CONTRACT = 'contract',
+  TX_CONTRACT_EXE = 'contract-exe',
+  TX_FILE = 'file',
+  TX_STRING = 'string',
+  TX_EN_JSON = 'json-encrypt',
+  TX_EN_COMMAND = 'command-encrypt',
+  TX_EN_CONTRACT = 'contract-encrypt',
+  TX_EN_CONTRACT_EXE = 'contract-exe-encrypt',
+  TX_EN_FILE = 'file-encrypt',
+  TX_EN_STRING = 'string-encrypt',
+}
 
 @model()
 export class TransactionsDTO extends Model {
@@ -259,6 +282,24 @@ export class ValueDTO extends Model {
 }
 
 @model()
+export class TryCompile extends Model {
+
+  @property({
+    type: 'string',
+  })
+  error?: string;
+
+  @property({
+    type: 'object',
+  })
+  contract?: object;
+
+  constructor(data?: Partial<TryCompile>) {
+    super(data);
+  }
+}
+
+@model()
 export class ValueBooleanDTO extends Model {
 
   @property({
@@ -280,6 +321,57 @@ export class SimulateSliceDTO extends Model {
   contractEnvModels: ContractsEnv[] = [];
   contractVarsModels: ContractsVars[] = [];
   configs: Configs[] = [];
+}
+
+@model()
+export class VariableDTO extends Model {
+  @property({
+    type: 'string',
+  })
+  type: string;
+
+  @property({
+    type: 'string',
+  })
+  value: string;
+
+  constructor(data?: Partial<VariableDTO>) {
+    super(data);
+  }
+}
+
+@model()
+export class TransactionOutputDTO extends Model {
+  @property({
+    type: 'number',
+  })
+  cost: number;
+
+  @property({
+    type: 'number',
+  })
+  size: number;
+
+  @property({
+    type: 'string',
+  })
+  fee: string;
+
+  @property({
+    type: 'array',
+    itemType: 'string'
+  })
+  logs: string[];
+  
+  @property({
+    type: 'array',
+    itemType: VariableDTO
+  })
+  output: VariableDTO[];
+
+  constructor(data?: Partial<TransactionOutputDTO>) {
+    super(data);
+  }
 }
 
 @model()
@@ -309,7 +401,7 @@ export class WalletInfoDTO extends Model {
     default: '',
   })
   photo: string;
-  
+
   @property({
     type: 'string',
     default: '',
@@ -327,7 +419,7 @@ export class WalletInfoDTO extends Model {
     default: '',
   })
   bio: string;
-  
+
   @property({
     type: 'string',
     default: '',

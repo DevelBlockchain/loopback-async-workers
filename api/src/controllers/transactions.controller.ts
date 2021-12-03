@@ -18,7 +18,7 @@ import {
 import { Transactions } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { NodesProvider, TransactionsProvider } from '../services';
-import { TransactionsDTO, ValueDTO } from '../types';
+import { TransactionOutputDTO, TransactionsDTO, ValueDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
 
 export class TransactionsController {
@@ -33,7 +33,7 @@ export class TransactionsController {
     description: 'Fee of transaction',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(ValueDTO),
+        schema: getModelSchemaRef(TransactionOutputDTO),
       },
     },
   })
@@ -46,10 +46,9 @@ export class TransactionsController {
       },
     })
     tx: TransactionsDTO,
-  ): Promise<ValueDTO> {
+  ): Promise<TransactionOutputDTO> {
     try {
-      let fee = await this.transactionsProvider.simulateFee(tx);
-      return new ValueDTO({ value: fee })
+      return await this.transactionsProvider.simulateFee(tx);
     } catch (err: any) {
       throw new HttpErrors.BadRequest(err.message);
     }

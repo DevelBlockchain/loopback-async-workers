@@ -25,7 +25,7 @@ export default class SendCommand extends Component {
         if (e.key === 'Enter') {
             const state = this.state;
             state.inputs.push(this.state.form.text);
-            this.state.form.text = '';
+            state.form.text = '';
             this.setState({ ...state });
         }
     }

@@ -10,8 +10,6 @@ import {
   requestBody,
   getModelSchemaRef,
 } from '@loopback/rest';
-import Compiler from '../compiler/vm/compiler';
-import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
 import { TransactionsRepository } from '../repositories';
 import { ContractProvider, WalletProvider } from '../services';
 import { TransactionsProvider } from '../services/transactions.service';
@@ -60,43 +58,5 @@ export class PingController {
       url: this.req.url,
       headers: Object.assign({}, this.req.headers)
     };
-  }
-
-  @post('/api/v1/compiler')
-  async compiler(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(ValueDTO),
-        },
-      },
-    })
-    valueDTO: ValueDTO,
-  ): Promise<ValueDTO> {
-    let compiler = new Compiler(BywiseVirtualMachine.getDictionary());
-    let isMainnet = ContractProvider.isMainNet();
-    return new ValueDTO({
-      value: JSON.stringify(compiler.compilerASM(isMainnet, valueDTO.value).toJSON())
-    });
-  }
-
-  @post('/api/v1/debug-transaction')
-  async create(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(TransactionsDTO, {
-            exclude: ['created', 'from', 'hash', 'sign', 'validator', 'validatorSign', 'version']
-          }),
-        },
-      },
-    })
-    txInput: TransactionsDTO,
-  ): Promise<any> {
-    let account = this.contractProvider.getAccount();
-    let address = WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
-    let tx = await this.transactionsProvider.createNewTransaction(txInput.to, txInput.amount, txInput.fee, txInput.type, txInput.data);
-    await this.transactionsProvider.saveTransaction(tx);
-    return tx;
   }
 }
