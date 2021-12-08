@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import BywiseAPI from '../../../api/api';
 import OverlayLoading from '../../common/overlay-loading';
 import DialogModal from '../../common/dialog-modal';
-import ConfirmModal from '../../common/confirm-modal';
+
 import SeeContract from './see-contract';
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-monokai";
@@ -86,13 +86,14 @@ export default class Contracts extends React.Component {
             loading: false,
             load: false,
             loadDep: false,
-            modal: false,
-            id: null,
             contract: {
+                functions: [],
                 address: '',
                 bytecode: '',
                 nonce: 0,
             },
+            ctx: {},
+            simulateAccounts: [],
             success: false,
             successDep: false,
             text: "",
@@ -134,10 +135,6 @@ export default class Contracts extends React.Component {
         this.setState({ form })
     }
 
-    toggleModal = () => {
-        this.setState({ modal: !this.state.modal })
-    }
-
     onChange = (newValue) => {
         this.setState({ text: newValue, success: false, successDep: false })
     }
@@ -147,41 +144,35 @@ export default class Contracts extends React.Component {
         localStorage.setItem('code', this.state.text)
         await sleep(1000);
         let logs = [];
-        let req = await BywiseAPI.post(`/compiler`, {
-            value: this.state.text,
+        let success = true;
+        let req = await BywiseAPI.post(`/contracts/compiler`, {
+            type: 'asm',
+            code: this.state.text,
+            amount: '0'
         });
         if (req.error) return;
         if (req.data.error) {
+            success = false;
             logs.push(<span className="text-danger">{req.data.error}</span>)
         } else {
             let contract = req.data.contract;
+            let ctx = req.data.ctx;
+            let simulateAccounts = req.data.simulateAccounts;
             logs.push(<span className="text-success">Compilation success!</span>)
             logs.push(<span><strong>Contract Address:</strong> {contract.address}</span>)
-            console.log(contract);
-            let tx = {
-                to: contract.address,
-                amount: "0",
-                type: 'contract',
-                data: JSON.stringify(contract),
-            };
-            req = await BywiseAPI.post(`/users-transactions/simulate`, tx);
-            console.log(req);
-            if (req.error) {
-                logs.push(<span className="text-danger">{req.error}</span>)
-            } else {
-                logs.push(<span><strong>Computational cost:</strong> {req.data.cost}</span>)
-                logs.push(<span><strong>Data transaction size:</strong> {req.data.size}</span>)
-                logs.push(<span><strong>Fee:</strong> {req.data.fee}</span>)
-                if (req.data.logs) req.data.logs.forEach(log => {
-                    logs.push(<span><strong>LOG:</strong> {log}</span>)
-                })
-                if (req.data.output) req.data.output.forEach(out => {
-                    logs.push(<span><strong>OUTPUT:</strong> {out}</span>)
-                })
-            }
-            this.setState({ error: '', success: true, contract: contract });
+            let output = req.data.output;
+            logs.push(<span><strong>Computational cost:</strong> {output.cost}</span>)
+            logs.push(<span><strong>Data transaction size:</strong> {output.size}</span>)
+            logs.push(<span><strong>Fee:</strong> {output.fee}</span>)
+            if (output.logs) output.logs.forEach(log => {
+                logs.push(<span><strong>LOG:</strong> {log}</span>)
+            })
+            if (output.output) output.output.forEach(out => {
+                logs.push(<span><strong>OUTPUT:</strong> {out}</span>)
+            })
+            await this.setState({ contract, ctx, simulateAccounts });
         }
-        await this.setState({ load: false, logs });
+        await this.setState({ load: false, success, logs });
     }
 
     deploy = async () => {
@@ -201,7 +192,7 @@ export default class Contracts extends React.Component {
             this.dialog.show('Transaction send!', <>
                 <span>TxId: <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
             </>)
-            this.setState({ successDep: true });
+            await this.setState({ successDep: true });
         }
         await this.setState({ loadDep: false });
     }
@@ -238,7 +229,22 @@ export default class Contracts extends React.Component {
                                             {this.state.logs.map((item, i) => <div key={`log-${i}`}>{item}</div>)}
                                         </div>
                                     </div>
-                                    {this.state.success && <>
+                                </div>
+                            </div>
+                        </div>
+                        {this.state.success && <>
+                            <div className="col-sm-12">
+                                <SeeContract
+                                    ctx={this.state.ctx}
+                                    contract={this.state.contract}
+                                    simulateAccounts={this.state.simulateAccounts} />
+                            </div>
+                            <div className="col-sm-12">
+                                <div className="card">
+                                    <div className="card-header">
+                                        <h5>Deploy your smartcontract</h5>
+                                    </div>
+                                    <div className="card-body">
                                         <div className="form-group mt-2">
                                             <label>Account</label>
                                             <select className="form-control digits"
@@ -248,17 +254,13 @@ export default class Contracts extends React.Component {
                                                 {this.state.accounts.map(account => <option key={account}>{account}</option>)}
                                             </select>
                                         </div>
-                                        <button className={this.state.successDep ? "btn btn-success mt-2" : "btn btn-primary mt-2"} disabled={this.state.loadDep} onClick={this.deploy}>{this.state.loadDep ? 'Loading...' : (this.state.successDep ? 'Success' : 'Compile')}</button>
-                                    </>}
+                                        <button className={this.state.successDep ? "btn btn-success mt-2" : "btn btn-primary mt-2"} disabled={this.state.loadDep} onClick={this.deploy}>{this.state.loadDep ? 'Loading...' : (this.state.successDep ? 'Success' : 'Deploy')}</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-sm-12">
-                            <SeeContract />
-                        </div>
+                        </>}
                     </div>
                 </div>
-                <ConfirmModal ref={ref => this.confirm = ref} />
                 <DialogModal ref={ref => this.dialog = ref} />
             </Fragment >
         );

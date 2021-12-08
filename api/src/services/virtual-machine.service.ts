@@ -5,10 +5,10 @@ import { ContractProvider, WalletProvider } from '.';
 import { BywiseBlockchainInterface } from '../compiler/bywise/bywise-blockchain';
 import { ContractABI, Environment, Types, Variable } from '../compiler/vm/data';
 import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
-import { Transactions, Wallets } from '../models';
+import { Configs, Transactions, Wallets } from '../models';
 import { ContractsEnv } from '../models/contracts-env.model';
 import { ContractsVars } from '../models/contracts-vars.model';
-import { WalletsRepository } from '../repositories';
+import { ConfigsRepository, WalletsRepository } from '../repositories';
 import { ContractsEnvRepository } from '../repositories/contracts-env.repository';
 import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
 import { CommandDTO, SimulateSliceDTO, TransactionOutputDTO, TransactionsType, VariableDTO, WalletInfoDTO } from '../types/transactions.type';
@@ -20,7 +20,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     @repository(WalletsRepository) public walletsRepository: WalletsRepository,
     @repository(ContractsEnvRepository) public contractsEnvRepository: ContractsEnvRepository,
     @repository(ContractsVarsRepository) public contractsVarsRepository: ContractsVarsRepository,
-    @service(ConfigProvider) public configProvider: ConfigProvider,
+    @repository(ConfigsRepository) public configsRepository: ConfigsRepository,
   ) { }
 
   async getWallet(address: string, ctx: SimulateSliceDTO): Promise<Wallets> {
@@ -31,14 +31,21 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       }
     }
     let wallet = null;
-    if (!wallet) {
-      wallet = await this.walletsRepository.findOne({ where: { address: address } });
-    }
-    if (!wallet) {
-      wallet = await this.walletsRepository.create({
-        balance: '0',
+    if (ctx.simulate) {
+      wallet = new Wallets({
+        balance: '100',
         address: address,
       });
+    } else {
+      if (!wallet) {
+        wallet = await this.walletsRepository.findOne({ where: { address: address } });
+      }
+      if (!wallet) {
+        wallet = await this.walletsRepository.create({
+          balance: '0',
+          address: address,
+        });
+      }
     }
     ctx.walletsModels.push(wallet);
     return wallet;
@@ -54,12 +61,13 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     }
     let contractEnv = await this.contractsEnvRepository.findOne({ where: { address: address } });
     if (!contractEnv) {
-      console.log('##### create new env', contractEnv)
-      contractEnv = await this.contractsEnvRepository.create({
-        address: address,
-      });
-    } else {
-      console.log('##### get env from database', contractEnv)
+      if (ctx.simulate) {
+        contractEnv = new ContractsEnv({ address });
+      } else {
+        contractEnv = await this.contractsEnvRepository.create({
+          address: address,
+        });
+      }
     }
     ctx.contractEnvModels.push(contractEnv);
     return contractEnv;
@@ -74,13 +82,38 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     }
     let contractVars = await this.contractsVarsRepository.findOne({ where: { address, key } });
     if (!contractVars) {
-      contractVars = await this.contractsVarsRepository.create({
-        address,
-        key,
-      });
+      if (ctx.simulate) {
+        contractVars = new ContractsVars({ address, key });
+      } else {
+        contractVars = await this.contractsVarsRepository.create({
+          address,
+          key,
+        });
+      }
     }
     ctx.contractVarsModels.push(contractVars);
     return contractVars;
+  }
+
+  async getConfig(name: string, ctx: SimulateSliceDTO): Promise<Configs> {
+    for (let i = 0; i < ctx.configs.length; i++) {
+      let config = ctx.configs[i];
+      if (config.name === name) {
+        return config;
+      }
+    }
+    let config = await this.configsRepository.findOne({ where: { name } });
+    if (!config) {
+      if (ctx.simulate) {
+        config = new Configs({ name });
+      } else {
+        config = await this.configsRepository.create({
+          name,
+        });
+      }
+    }
+    ctx.configs.push(config);
+    return config;
   }
 
   private async send(senderAddress: string, toAddress: string, amount: string, ctx: SimulateSliceDTO) {
@@ -93,12 +126,14 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     if (senderBalance.isLessThan(new BigNumber(0))) {
       throw new Error('insufficient funds')
     }
+    console.log('before', sender.balance, recipient.balance, amount)
     recipientBalance = recipientBalance.plus(amount);
     sender.balance = senderBalance.toString();
     recipient.balance = recipientBalance.toString();
+    console.log('after', sender.balance, recipient.balance, amount)
   }
 
-  async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO, simulate = false): Promise<TransactionOutputDTO> {
+  async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO): Promise<TransactionOutputDTO> {
     let transactionOutput = new TransactionOutputDTO();
     transactionOutput.cost = 0;
     transactionOutput.size = tx.data.length;
@@ -116,12 +151,12 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         throw new Error(`Contract ${contract.address} already exists`);
       }
       let isMainnet = ContractProvider.isMainNet();
-      let executeLimit = await this.configProvider.getByName('executeLimit');
+      let executeLimit = await this.getConfig('executeLimit', ctx);
 
       let output = await BywiseVirtualMachine.exec(
         ctx,
         isMainnet,
-        executeLimit.getNumber().toNumber(),
+        parseInt(executeLimit.value),
         contract,
         this
       );
@@ -135,12 +170,11 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         throw new Error(`Contract ${tx.to} not found`);
       }
       let env = Environment.fromJSON(JSON.parse(contractEnv.env));
-      let executeLimit = await this.configProvider.getByName('executeLimit');
+      let executeLimit = await this.getConfig('executeLimit', ctx);
       let cmd = new CommandDTO(JSON.parse(tx.data));
       let output = await BywiseVirtualMachine.execFunction(
         ctx,
-        executeLimit.getNumber().toNumber(),
-        !simulate,
+        parseInt(executeLimit.value),
         env,
         this,
         cmd.name,
@@ -158,7 +192,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       await this.setConfig(ctx, cmd);
     }
 
-    let configFee = await this.configProvider.getByName('fee');
+    let configFee = await this.getConfig('fee', ctx);
     let code = '';
     code += `const BigNumber = require("bignumber.js");\n`;
     code += `let size = new BigNumber('${transactionOutput.size}');\n`;
@@ -166,7 +200,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     code += `let cost = new BigNumber('${transactionOutput.cost}');\n`;
     code += `${configFee.value}`;
     let fee = `${eval(code)}`;
-    if (fee !== tx.fee && !simulate) {
+    if (fee !== tx.fee && !ctx.simulate) {
       throw new Error(`Invalid fee`);
     }
     transactionOutput.fee = fee;
@@ -175,7 +209,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
   }
 
   async checkAdminAddress(ctx: SimulateSliceDTO) {
-    let adminAddress = await this.configProvider.getByName('adminAddress');
+    let adminAddress = await this.getConfig('adminAddress', ctx);
     if (adminAddress.value !== WalletProvider.ZERO_ADDRESS && (!ctx.tx || adminAddress.value !== ctx.tx.from)) {
       throw new Error(`setConfig forbidden`);
     }
@@ -184,7 +218,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
   async setConfig(ctx: SimulateSliceDTO, cmd: CommandDTO): Promise<void> {
     if (cmd.name == 'setConfig' && cmd.input.length === 3) {
       await this.checkAdminAddress(ctx);
-      let configs = await this.configProvider.getAll();
+      let configs = await this.configsRepository.find();
       for (let i = 0; i < configs.length; i++) {
         let cfg = configs[i];
         if (cmd.input[0] === cfg.name) {

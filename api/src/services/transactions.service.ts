@@ -6,7 +6,7 @@ import { WalletProvider } from '.';
 import { Transactions } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { ContractProvider } from './contract.service';
-import { SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, TransactionsStatus } from '../types/transactions.type';
+import { SimulateAccountDTO, SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, TransactionsStatus } from '../types/transactions.type';
 import { VirtualMachineProvider } from './virtual-machine.service';
 import { ConfigProvider } from './configs.service';
 
@@ -95,12 +95,10 @@ export class TransactionsProvider {
     return tx;
   }
 
-  async simulateFee(tx: TransactionsDTO): Promise<TransactionOutputDTO> {
-    let ctx = new SimulateSliceDTO();
+  async simulateTransaction(tx: TransactionsDTO, ctx: SimulateSliceDTO): Promise<TransactionOutputDTO> {
     let newTx = new Transactions(tx);
-    let sender = await this.virtualMachineProvider.getWallet(tx.from, ctx);
-    sender.balance = '1000000000000000000000';
-    await this.virtualMachineProvider.executeTransaction(newTx, ctx, true);
+    ctx.simulate = true;
+    await this.virtualMachineProvider.executeTransaction(newTx, ctx);
     return newTx.output;
   }
 

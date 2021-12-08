@@ -11,16 +11,14 @@ import {
   HttpErrors,
 } from '@loopback/rest';
 import { PermissionsTypes } from '../authorization/PermissionsTypes';
-import { MyWallets, Transactions, Wallets } from '../models';
+import { Transactions } from '../models';
 import { MyWalletsRepository, TransactionsRepository } from '../repositories';
-import { InfoJWT, TransactionOutputDTO, TransactionsDTO, TryCompile, ValueDTO } from '../types';
+import { InfoJWT, SimulateSliceDTO, TransactionsDTO } from '../types';
 import { ethers } from "ethers";
-import { ContractProvider, NodesProvider, TransactionsProvider, WalletProvider } from '../services';
+import { NodesProvider, TransactionsProvider } from '../services';
 import { ConfigProvider } from '../services/configs.service';
 import { BywiseAPI } from '../utils/bywise-api';
 import { sha256, base16Decode, base16Encode } from '@waves/ts-lib-crypto';
-import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
-import Compiler from '../compiler/vm/compiler';
 
 const getHashFromTransaction = (tx: TransactionsDTO) => {
   let version = '1';
@@ -56,46 +54,6 @@ export class UsersTransactionsController {
     @service(ConfigProvider) private configProvider: ConfigProvider,
     @inject.getter(AuthenticationBindings.CURRENT_USER) public getCurrentUser: Getter<InfoJWT>,
   ) { }
-
-  @authenticate({ strategy: 'basic', options: [PermissionsTypes.WALLET, true] })
-  @post('/api/v1/users-transactions/simulate')
-  @response(200, {
-    description: 'Accepted transaction',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(TransactionOutputDTO),
-      },
-    },
-  })
-  async simulate(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(TransactionsDTO, {
-            exclude: ['created', 'fee', 'hash', 'tag', 'validator', 'validatorSign', 'version', 'sign'],
-            optional: ['from']
-          }),
-        },
-      },
-    })
-    tx: TransactionsDTO,
-  ): Promise<TransactionOutputDTO> {
-    try {
-      (await this.configProvider.getAll()).forEach(config => {
-        if (config.name == 'validator') {
-          tx.validator = config.value
-        }
-      })
-      tx.from = tx.from ? tx.from : WalletProvider.ZERO_ADDRESS;
-      tx.version = '1';
-      tx.created = new Date().toISOString();
-      let output = await this.transactionsProvider.simulateFee(tx);
-      return output;
-    } catch (err: any) {
-      console.error(err);
-      throw new HttpErrors.BadRequest(err.message);
-    }
-  }
 
   @authenticate({ strategy: 'basic', options: [PermissionsTypes.WALLET, true] })
   @post('/api/v1/users-transactions')
@@ -136,7 +94,9 @@ export class UsersTransactionsController {
       })
       tx.version = '1';
       tx.created = new Date().toISOString();
-      tx.fee = (await this.transactionsProvider.simulateFee(tx)).fee;
+      let ctx = new SimulateSliceDTO();
+      ctx.simulate = true;
+      tx.fee = (await this.transactionsProvider.simulateTransaction(tx, ctx)).fee;
       tx.sign = await signTransaction(wallet.seed, tx);
 
       let newTx = await this.transactionsProvider.saveTransaction(tx);
@@ -148,39 +108,6 @@ export class UsersTransactionsController {
     } catch (err: any) {
       console.error(err);
       throw new HttpErrors.BadRequest(err.message);
-    }
-  }
-
-  @post('/api/v1/compiler')
-  @response(200, {
-    description: 'Try compile',
-    content: {
-      'application/json': {
-        schema: getModelSchemaRef(TryCompile),
-      },
-    },
-  })
-  async compiler(
-    @requestBody({
-      content: {
-        'application/json': {
-          schema: getModelSchemaRef(ValueDTO),
-        },
-      },
-    })
-    valueDTO: ValueDTO,
-  ): Promise<TryCompile> {
-    try {
-      let compiler = new Compiler(BywiseVirtualMachine.getDictionary());
-      let isMainnet = ContractProvider.isMainNet();
-      return new TryCompile({
-        contract: (compiler.compilerASM(isMainnet, valueDTO.value).toJSON())
-      });
-    } catch (err: any) {
-      console.error(err);
-      return new TryCompile({
-        error: err.message
-      });
     }
   }
 }

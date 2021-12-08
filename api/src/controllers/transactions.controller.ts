@@ -18,7 +18,7 @@ import {
 import { Transactions } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { NodesProvider, TransactionsProvider } from '../services';
-import { TransactionOutputDTO, TransactionsDTO, ValueDTO } from '../types';
+import { SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, ValueDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
 
 export class TransactionsController {
@@ -48,7 +48,9 @@ export class TransactionsController {
     tx: TransactionsDTO,
   ): Promise<TransactionOutputDTO> {
     try {
-      return await this.transactionsProvider.simulateFee(tx);
+      let ctx = new SimulateSliceDTO();
+      ctx.simulate = true;
+      return await this.transactionsProvider.simulateTransaction(tx, ctx);
     } catch (err: any) {
       throw new HttpErrors.BadRequest(err.message);
     }

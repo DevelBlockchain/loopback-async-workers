@@ -13,6 +13,7 @@ export default class ExecContract extends Component {
         super(props);
         this.state = {
             load: false,
+            logs: [],
             name: "functionName",
             isPaid: true,
             description: "Description",
@@ -63,11 +64,56 @@ export default class ExecContract extends Component {
     exeContract = async () => {
         await this.setState({ load: true });
         await sleep(1000);
-        await this.props.trySend(JSON.stringify({
-            name: this.state.name,
-            input: this.state.inputs.map(input => input.value)
-        }), this.state.isPaid)
-        await this.setState({ load: false });
+        let logs = [];
+        let tx = {
+            from: this.props.account.split(' - ')[1],
+            to: this.props.address,
+            amount: "0",
+            type: 'contract-exe',
+            data: JSON.stringify({
+                name: this.state.name,
+                input: this.state.inputs.map(input => input.value)
+            }),
+        };
+        if (this.state.isPaid) {
+            let req = await BywiseAPI.post(`/users-transactions`, tx);
+            if (req.error) {
+                logs.push(<span className="text-danger">{req.error}</span>)
+            } else {
+                let tx = req.data;
+                logs.push(<span><strong>TxId:</strong> <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${tx.hash}`} >{tx.hash}</a></span>)
+                logs.push(<span><strong>Computational cost:</strong> {tx.output.cost}</span>)
+                logs.push(<span><strong>Data transaction size:</strong> {tx.output.size}</span>)
+                logs.push(<span><strong>Fee:</strong> {tx.output.fee}</span>)
+                if (tx.output.logs) tx.output.logs.forEach(log => {
+                    logs.push(<span><strong>LOG:</strong> {log}</span>)
+                })
+                if (tx.output.output) tx.output.output.forEach(out => {
+                    logs.push(<span><strong>OUTPUT:</strong> {out}</span>)
+                })
+            }
+        } else {
+            let req = await BywiseAPI.post(`/users-transactions/simulate`, tx);
+            if (req.error) {
+                logs.push(<span className="text-danger">{req.error}</span>)
+            } else {
+                logs.push(<span><strong>Computational cost:</strong> {req.data.cost}</span>)
+                logs.push(<span><strong>Data transaction size:</strong> {req.data.size}</span>)
+                logs.push(<span><strong>Fee:</strong> {req.data.fee}</span>)
+                if (req.data.logs) req.data.logs.forEach(log => {
+                    logs.push(<span><strong>LOG:</strong> {log}</span>)
+                })
+                if (req.data.output) {
+                    for (let i = 0; i < this.state.outputs.length; i++) {
+                        let name = this.state.outputs[i].name;
+                        let type = this.state.outputs[i].type;
+                        let value = req.data.output[i].value;
+                        logs.push(<span><strong>OUTPUT: </strong>{JSON.stringify({ type, name, value })}</span>)
+                    }
+                }
+            }
+        }
+        await this.setState({ load: false, logs });
     }
 
     render = () => {
@@ -91,6 +137,12 @@ export default class ExecContract extends Component {
                         </div>)}
                     </div>
                     <button className="btn btn-primary mt-3" disabled={this.state.load} onClick={this.exeContract}>{this.state.load ? 'Loading...' : 'Send'}</button>
+                    <div>
+                        <label className="mt-2">Log:</label>
+                        <div className="box-log">
+                            {this.state.logs.map((item, i) => <div key={`log-${i}`}>{item}</div>)}
+                        </div>
+                    </div>
                 </div>
             </div>
         </>);

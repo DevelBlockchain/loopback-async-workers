@@ -45,7 +45,6 @@ export class Variable {
     constructor(type: Type, value: string) {
         this.type = type;
         this.value = value;
-
     }
 
     getNumber(): BigNumber {
@@ -340,12 +339,29 @@ export class ContractABI {
     names?: Map<string, string> | undefined;
     publicFunctions: FunctionABI[] = [];
 
-    toJSON(): any {
-        return {
-            nonce: this.nonce,
-            bytecode: this.bytecode,
-            address: this.address,
-            publicFunctions: this.publicFunctions.map(v => v.toJSON()),
+    toJSON(all = false): any {
+        if (all) {
+            let names: string[] = [];
+            if (this.names) {
+                this.names.forEach((value, key) => {
+                    names.push(`${key}:${value}`);
+                })
+            }
+            return {
+                nonce: this.nonce,
+                bytecode: this.bytecode,
+                address: this.address,
+                debug: this.debug,
+                names,
+                publicFunctions: this.publicFunctions.map(v => v.toJSON()),
+            }
+        } else {
+            return {
+                nonce: this.nonce,
+                bytecode: this.bytecode,
+                address: this.address,
+                publicFunctions: this.publicFunctions.map(v => v.toJSON()),
+            }
         }
     }
 
@@ -355,6 +371,18 @@ export class ContractABI {
         obj.bytecode = json.bytecode;
         obj.address = json.address;
         obj.publicFunctions = json.publicFunctions.map((v: any) => FunctionABI.fromJSON(v));
+        if (json.debug) {
+            obj.debug = json.debug;
+        }
+        if (json.names) {
+            let names = new Map<string, string>();
+            json.names.forEach((entire: string) => {
+                let key = entire.substring(0, entire.indexOf(':', 0));
+                let value = entire.substring(entire.indexOf(':', 0) + 1);
+                names.set(key, value);
+            })
+            obj.names = names;
+        }
         return obj;
     }
 }

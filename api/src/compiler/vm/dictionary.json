@@ -183,6 +183,8 @@
           "boolean",
           "binary",
           "string",
+          "array",
+          "map",
           "address"
         ]
       },
@@ -199,6 +201,8 @@
           "boolean",
           "binary",
           "string",
+          "array",
+          "map",
           "address"
         ]
       }
@@ -510,8 +514,8 @@
   },
   {
     "bytecode": "0033",
-    "name": "pop",
-    "description": "pop array\nExemple: pop arrayName index\nExemple: pop arrayName void",
+    "name": "delete",
+    "description": "delete array\nExemple: delete arrayName index\nExemple: delete arrayName void",
     "complements": [
       {
         "size": 2
@@ -552,6 +556,16 @@
     "bytecode": "0037",
     "name": "size",
     "description": "get size of array or map\nExemple: size recipientVar arrayOrMapName",
+    "complements": [
+      {
+        "size": 2
+      }
+    ]
+  },
+  {
+    "bytecode": "0038",
+    "name": "require",
+    "description": "Test some parameter\nExemple: require true \"Did not pass this test\"",
     "complements": [
       {
         "size": 2

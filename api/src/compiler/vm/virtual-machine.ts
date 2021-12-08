@@ -27,10 +27,10 @@ export default class BywiseVirtualMachine {
         return await vm.exec(ctx, isMainnet, limiteCost);
     }
 
-    static async execFunction(ctx: SimulateSliceDTO, limiteCost: number, isPaid: boolean, env: Environment, bywiseBlockchain: BywiseBlockchainInterface, name: string, inputsValues: string[]): Promise<ExecutedFunction> {
+    static async execFunction(ctx: SimulateSliceDTO, limiteCost: number, env: Environment, bywiseBlockchain: BywiseBlockchainInterface, name: string, inputsValues: string[]): Promise<ExecutedFunction> {
         let vm = new BywiseVirtualMachine(env.contract, bywiseBlockchain);
         vm.env = env;
-        return await vm.execFunction(ctx, limiteCost, isPaid, name, inputsValues);
+        return await vm.execFunction(ctx, limiteCost, name, inputsValues);
     }
 
     private async exec(ctx: SimulateSliceDTO, isMainnet: boolean, limiteCost: number): Promise<{ cost: number, env: string, logs: string[] }> {
@@ -59,16 +59,16 @@ export default class BywiseVirtualMachine {
             if (this.env.contract.debug) {
                 if (this.env.contract.names) {
                     this.env.contract.names.forEach((key, value) => {
-                        err.message = err.message.replace(` ${value} `, key);
+                        err.message = err.message.replace(` ${value} `, ` ${key} `);
                     })
                 }
-                throw `${this.env.contract.debug[this.env.lastPointer]}\n- ${err.message}`;
+                throw new Error(`${this.env.contract.debug[this.env.lastPointer]}\n- ${err.message}`);
             }
             throw err;
         }
     }
 
-    private async execFunction(ctx: SimulateSliceDTO, limiteCost: number, isPaid: boolean, name: string, inputsValues: string[]): Promise<ExecutedFunction> {
+    private async execFunction(ctx: SimulateSliceDTO, limiteCost: number, name: string, inputsValues: string[]): Promise<ExecutedFunction> {
         let code = this.decodeBytecode(this.env.contract.bytecode);
         let endCommandSignal = this.getBytecodeByName(';');
         let checkpointCommand = this.getBytecodeByName('checkpoint');
@@ -76,7 +76,7 @@ export default class BywiseVirtualMachine {
         for (let i = 0; i < this.env.contract.publicFunctions.length; i++) {
             let func = this.env.contract.publicFunctions[i];
             if (func.name === name) {
-                if (!func.isPaid && isPaid) {
+                if (!func.isPaid && !ctx.simulate) {
                     throw new Error(`function ${name} is not paid`);
                 }
                 let inputs = [];
@@ -288,6 +288,11 @@ export default class BywiseVirtualMachine {
                         this.newArray(env.ctx, persistence, registerId);
                     }
                 } else if (type === Types.map) {
+                    if (voidValue !== valueBC) {
+                        throw new Error(`need "void" default value`);
+                    } else {
+                        this.newMap(env.ctx, persistence, registerId);
+                    }
                 } else {
                     if (voidValue === valueBC) {
                         this.newValue(env.ctx, persistence, registerId, new Variable(type, type.defaultValue));
@@ -393,6 +398,19 @@ export default class BywiseVirtualMachine {
             'print',
             (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
                 env.logs.push(inputs.map(word => this.getVar(env.ctx, word).value).join(' '));
+            }
+        ));
+        this.addOperator(new Operator(
+            'require',
+            (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
+                let [test, message] = inputs;
+                let opTest = this.getVar(env.ctx, test);
+                let opMessage = this.getVar(env.ctx, message);
+                this.checkType(opTest, Types.boolean);
+                this.checkType(opMessage, Types.string);
+                if (opTest.value === 'false') {
+                    throw new Error(opMessage.value);
+                }
             }
         ));
         this.addOperator(new Operator(
@@ -819,7 +837,7 @@ export default class BywiseVirtualMachine {
             }
         ));
         this.addOperator(new Operator(
-            'pop',
+            'delete',
             (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
                 let [array, indexBC] = inputs;
                 let registerId = this.getRegisterID(array);
@@ -836,16 +854,33 @@ export default class BywiseVirtualMachine {
         this.addOperator(new Operator(
             'get',
             (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                let [resultVar, array, indexBC] = inputs;
-                let registerId = this.getRegisterID(array);
+                let [resultVar, arrayOrMap, indexBC] = inputs;
+                let registerId = this.getRegisterID(arrayOrMap);
+                let arrayOrMapValue = this._getValue(env.ctx, registerId);
                 let value = this.getVar(env.ctx, indexBC);
-                this.checkType(value, Types.integer);
-                let index = value.getNumber().toNumber();
-                value = this.getArrayValue(env.ctx, registerId, index);
+                if (arrayOrMapValue === undefined) {
+                    throw new Error(`variable ${indexBC} not found`);
+                } else if (arrayOrMapValue.type === Types.array) {
+                    this.checkType(value, Types.integer);
+                    let index = value.getNumber().toNumber();
+                    value = this.getArrayValue(env.ctx, registerId, index);
+                } else if (arrayOrMapValue.type === Types.map) {
+                    value = this.getMap(env.ctx, registerId, value);
+                } else {
+                    throw new Error(`variable ${indexBC} is not array or mapping`);
+                }
+                let opRes = this.getRegisterID(resultVar);
+                this.setValue(env.ctx, opRes, value);
+            }
+        ));
+        this.addOperator(new Operator(
+            'size',
+            (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
+                let [resultVar, array] = inputs;
+                let registerId = this.getRegisterID(array);
+                let value = this.getSizeArray(env.ctx, registerId);
 
                 let opRes = this.getRegisterID(resultVar);
-                let valueRes = this.getVar(env.ctx, resultVar);
-
                 this.setValue(env.ctx, opRes, value);
             }
         ));
@@ -999,21 +1034,43 @@ export default class BywiseVirtualMachine {
         }
     }
 
-    private getArrayValue(ctx: Context, registerId: string, index: number): Variable {
+    private _getArray(ctx: Context, registerId: string): Variable[] | undefined {
         if (registerId.length !== 8) throw new Error(`invalid length register ${registerId}`);
-        let vs = ctx.variablesArray.get(registerId);
+        let v = ctx.variablesArray.get(registerId);
+        if (v) {
+            return v;
+        }
+        if (ctx.subContext) {
+            return this._getArray(ctx.subContext, registerId);
+        } else {
+            return undefined;
+        }
+    }
+
+    private getSizeArray(ctx: Context, registerId: string): Variable {
+        let vs = this._getArray(ctx, registerId);
         if (vs !== undefined) {
-            return vs[index];
+            return new Variable(Types.number, `${vs.length}`);
+        }
+        throw new Error(`variable ${registerId} not found`);
+    }
+
+    private getArrayValue(ctx: Context, registerId: string, index: number): Variable {
+        let vs = this._getArray(ctx, registerId);
+        if (vs !== undefined) {
+            if (index < vs.length) {
+                return vs[index];
+            }
         }
         throw new Error(`variable ${registerId} [${index}] not found`);
     }
 
     private pushArray(ctx: Context, registerId: string, value: Variable, index: number | undefined) {
-        let vs = ctx.variablesArray.get(registerId);
+        let vs = this._getArray(ctx, registerId);
         if (vs !== undefined) {
-            if (index) {
+            if (index !== undefined) {
                 index = Math.floor(index);
-                if (index > 0) {
+                if (index >= 0) {
                     ctx.variablesArray.set(registerId, [...vs.slice(0, index), value, ...vs.slice(index)]);
                 } else {
                     throw new Error(`invalid index ${index}`);
@@ -1030,9 +1087,9 @@ export default class BywiseVirtualMachine {
         let vs = ctx.variablesArray.get(registerId);
         if (vs !== undefined) {
             let v = undefined;
-            if (index) {
+            if (index !== undefined) {
                 index = Math.floor(index);
-                if (index > 0) {
+                if (index >= 0) {
                     v = vs[index];
                     ctx.variablesArray.set(registerId, [...vs.slice(0, index), ...vs.slice(index + 1)]);
                 } else {
@@ -1046,5 +1103,59 @@ export default class BywiseVirtualMachine {
             }
         }
         throw new Error(`variable ${registerId} not found`);
+    }
+
+    private _getMap(ctx: Context, registerId: string): Map<string, Variable> | undefined {
+        if (registerId.length !== 8) throw new Error(`invalid length register ${registerId}`);
+        let v = ctx.variablesMap.get(registerId);
+        if (v) {
+            return v;
+        }
+        if (ctx.subContext) {
+            return this._getMap(ctx.subContext, registerId);
+        } else {
+            return undefined;
+        }
+    }
+
+    private setMap(ctx: Context, registerId: string, value: Variable, index: Variable) {
+        let vs = this._getMap(ctx, registerId);
+        if (vs !== undefined) {
+            if (index !== undefined) {
+                vs.set(`${index.type}:${index.value}`, value);
+            } else {
+                throw new Error(`invalid key ${registerId}`);
+            }
+        } else {
+            throw new Error(`variable ${registerId} not found`);
+        }
+    }
+
+    private getMap(ctx: Context, registerId: string, index: Variable): Variable {
+        let vs = this._getMap(ctx, registerId);
+        if (vs !== undefined) {
+            if (index !== undefined) {
+                let value = vs.get(`${index.type}:${index.value}`);
+                if (value === undefined) {
+                    throw new Error(`variable ${registerId} [${index.value}] not found`);
+                } else {
+                    return value;
+                }
+            } else {
+                throw new Error(`invalid key ${registerId}`);
+            }
+        } else {
+            throw new Error(`variable ${registerId} not found`);
+        }
+    }
+
+    private newMap(ctx: Context, persistence: string, registerId: string) {
+        let v = this._getMap(ctx, registerId);
+        if (v) {
+            throw new Error(`variable ${registerId} already defined`);
+        } else {
+            ctx.variables.set(registerId, new Variable(Types.map, 'map'));
+            ctx.variablesMap.set(registerId, new Map<string, Variable>());
+        }
     }
 }

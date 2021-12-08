@@ -282,24 +282,6 @@ export class ValueDTO extends Model {
 }
 
 @model()
-export class TryCompile extends Model {
-
-  @property({
-    type: 'string',
-  })
-  error?: string;
-
-  @property({
-    type: 'object',
-  })
-  contract?: object;
-
-  constructor(data?: Partial<TryCompile>) {
-    super(data);
-  }
-}
-
-@model()
 export class ValueBooleanDTO extends Model {
 
   @property({
@@ -314,12 +296,36 @@ export class ValueBooleanDTO extends Model {
 
 @model()
 export class SimulateSliceDTO extends Model {
-  tx: Transactions | undefined;
+  @property({
+    type: 'string',
+  })
+  simulate: boolean;
+
+  @property({
+    type: 'object',
+    itemType: Transactions
+  })
+  tx?: Transactions;
+
+  @property.array(SliceDTO)
   slicesModels: SliceDTO[] = [];
+
+  @property.array(Transactions)
   transactionsModels: Transactions[] = [];
+
+  @property.array(Wallets)
   walletsModels: Wallets[] = [];
+
+  @property.array(ContractsEnv)
   contractEnvModels: ContractsEnv[] = [];
+
+  @property.array(ContractsVars)
   contractVarsModels: ContractsVars[] = [];
+
+  @property({
+    type: 'object',
+    itemType: Configs
+  })
   configs: Configs[] = [];
 }
 
@@ -361,13 +367,13 @@ export class TransactionOutputDTO extends Model {
     type: 'array',
     itemType: 'string'
   })
-  logs: string[];
-  
+  logs: string[] = [];
+
   @property({
     type: 'array',
     itemType: VariableDTO
   })
-  output: VariableDTO[];
+  output: VariableDTO[] = [];
 
   constructor(data?: Partial<TransactionOutputDTO>) {
     super(data);
@@ -427,6 +433,128 @@ export class WalletInfoDTO extends Model {
   publicKey: string;
 
   constructor(data?: Partial<WalletInfoDTO>) {
+    super(data);
+  }
+}
+
+@model()
+export class SimulateAccountDTO extends Model {
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  address: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  balance: string;
+
+  constructor(data?: Partial<SimulateAccountDTO>) {
+    super(data);
+  }
+}
+
+@model()
+export class CompileRequestDTO extends Model {
+
+  @property({
+    type: 'string',
+    default: 'asm',
+  })
+  type: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  code: string;
+
+  @property({
+    type: 'string',
+  })
+  from?: string;
+
+  @property({
+    type: 'object',
+    itemType: SimulateSliceDTO,
+  })
+  ctx?: SimulateSliceDTO;
+
+  constructor(data?: Partial<CompileRequestDTO>) {
+    super(data);
+  }
+}
+
+@model()
+export class TryCompileDTO extends Model {
+
+  @property({
+    type: 'string',
+  })
+  error?: string;
+
+  @property({
+    type: 'object',
+  })
+  contract?: object;
+
+  @property.array(SimulateAccountDTO)
+  simulateAccounts?: SimulateAccountDTO[];
+
+  @property({
+    type: 'object',
+    itemType: TransactionOutputDTO,
+  })
+  output?: TransactionOutputDTO;
+
+  @property({
+    type: 'object',
+    itemType: SimulateSliceDTO,
+  })
+  ctx?: SimulateSliceDTO;
+
+  constructor(data?: Partial<TryCompileDTO>) {
+    super(data);
+  }
+}
+
+@model()
+export class SimulateContractDTO extends Model {
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  from: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  to: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  amount: string;
+
+  @property({
+    type: 'string',
+    default: '',
+  })
+  data: string;
+
+  @property({
+    type: 'object',
+    itemType: SimulateSliceDTO,
+  })
+  ctx?: SimulateSliceDTO;
+
+  constructor(data?: Partial<SimulateContractDTO>) {
     super(data);
   }
 }
