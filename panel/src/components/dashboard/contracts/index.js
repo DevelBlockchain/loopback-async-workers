@@ -84,10 +84,16 @@ export default class Contracts extends React.Component {
         super(props);
         this.state = {
             loading: false,
-            form: {
-                account: '',
-            }
+            address: undefined,
         }
+    }
+
+    componentDidMount = () => {
+        let address = this.props.match.params.address
+        if(address) {
+            this.setState({address});
+        }
+        console.log('address', address)
     }
 
     render() {
@@ -97,7 +103,7 @@ export default class Contracts extends React.Component {
                 <div className="container-fluid pt-5">
                     <div className="row">
                         <div className="col-sm-12">
-                            <SeeContract />
+                            <SeeContract address={this.state.address} />
                         </div>
                     </div>
                 </div>

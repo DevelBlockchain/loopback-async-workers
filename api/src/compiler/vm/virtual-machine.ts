@@ -76,6 +76,12 @@ export default class BywiseVirtualMachine {
             for (let i = 0; i < this.env.contract.publicFunctions.length; i++) {
                 let func = this.env.contract.publicFunctions[i];
                 if (func.name === name) {
+                    if (!ctx.tx) {
+                        throw new Error(`Transaction context not found`);
+                    }
+                    if (ctx.tx.amount !== "0" && !func.isPayable) {
+                        throw new Error(`function ${name} is not payable`);
+                    }
                     if (!func.isPaid && !ctx.simulate) {
                         throw new Error(`function ${name} is not paid`);
                     }

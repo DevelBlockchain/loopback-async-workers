@@ -21,6 +21,12 @@ export default class SeeContract extends Component {
 
     componentDidMount = async () => {
         await this.updateTable();
+        if (this.props.address) {
+            let form = this.state.form;
+            form.address = this.props.address
+            await this.setState({ form });
+            await this.loadContract();
+        }
     }
 
     updateTable = async () => {
@@ -64,7 +70,7 @@ export default class SeeContract extends Component {
             </>)
             return;
         }
-        if(isPaid) {
+        if (isPaid) {
             let tx = {
                 from: from,
                 to: this.state.form.address,
@@ -94,7 +100,7 @@ export default class SeeContract extends Component {
             let tx = {
                 from: from,
                 to: this.state.form.address,
-                amount: amount,
+                amount: '0',
                 data,
             };
             let req = await BywiseAPI.post(`/contracts/simulate`, tx);
@@ -157,7 +163,7 @@ export default class SeeContract extends Component {
                                 value={this.state.form.address}
                                 onChange={this.handleChange} />
                             <div className="input-group-append">
-                                <button className="btn btn-primary" disabled={this.state.load} onClick={this.loadContract}>{this.state.load ? 'Loading...' : 'Load'}</button>
+                                <button className="btn btn-primary" disabled={this.state.load || this.props.address} onClick={this.loadContract}>{this.state.load ? 'Loading...' : 'Load'}</button>
                             </div>
                         </div>
                     </div>
