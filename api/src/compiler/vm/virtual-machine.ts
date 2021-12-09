@@ -2,7 +2,7 @@ import BigNumber from "bignumber.js";
 import { SimulateSliceDTO } from "../../types";
 import { BywiseBlockchainInterface } from "../bywise/bywise-blockchain";
 import Compiler from "./compiler";
-import { CommandComplement, CommandSyntax, Context, ContractABI, Environment, ExecutedFunction, Function, FunctionABI, Operator, Type, Types, Variable } from "./data";
+import { CommandComplement, CommandSyntax, Context, ContractABI, Environment, ExecutedFunction, Function, FunctionABI, Operator, Type, Types, Variable, VariableMeta } from "./data";
 import { ULA } from "./ula";
 import fs from 'fs';
 
@@ -106,7 +106,11 @@ export default class BywiseVirtualMachine {
                         }
                     }
                     let executed = new ExecutedFunction();
-                    executed.output = this.outputValues;
+                    let outputResponse: any = {};
+                    this.outputValues.forEach((value, i) => {
+                        outputResponse[func.outputs[i].name] = value.toOutput();
+                    })
+                    executed.output = outputResponse;
                     executed.cost = this.env.cost;
                     executed.logs = this.env.logs;
                     return executed;
@@ -114,6 +118,7 @@ export default class BywiseVirtualMachine {
             }
             throw new Error(`function ${name} not found`);
         } catch (err: any) {
+            console.log(err)
             if (this.env.contract.debug) {
                 if (this.env.contract.names) {
                     this.env.contract.names.forEach((key, value) => {
@@ -257,13 +262,13 @@ export default class BywiseVirtualMachine {
                 }
             } else {
                 if (isInputs) {
-                    let value = this.getVar(env.ctx, word);
+                    let value = this.getVar(env.ctx, word).variable;
                     this.checkType(value, func.inputs[countVar]);
                     env.ctx.inputValues.push(value);
                     countVar++;
                 } else if (!isExternal) {
                     let registerId = this.getRegisterID(word);
-                    let value = this.getVar(env.ctx, word);
+                    let value = this.getVar(env.ctx, word).variable;
                     this.checkType(value, func.outputs[countVar]);
                     countVar++;
                     env.ctx.outputRegisters.push(registerId);
@@ -315,9 +320,9 @@ export default class BywiseVirtualMachine {
                         this.newValue(env.ctx, persistence, registerId, new Variable(type, type.defaultValue));
                     } else {
                         let value = this.getVar(env.ctx, valueBC);
-                        this.checkType(value, type)
+                        this.checkType(value.variable, type)
 
-                        this.newValue(env.ctx, persistence, registerId, value);
+                        this.newValue(env.ctx, persistence, registerId, value.variable);
                     }
                 }
             }
@@ -377,11 +382,11 @@ export default class BywiseVirtualMachine {
             (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
                 let [valueBD] = inputs;
                 let value = this.getVar(env.ctx, valueBD);
-                if(env.ctx.outputs.length === 0) {
+                if (env.ctx.outputs.length === 0) {
                     throw new Error(`function not has return`);
                 }
-                this.checkType(value, env.ctx.outputs[env.ctx.outputValues.length]);
-                env.ctx.outputValues.push(value);
+                this.checkType(value.variable, env.ctx.outputs[env.ctx.outputValues.length]);
+                env.ctx.outputValues.push(value.variable);
             }
         ));
         this.addOperator(new Operator(
@@ -411,13 +416,13 @@ export default class BywiseVirtualMachine {
                 let opRes = this.getRegisterID(resultVar);
                 let opA = this.getVar(env.ctx, a);
 
-                this.setValue(env.ctx, opRes, opA);
+                this.setValue(env.ctx, opRes, opA.variable);
             }
         ));
         this.addOperator(new Operator(
             'print',
             (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                let log = inputs.map(word => this.getVar(env.ctx, word).value).join(' ');
+                let log = inputs.map(word => this.getVar(env.ctx, word).variable.value).join(' ');
                 env.logs.push(log);
                 console.log('print logs', log);
             }
@@ -428,10 +433,10 @@ export default class BywiseVirtualMachine {
                 let [test, message] = inputs;
                 let opTest = this.getVar(env.ctx, test);
                 let opMessage = this.getVar(env.ctx, message);
-                this.checkType(opTest, Types.boolean);
-                this.checkType(opMessage, Types.string);
-                if (opTest.value === 'false') {
-                    throw new Error(opMessage.value);
+                this.checkType(opTest.variable, Types.boolean);
+                this.checkType(opMessage.variable, Types.string);
+                if (opTest.variable.value === 'false') {
+                    throw new Error(opMessage.variable.value);
                 }
             }
         ));
@@ -439,7 +444,7 @@ export default class BywiseVirtualMachine {
             'bywise',
             async (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
                 let nameFunction = this.getVar(env.ctx, inputs[0]);
-                this.checkType(nameFunction, Types.string);
+                this.checkType(nameFunction.variable, Types.string);
 
                 let inputValues: Variable[] = [];
                 let outputRegisters: string[] = [];
@@ -459,16 +464,16 @@ export default class BywiseVirtualMachine {
                     } else {
                         let value = this.getVar(env.ctx, word);
                         if (isInputs) {
-                            inputValues.push(value);
+                            inputValues.push(value.variable);
                         } else {
                             let registerId = this.getRegisterID(word);
                             outputRegisters.push(registerId);
                             let value = this.getVar(env.ctx, word);
-                            outputValues.push(value);
+                            outputValues.push(value.variable);
                         }
                     }
                 }
-                let returnValues = await this.bywiseBlockchain.executeFunction(ctx, env, nameFunction.value, inputValues);
+                let returnValues = await this.bywiseBlockchain.executeFunction(ctx, env, nameFunction.variable.value, inputValues);
                 for (let index = 0; index < outputRegisters.length; index++) {
                     const registerId = outputRegisters[index];
                     const value = outputValues[index];
@@ -492,9 +497,9 @@ export default class BywiseVirtualMachine {
                 let typeName = this.getReservedName(typeBC).name;
                 let newType = this.validateType(typeName);
                 let opRes = this.getRegisterID(resultVar);
-                let resultValue = this.getVar(env.ctx, resultVar);
+                let resultValue = this.getVar(env.ctx, resultVar).variable;
                 this.checkType(resultValue, newType);
-                let oldValue = this.getVar(env.ctx, oldValueName);
+                let oldValue = this.getVar(env.ctx, oldValueName).variable;
 
                 let newValue: string | undefined = undefined;
                 if (Types.string === newType) {
@@ -590,8 +595,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.equ(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -603,7 +608,7 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
+                let opA = this.getVar(env.ctx, a).variable;
                 let resultVal = this.ula.inv(opA);
 
                 this.setValue(env.ctx, opRes, resultVal);
@@ -615,8 +620,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.gt(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -628,8 +633,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.gte(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -641,8 +646,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.le(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -654,8 +659,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.lee(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -667,8 +672,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.and(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -680,8 +685,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.or(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -693,8 +698,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.add(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -706,8 +711,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.sub(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -719,8 +724,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.mul(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -732,8 +737,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.div(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -745,8 +750,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.exp(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -758,8 +763,8 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a, b] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
-                let opB = this.getVar(env.ctx, b);
+                let opA = this.getVar(env.ctx, a).variable;
+                let opB = this.getVar(env.ctx, b).variable;
 
                 let resultVal = this.ula.fixed(opA, opB);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -771,7 +776,7 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
+                let opA = this.getVar(env.ctx, a).variable;
 
                 let resultVal = this.ula.sqrt(opA);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -783,7 +788,7 @@ export default class BywiseVirtualMachine {
                 let [resultVar, a] = inputs;
 
                 let opRes = this.getRegisterID(resultVar);
-                let opA = this.getVar(env.ctx, a);
+                let opA = this.getVar(env.ctx, a).variable;
 
                 let resultVal = this.ula.abs(opA);
                 this.setValue(env.ctx, opRes, resultVal);
@@ -818,7 +823,7 @@ export default class BywiseVirtualMachine {
                 let registerId = this.getRegisterID(checkpoint);
                 let pointer = env.checkpoints.get(registerId);
                 if (pointer === undefined) throw new Error(`checkpoint label ${checkpoint} not found`);
-                let value = this.getVar(env.ctx, condition);
+                let value = this.getVar(env.ctx, condition).variable;
                 this.checkType(value, Types.boolean);
                 if (value.value === 'true') {
                     env.pointer = pointer;
@@ -832,7 +837,7 @@ export default class BywiseVirtualMachine {
                 let registerId = this.getRegisterID(checkpoint);
                 let pointer = env.checkpoints.get(registerId);
                 if (pointer === undefined) throw new Error(`checkpoint label ${checkpoint} not found`);
-                let value = this.getVar(env.ctx, condition);
+                let value = this.getVar(env.ctx, condition).variable;
                 this.checkType(value, Types.boolean);
                 if (value.value === 'false') {
                     env.pointer = pointer;
@@ -845,48 +850,43 @@ export default class BywiseVirtualMachine {
         this.addOperator(new Operator(
             'push',
             async (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                let [array, valueBC, indexBC] = inputs;
-                let registerId = this.getRegisterID(array);
+                let [arrayBC, valueBC, indexBC] = inputs;
+                let array = this.getVar(env.ctx, arrayBC);
                 let value = this.getVar(env.ctx, valueBC);
                 let voidValue = this.getBytecodeByName('void');
                 let index = undefined;
                 if (voidValue !== indexBC) {
                     let value = this.getVar(env.ctx, indexBC);
-                    this.checkType(value, Types.integer);
-                    index = value.getNumber().toNumber();
+                    this.checkType(value.variable, Types.integer);
+                    index = value.variable.getNumber().toNumber();
                 }
-                await this.pushArray(ctx, env, registerId, value, index);
+                await this.pushArray(ctx, env, array, value.variable, index);
             }
         ));
         this.addOperator(new Operator(
             'set',
             async (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                let [map, valueBC, indexBC] = inputs;
-                let registerId = this.getRegisterID(map);
+                let [mapBC, valueBC, indexBC] = inputs;
+                let map = this.getVar(env.ctx, mapBC);
                 let value = this.getVar(env.ctx, valueBC);
                 let index = this.getVar(env.ctx, indexBC);
-                await this.setMap(ctx, env, registerId, value, index);
+                await this.setMap(ctx, env, map, value.variable, index.variable);
             }
         ));
         this.addOperator(new Operator(
             'pop',
             async (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                let [resultVar, array, indexBC] = inputs;
-                let registerId = this.getRegisterID(array);
-                let arrayValue = this._getValue(env.ctx, registerId);
-                if (arrayValue === undefined) {
-                    throw new Error(`variable ${indexBC} not found`);
-                }
-                this.checkType(arrayValue, Types.array);
+                let [resultVar, arrayBC, indexBC] = inputs;
 
+                let array = this.getVar(env.ctx, arrayBC);
                 let voidValue = this.getBytecodeByName('void');
                 let index = undefined;
                 if (voidValue !== indexBC) {
                     let value = this.getVar(env.ctx, indexBC);
-                    this.checkType(value, Types.integer);
-                    index = value.getNumber().toNumber();
+                    this.checkType(value.variable, Types.integer);
+                    index = value.variable.getNumber().toNumber();
                 }
-                let value = await this.popArray(ctx, env, registerId, index);
+                let value = await this.popArray(ctx, env, array, index);
                 let opRes = this.getRegisterID(resultVar);
                 this.setValue(env.ctx, opRes, value);
             }
@@ -894,19 +894,17 @@ export default class BywiseVirtualMachine {
         this.addOperator(new Operator(
             'delete',
             async (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                let [arrayOrMap, indexBC] = inputs;
-                let registerId = this.getRegisterID(arrayOrMap);
-                let arrayOrMapValue = this._getValue(env.ctx, registerId);
+                let [arrayOrMapBC, indexBC] = inputs;
+
+                let arrayOrMap = this.getVar(env.ctx, arrayOrMapBC);
                 let index = this.getVar(env.ctx, indexBC);
 
-                if (arrayOrMapValue === undefined) {
-                    throw new Error(`variable ${indexBC} not found`);
-                } else if (arrayOrMapValue.type === Types.array) {
-                    this.checkType(index, Types.integer);
-                    let indexN = index.getNumber().toNumber();
-                    await this.popArray(ctx, env, registerId, indexN);
-                } else if (arrayOrMapValue.type === Types.map) {
-                    await this.delMap(ctx, env, registerId, index);
+                if (arrayOrMap.variable.type === Types.array) {
+                    this.checkType(index.variable, Types.integer);
+                    let indexN = index.variable.getNumber().toNumber();
+                    await this.popArray(ctx, env, arrayOrMap, indexN);
+                } else if (arrayOrMap.variable.type === Types.map) {
+                    await this.delMap(ctx, env, arrayOrMap, index.variable);
                 } else {
                     throw new Error(`variable ${indexBC} is not array or mapping`);
                 }
@@ -915,15 +913,11 @@ export default class BywiseVirtualMachine {
         this.addOperator(new Operator(
             'has',
             async (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                let [resultVar, map, indexBC] = inputs;
-                let registerId = this.getRegisterID(map);
-                let mapValue = this._getValue(env.ctx, registerId);
+                let [resultVar, mapBC, indexBC] = inputs;
+                let map = this.getVar(env.ctx, mapBC);
                 let index = this.getVar(env.ctx, indexBC);
-                if (mapValue === undefined) {
-                    throw new Error(`variable ${indexBC} not found`);
-                }
-                this.checkType(mapValue, Types.map);
-                let value = await this.hasMap(ctx, env, registerId, index);
+                this.checkType(map.variable, Types.map);
+                let value = await this.hasMap(ctx, env, map, index.variable);
                 let opRes = this.getRegisterID(resultVar);
                 this.setValue(env.ctx, opRes, value);
             }
@@ -931,19 +925,16 @@ export default class BywiseVirtualMachine {
         this.addOperator(new Operator(
             'get',
             async (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                let [resultVar, arrayOrMap, indexBC] = inputs;
-                let registerId = this.getRegisterID(arrayOrMap);
-                let arrayOrMapValue = this._getValue(env.ctx, registerId);
-                let index = this.getVar(env.ctx, indexBC);
+                let [resultVar, arrayOrMapBC, indexBC] = inputs;
+                let arrayOrMap = this.getVar(env.ctx, arrayOrMapBC);
+                let index = this.getVar(env.ctx, indexBC).variable;
                 let value;
-                if (arrayOrMapValue === undefined) {
-                    throw new Error(`variable ${indexBC} not found`);
-                } else if (arrayOrMapValue.type === Types.array) {
+                if (arrayOrMap.variable.type === Types.array) {
                     this.checkType(index, Types.integer);
                     let indexN = index.getNumber().toNumber();
-                    value = await this.getArrayValue(ctx, env, registerId, indexN);
-                } else if (arrayOrMapValue.type === Types.map) {
-                    value = await this.getMap(ctx, env, registerId, index);
+                    value = await this.getArrayValue(ctx, env, arrayOrMap, indexN);
+                } else if (arrayOrMap.variable.type === Types.map) {
+                    value = await this.getMap(ctx, env, arrayOrMap, index);
                 } else {
                     throw new Error(`variable ${indexBC} is not array or mapping`);
                 }
@@ -954,14 +945,26 @@ export default class BywiseVirtualMachine {
         this.addOperator(new Operator(
             'size',
             async (ctx: SimulateSliceDTO, env: Environment, inputs: string[]) => {
-                let [resultVar, array] = inputs;
-                let registerId = this.getRegisterID(array);
-                let value = await this.getSizeArray(ctx, env, registerId);
+                let [resultVar, arrayBC] = inputs;
+
+                let array = this.getVar(env.ctx, arrayBC);
+                let value = await this.getSizeArray(ctx, env, array);
 
                 let opRes = this.getRegisterID(resultVar);
                 this.setValue(env.ctx, opRes, value);
             }
         ));
+    }
+
+    private isRegisterID(register: string): boolean {
+        let size = 4;
+        let bytecode = register.substring(0, size);
+        let parameter = this.getReservedName(bytecode);
+        if (parameter.name === '*' && register.length === 12) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private getRegisterID(register: string): string {
@@ -979,14 +982,15 @@ export default class BywiseVirtualMachine {
         if (value.type !== type) throw new Error(`invalid type ${value.type} - need ${type}`);
     }
 
-    private getVar(ctx: Context, variableBC: string): Variable {
+    private getVar(ctx: Context, variableBC: string): VariableMeta {
         let size = 4;
         let bytecode = variableBC.substring(0, size);
         let parameter = this.getReservedName(bytecode);
         if (parameter.name === 'input') {
             let indexHex = variableBC.substring(4, 12);
             let index = Number.parseInt(indexHex, 16);
-            return this.getInputValue(ctx, index);
+            let variable = this.getInputValue(ctx, index);
+            return new VariableMeta(variable);
         } else if (parameter.name === '*') {
             let registerId = variableBC.substring(4, 12);
             return this.getValue(ctx, registerId);
@@ -1003,11 +1007,13 @@ export default class BywiseVirtualMachine {
             } else {
                 value = Buffer.from(valueBC, 'hex').toString('utf-8');
             }
-            return new Variable(type, value);
+            return new VariableMeta(new Variable(type, value));
         } else {
             throw new Error(`invalid register ${variableBC}`);
         }
     }
+
+
 
     private isAddress(address: string) {
         return address === 'BWS0000000000000000000000000000000000000000000' || !/ˆBWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0, 43}$/.test(address);
@@ -1029,15 +1035,15 @@ export default class BywiseVirtualMachine {
         this.cmds.push(op);
     }
 
-    private _getValue(ctx: Context, registerId: string): Variable | undefined {
+    private _getValue(ctx: Context, registerId: string): VariableMeta | undefined {
         if (registerId.length !== 8) throw new Error(`invalid length register ${registerId}`);
         let v = ctx.variables.get(registerId);
         if (v) {
-            return v;
+            return new VariableMeta(v, false, registerId);
         }
         v = ctx.globalVariables.get(registerId);
         if (v) {
-            return v;
+            return new VariableMeta(v, true, registerId);
         }
         if (ctx.subContext) {
             return this._getValue(ctx.subContext, registerId);
@@ -1054,12 +1060,9 @@ export default class BywiseVirtualMachine {
         }
     }
 
-    private getValue(ctx: Context, registerId: string): Variable {
+    private getValue(ctx: Context, registerId: string): VariableMeta {
         let v = this._getValue(ctx, registerId);
         if (v) {
-            if (v.type === Types.array || v.type === Types.map) {
-                throw new Error(`it is not possible to manipulate the ${v.type.name} in this way`);
-            }
             return v;
         } else {
             throw new Error(`variable ${registerId} not found`);
@@ -1083,7 +1086,7 @@ export default class BywiseVirtualMachine {
     }
 
     private setValue(ctx: Context, registerId: string, value: Variable) {
-        let v = this.getValue(ctx, registerId);
+        let v = this.getValue(ctx, registerId).variable;
         if (value.type === Types.array || value.type === Types.map) {
             throw new Error(`it is not possible to manipulate the ${value.type.name} in this way`);
         } else if (v.type !== value.type) {
@@ -1098,241 +1101,169 @@ export default class BywiseVirtualMachine {
     }
 
     private newArray(ctx: Context, persistence: string, registerId: string) {
-        let v = this._getValue(ctx, registerId);
-        if (v) {
-            throw new Error(`variable ${registerId} already defined`);
+        let value;
+        if (persistence === 'global') {
+            value = new Variable(Types.array, 'global');
         } else {
-            if (persistence === 'global') {
-                ctx.globalVariables.set(registerId, new Variable(Types.array, 'array'));
-            } else {
-                ctx.variables.set(registerId, new Variable(Types.array, 'array'));
-                ctx.variablesArray.set(registerId, []);
-            }
+            value = new Variable(Types.array, '[]');
         }
+        this.newValue(ctx, persistence, registerId, value);
     }
 
-    private _getArray(ctx: Context, registerId: string): Variable[] | undefined {
-        if (registerId.length !== 8) throw new Error(`invalid length register ${registerId}`);
-        let v = ctx.variablesArray.get(registerId);
-        if (v) {
-            return v;
-        }
-        if (ctx.subContext) {
-            return this._getArray(ctx.subContext, registerId);
-        } else {
-            return undefined;
-        }
-    }
-
-    private async getArrayValue(ctx: SimulateSliceDTO, env: Environment, registerId: string, index: number): Promise<Variable> {
-        let glovalV = env.ctx.globalVariables.get(registerId);
-        if (glovalV) {
-            let value = await this.bywiseBlockchain.getArray(ctx, env, registerId, index);
-            if (value === null) {
-                throw new Error(`variable ${registerId} [${index}] not found`);
-            } else {
+    private async getArrayValue(ctx: SimulateSliceDTO, env: Environment, array: VariableMeta, index: number): Promise<Variable> {
+        if (array.isGlobal) {
+            if (!array.registerId) throw new Error(`register id not found of global array`);
+            let value = await this.bywiseBlockchain.getArray(ctx, env, array.registerId, index);
+            if (value !== null) {
                 return value;
             }
         } else {
-            let vs = this._getArray(env.ctx, registerId);
-            if (vs !== undefined) {
-                if (index < vs.length) {
-                    return vs[index];
-                }
+            this.checkType(array.variable, Types.array);
+            let vs: any[] = JSON.parse(array.variable.value);
+            if (index < vs.length) {
+                let jsonVar = vs[index];
+                let type = Types.getType(jsonVar.type);
+                if (!type) throw new Error(`invalid type "${jsonVar.type}" at ${array.registerId} [${index}]`);
+                return new Variable(type, jsonVar.value);
             }
-            throw new Error(`variable ${registerId} [${index}] not found`);
         }
+        throw new Error(`variable ${array.registerId} [${index}] not found`);
     }
 
-    private async getSizeArray(ctx: SimulateSliceDTO, env: Environment, registerId: string): Promise<Variable> {
-        let glovalV = env.ctx.globalVariables.get(registerId);
-        if (glovalV) {
-            let value = await this.bywiseBlockchain.getArrayLength(ctx, env, registerId);
+    private async getSizeArray(ctx: SimulateSliceDTO, env: Environment, array: VariableMeta): Promise<Variable> {
+        if (array.isGlobal) {
+            if (!array.registerId) throw new Error(`register id not found of global array`);
+            let value = await this.bywiseBlockchain.getArrayLength(ctx, env, array.registerId);
             return new Variable(Types.integer, `${value}`);
         } else {
-            let vs = this._getArray(env.ctx, registerId);
-            if (vs !== undefined) {
-                return new Variable(Types.integer, `${vs.length}`);
-            }
-            throw new Error(`variable ${registerId} not found`);
+            this.checkType(array.variable, Types.array);
+            let vs: any[] = JSON.parse(array.variable.value);
+            return new Variable(Types.integer, `${vs.length}`);
         }
     }
 
-    private async pushArray(ctx: SimulateSliceDTO, env: Environment, registerId: string, value: Variable, index: number | undefined) {
-        let glovalV = env.ctx.globalVariables.get(registerId);
-        if (glovalV) {
-            await this.bywiseBlockchain.pushArray(ctx, env, registerId, value, index);
+    private async pushArray(ctx: SimulateSliceDTO, env: Environment, array: VariableMeta, value: Variable, index: number | undefined) {
+        if (array.isGlobal) {
+            if (!array.registerId) throw new Error(`register id not found of global array`);
+            await this.bywiseBlockchain.pushArray(ctx, env, array.registerId, value, index);
+            return;
         } else {
-            let vs = this._getArray(env.ctx, registerId);
-            if (vs !== undefined) {
-                if (index !== undefined) {
-                    index = Math.floor(index);
-                    if (index >= 0) {
-                        env.ctx.variablesArray.set(registerId, [...vs.slice(0, index), value, ...vs.slice(index)]);
-                    } else {
-                        throw new Error(`invalid index ${index}`);
-                    }
+            this.checkType(array.variable, Types.array);
+            let vs: any[] = JSON.parse(array.variable.value);
+            if (index !== undefined) {
+                index = Math.floor(index);
+                if (index >= 0) {
+                    vs = [...vs.slice(0, index), value, ...vs.slice(index)];
                 } else {
-                    vs.push(value);
+                    throw new Error(`invalid index ${index}`);
                 }
             } else {
-                throw new Error(`variable ${registerId} not found`);
+                vs.push(value);
             }
+            array.variable.value = JSON.stringify(vs);
+            return;
         }
+        throw new Error(`variable ${array.registerId} [${index}] not found`);
     }
 
-    private async popArray(ctx: SimulateSliceDTO, env: Environment, registerId: string, index: number | undefined): Promise<Variable> {
-        let glovalV = env.ctx.globalVariables.get(registerId);
-        if (glovalV) {
-            return await this.bywiseBlockchain.popArray(ctx, env, registerId, index);
+    private async popArray(ctx: SimulateSliceDTO, env: Environment, array: VariableMeta, index: number | undefined): Promise<Variable> {
+        if (array.isGlobal) {
+            if (!array.registerId) throw new Error(`register id not found of global array`);
+            return await this.bywiseBlockchain.popArray(ctx, env, array.registerId, index);
         } else {
-            let vs = env.ctx.variablesArray.get(registerId);
-            if (vs !== undefined) {
-                let v = undefined;
-                if (index !== undefined) {
-                    index = Math.floor(index);
-                    if (index >= 0) {
-                        v = vs[index];
-                        env.ctx.variablesArray.set(registerId, [...vs.slice(0, index), ...vs.slice(index + 1)]);
-                    } else {
-                        throw new Error(`invalid index ${index}`);
-                    }
+            this.checkType(array.variable, Types.array);
+            let vs: any[] = JSON.parse(array.variable.value);
+            let jsonVar;
+            if (index !== undefined) {
+                jsonVar = vs[index];
+                index = Math.floor(index);
+                if (index >= 0) {
+                    vs = [...vs.slice(0, index), ...vs.slice(index + 1)];
                 } else {
-                    v = vs.pop();
+                    throw new Error(`invalid index ${index}`);
                 }
-                if (v !== undefined) {
-                    return v;
-                }
+            } else {
+                jsonVar = vs.pop();
             }
-            throw new Error(`variable ${registerId} not found`);
+            array.variable.value = JSON.stringify(vs);
+            let type = Types.getType(jsonVar.type);
+            if (!type) throw new Error(`invalid type "${jsonVar.type}" at ${array.registerId} [${index}]`);
+            return new Variable(type, jsonVar.value);
         }
+        throw new Error(`variable ${array.registerId} [${index}] not found`);
     }
 
-    private _getMap(ctx: Context, registerId: string): Map<string, Variable> | undefined {
-        if (registerId.length !== 8) throw new Error(`invalid length register ${registerId}`);
-        let v = ctx.variablesMap.get(registerId);
-        if (v) {
-            return v;
-        }
-        if (ctx.subContext) {
-            return this._getMap(ctx.subContext, registerId);
-        } else {
-            return undefined;
-        }
-    }
-
-    private async delMap(ctx: SimulateSliceDTO, env: Environment, registerId: string, index: Variable): Promise<Variable> {
+    private async delMap(ctx: SimulateSliceDTO, env: Environment, array: VariableMeta, index: Variable): Promise<void> {
         let key = `${index.type}:${index.value}`;
-        let glovalV = env.globalVariables.get(registerId);
-        if (glovalV) {
-            let value = await this.bywiseBlockchain.getMap(ctx, env, registerId, key);
-            if (value === null) {
-                throw new Error(`variable ${registerId} [${index.value}] not found`);
-            } else {
-                await this.bywiseBlockchain.delMap(ctx, env, registerId, key);
-                return value;
-            }
+        if (array.isGlobal) {
+            if (!array.registerId) throw new Error(`register id not found of global array`);
+            await this.bywiseBlockchain.delMap(ctx, env, array.registerId, key);
         } else {
-            let vs = this._getMap(env.ctx, registerId);
-            if (vs !== undefined) {
-                if (index !== undefined) {
-                    let value = vs.get(key);
-                    vs.delete(key);
-                    if (value) {
-                        return value;
-                    } else {
-                        throw new Error(`variable ${registerId} [${index}] not found`);
-                    }
-                } else {
-                    throw new Error(`invalid key ${registerId}`);
-                }
-            } else {
-                throw new Error(`variable ${registerId} not found`);
-            }
+            this.checkType(array.variable, Types.map);
+            let vs: any = JSON.parse(array.variable.value);
+            vs[key] = undefined;
+            array.variable.value = JSON.stringify(vs);
         }
     }
 
-    private async setMap(ctx: SimulateSliceDTO, env: Environment, registerId: string, value: Variable, index: Variable): Promise<void> {
+    private async setMap(ctx: SimulateSliceDTO, env: Environment, array: VariableMeta, value: Variable, index: Variable): Promise<void> {
         let key = `${index.type}:${index.value}`;
-        let glovalV = env.globalVariables.get(registerId);
-        if (glovalV) {
-            await this.bywiseBlockchain.setMap(ctx, env, registerId, key, value);
+        if (array.isGlobal) {
+            if (!array.registerId) throw new Error(`register id not found of global array`);
+            await this.bywiseBlockchain.setMap(ctx, env, array.registerId, key, value);
         } else {
-            let vs = this._getMap(env.ctx, registerId);
-            if (vs !== undefined) {
-                if (index !== undefined) {
-                    vs.set(key, value);
-                } else {
-                    throw new Error(`invalid key ${registerId}`);
-                }
-            } else {
-                throw new Error(`variable ${registerId} not found`);
-            }
+            this.checkType(array.variable, Types.map);
+            let vs: any = JSON.parse(array.variable.value);
+            vs[key] = value;
+            array.variable.value = JSON.stringify(vs);
         }
     }
 
-    private async hasMap(ctx: SimulateSliceDTO, env: Environment, registerId: string, index: Variable): Promise<Variable> {
+    private async hasMap(ctx: SimulateSliceDTO, env: Environment, array: VariableMeta, index: Variable): Promise<Variable> {
         let key = `${index.type}:${index.value}`;
-        let glovalV = env.globalVariables.get(registerId);
-        if (glovalV) {
-            let value = await this.bywiseBlockchain.getMap(ctx, env, registerId, key);
+        if (array.isGlobal) {
+            if (!array.registerId) throw new Error(`register id not found of global array`);
+            let value = await this.bywiseBlockchain.getMap(ctx, env, array.registerId, key);
             if (value !== null) {
                 return new Variable(Types.boolean, 'true');
             }
         } else {
-            let vs = this._getMap(env.ctx, registerId);
-            if (vs !== undefined) {
-                let value = vs.get(key);
-                if (value !== undefined) {
-                    return new Variable(Types.boolean, 'true');
-                }
-            } else {
-                throw new Error(`variable ${registerId} not found`);
-            }
+            this.checkType(array.variable, Types.map);
+            let vs: any = JSON.parse(array.variable.value);
+            let jsonVar = vs[key];
+            return new Variable(Types.boolean, `${jsonVar !== undefined}`);
         }
         return new Variable(Types.boolean, 'false');
     }
 
-    private async getMap(ctx: SimulateSliceDTO, env: Environment, registerId: string, index: Variable): Promise<Variable> {
+    private async getMap(ctx: SimulateSliceDTO, env: Environment, array: VariableMeta, index: Variable): Promise<Variable> {
         let key = `${index.type}:${index.value}`;
-        let glovalV = env.globalVariables.get(registerId);
-        if (glovalV) {
-            let value = await this.bywiseBlockchain.getMap(ctx, env, registerId, key);
-            if (value === null) {
-                throw new Error(`variable ${registerId} [${index.value}] not found`);
-            } else {
+        if (array.isGlobal) {
+            if (!array.registerId) throw new Error(`register id not found of global array`);
+            let value = await this.bywiseBlockchain.getMap(ctx, env, array.registerId, key);
+            if (value !== null) {
                 return value;
             }
         } else {
-            let vs = this._getMap(env.ctx, registerId);
-            if (vs !== undefined) {
-                if (index !== undefined) {
-                    let value = vs.get(key);
-                    if (value === undefined) {
-                        throw new Error(`variable ${registerId} [${index.value}] not found`);
-                    } else {
-                        return value;
-                    }
-                } else {
-                    throw new Error(`invalid key ${registerId}`);
-                }
-            } else {
-                throw new Error(`variable ${registerId} not found`);
+            this.checkType(array.variable, Types.map);
+            let vs: any = JSON.parse(array.variable.value);
+            let jsonVar = vs[key];
+            if (jsonVar) {
+                let type = Types.getType(jsonVar.type);
+                if (!type) throw new Error(`invalid type "${jsonVar.type}" at ${array.registerId} [${index}]`);
+                return new Variable(type, jsonVar.value);
             }
         }
+        throw new Error(`variable ${array.registerId} [${index.value}] not found`);
     }
 
     private newMap(ctx: Context, persistence: string, registerId: string) {
-        let v = this._getMap(ctx, registerId);
-        if (v) {
-            throw new Error(`variable ${registerId} already defined`);
+        let value;
+        if (persistence === 'global') {
+            value = new Variable(Types.map, 'global');
         } else {
-            if (persistence === 'global') {
-                ctx.globalVariables.set(registerId, new Variable(Types.map, 'map'));
-            } else {
-                ctx.variables.set(registerId, new Variable(Types.map, 'map'));
-                ctx.variablesMap.set(registerId, new Map<string, Variable>());
-            }
+            value = new Variable(Types.map, '{}');
         }
+        this.newValue(ctx, persistence, registerId, value);
     }
 }

@@ -335,15 +335,11 @@ export class SimulateSliceDTO {
 
 @model()
 export class VariableDTO extends Model {
-  @property({
-    type: 'string',
-  })
-  type: string;
 
   @property({
-    type: 'string',
+    type: 'any',
   })
-  value: string;
+  value: any;
 
   constructor(data?: Partial<VariableDTO>) {
     super(data);
@@ -374,10 +370,9 @@ export class TransactionOutputDTO extends Model {
   logs: string[] = [];
 
   @property({
-    type: 'array',
-    itemType: VariableDTO
+    type: 'object'
   })
-  output: VariableDTO[] = [];
+  output: any;
 
   constructor(data?: Partial<TransactionOutputDTO>) {
     super(data);

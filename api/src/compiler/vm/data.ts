@@ -1,10 +1,10 @@
 import BigNumber from "bignumber.js";
-import { SimulateSliceDTO } from "../../types";
+import { SimulateSliceDTO, VariableDTO } from "../../types";
 
 export class Type {
     name: string;
     defaultValue: string;
-    isNumber: boolean
+    isNumber: boolean;
 
     constructor(name: string, defaultValue: string, isNumber: boolean) {
         this.name = name;
@@ -24,8 +24,8 @@ export class Types {
     static address = new Type('address', 'BWS0000000000000000000000000000000000000000000', false);
     static binary = new Type('binary', '0x', false);
     static boolean = new Type('boolean', 'false', false);
-    static array = new Type('array', 'array', false);
-    static map = new Type('map', 'map', false);
+    static array = new Type('array', '[]', false);
+    static map = new Type('map', '{}', false);
 
     static getType(name: string): Type | undefined {
         let type: Type | undefined = undefined;
@@ -64,11 +64,45 @@ export class Variable {
         }
     }
 
+    toOutput(): any {
+        if (this.type === Types.array) {
+            let jsonArray: any[] = JSON.parse(this.value);
+            let array: any[] = [];
+            jsonArray.forEach(value => {
+                const variable = Variable.fromJSON(value).toOutput();
+                array.push(variable);
+            })
+            return array;
+        } else if (this.type === Types.map) {
+            let jsonArray: any = JSON.parse(this.value);
+            let obj: any = {};
+            Object.entries(jsonArray).forEach(([key, value]) => {
+                const variable = Variable.fromJSON(value).toOutput();
+                obj[key.split(':')[1]] = variable;
+            })
+            return obj;
+        } else {
+            return this.value;
+        }
+    }
+
     static fromJSON(json: any): Variable {
         let type = Types.getType(json.type);
         if (type === undefined) throw new Error(`Internal fatal error - invalid type ${json.type}`);
         let obj = new Variable(type, json.value);
         return obj;
+    }
+}
+
+export class VariableMeta {
+    variable: Variable;
+    isGlobal: boolean;
+    registerId?: string;
+
+    constructor(variable: Variable, isGlobal?: boolean, registerId?: string) {
+        this.variable = variable;
+        this.isGlobal = isGlobal ? isGlobal : false;
+        this.registerId = registerId;
     }
 }
 
@@ -178,8 +212,6 @@ export class Context {
     stack: number = 0;
     globalVariables = new Map<string, Variable>();
     variables = new Map<string, Variable>();
-    variablesArray = new Map<string, Variable[]>();
-    variablesMap = new Map<string, Map<string, Variable>>();
     inputs: Type[] = [];
     outputs: Type[] = [];
     inputValues: Variable[] = [];
@@ -387,7 +419,7 @@ export class ContractABI {
 }
 
 export class ExecutedFunction {
-    output: Variable[] = [];
+    output: any = {};
     cost: number = 0;
     logs: string[] = [];
 }

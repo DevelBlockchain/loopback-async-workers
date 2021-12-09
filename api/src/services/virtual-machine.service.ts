@@ -177,11 +177,9 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         cmd.name,
         cmd.input,
       );
-      transactionOutput.output = output.output.map(out => new VariableDTO({
-        type: out.type.name,
-        value: out.value
-      }));
+      
       contractEnv.env = JSON.stringify(env.toJSON());
+      transactionOutput.output = output.output;
       transactionOutput.cost = output.cost;
       transactionOutput.logs = output.logs;
     } else if (tx.type === TransactionsType.TX_COMMAND) {
@@ -201,6 +199,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       throw new Error(`Invalid fee`);
     }
     transactionOutput.fee = fee;
+    transactionOutput.output = transactionOutput.output
     tx.output = transactionOutput;
     return transactionOutput;
   }
