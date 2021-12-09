@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import BywiseAPI from "../../../api/api";
-import ExecContract from "./exec-contract";
-import DialogModal from './../../common/dialog-modal';
+import ExecContract from "../../common/contracts/exec-contract";
+import DialogModal from '../../common/dialog-modal';
 
 export default class SeeContract extends Component {
 
@@ -9,39 +9,29 @@ export default class SeeContract extends Component {
         super(props);
         this.state = {
             load: false,
-            contract: {
-                address: '',
-                bytecode: '',
-                functions: [],
-                nonce: 0,
-            },
-            ctx: {},
             functions: [],
             accounts: [],
-            address: '',
             form: {
+                account: '',
                 amount: '0',
-                account: ''
+                address: ''
             }
         }
     }
 
-    componentDidMount() {
-        let contract = this.props.contract;
-        let ctx = this.props.ctx;
-        let accounts = this.props.simulateAccounts;
-        let address = contract.address;
-        let functions = contract.publicFunctions
+    componentDidMount = async () => {
+        await this.updateTable();
+    }
+
+    updateTable = async () => {
+        await this.setState({ loading: true });
+        let req = await BywiseAPI.get('/my-wallets');
+        if (req.error) return;
+        let wallets = req.data;
+        let accounts = wallets.map(wallet => `${wallet.name} - ${wallet.address}`);
         let form = this.state.form;
-        form.account = accounts[0].address
-        this.setState({
-            contract,
-            ctx,
-            accounts,
-            address,
-            functions,
-            form,
-        });
+        form.account = accounts[0];
+        await this.setState({ loading: false, wallets, accounts, form });
     }
 
     handleChange = (event) => {
@@ -51,44 +41,79 @@ export default class SeeContract extends Component {
         this.setState({ form })
     }
 
+    loadContract = async () => {
+        await this.setState({ load: true });
+        let req = await BywiseAPI.get(`/contracts/${this.state.form.address}/abi`);
+        if (req.error) return;
+        await this.setState({ load: false, functions: req.data.contract.publicFunctions });
+    }
+
     trySend = async (data, isPaid) => {
         let logs = [];
-        let from = this.state.form.account
+        let from = this.state.form.account.split(' - ')[1]
         let amount = this.state.form.amount.replace(',', '.');
+        if (!from) {
+            this.dialog.show('Error', <>
+                <div>Invalid Account</div>
+            </>)
+            return;
+        }
         if (!/^[0-9]\.*[0-9]*$/.test(amount)) {
             this.dialog.show('Error', <>
                 <div>Invalid amount</div>
             </>)
             return;
         }
-        let tx = {
-            ctx: this.state.ctx,
-            from: from,
-            to: this.state.address,
-            amount: this.state.form.amount,
-            data,
-        };
-        let req = await BywiseAPI.post(`/contracts/simulate`, tx);
-        if (req.error) {
-            logs.push(<span className="text-danger">{req.error}</span>)
-        } else {
-            let accounts = req.data.simulateAccounts;
-            let ctx = req.data.ctx;
-            let output = req.data.output;
-            logs.push(<span><strong>Computational cost:</strong> {output.cost}</span>)
-            logs.push(<span><strong>Data transaction size:</strong> {output.size}</span>)
-            logs.push(<span><strong>Fee:</strong> {output.fee}</span>)
-            if (output.logs) output.logs.forEach(log => {
-                logs.push(<span><strong>LOG:</strong> {log}</span>)
-            })
-            if (output.output) {
-                logs.push(<span><strong>OUTPUT:</strong> {JSON.stringify(output.output, null, 2)}</span>)
+        if(isPaid) {
+            let tx = {
+                from: from,
+                to: this.state.form.address,
+                type: 'contract-exe',
+                amount: amount,
+                data,
+            };
+            let req = await BywiseAPI.post(`/users-transactions`, tx);
+            if (req.error) return;
+            if (req.data.error) {
+                logs.push(<span className="text-danger">{req.data.error}</span>)
+            } else {
+                let accounts = req.data.simulateAccounts;
+                let ctx = req.data.ctx;
+                let output = req.data.output;
+                logs.push(<span><strong>Computational cost:</strong> {output.cost}</span>)
+                logs.push(<span><strong>Data transaction size:</strong> {output.size}</span>)
+                logs.push(<span><strong>Fee:</strong> {output.fee}</span>)
+                if (output.logs) output.logs.forEach(log => {
+                    logs.push(<span><strong>LOG:</strong> {log}</span>)
+                })
+                if (output.output) {
+                    logs.push(<span><strong>OUTPUT:</strong> {JSON.stringify(output.output, null, 2)}</span>)
+                }
             }
-            if (isPaid) {
-                this.setState({
-                    ctx,
-                    accounts,
-                });
+        } else {
+            let tx = {
+                from: from,
+                to: this.state.form.address,
+                amount: amount,
+                data,
+            };
+            let req = await BywiseAPI.post(`/contracts/simulate`, tx);
+            if (req.error) return;
+            if (req.data.error) {
+                logs.push(<span className="text-danger">{req.data.error}</span>)
+            } else {
+                let accounts = req.data.simulateAccounts;
+                let ctx = req.data.ctx;
+                let output = req.data.output;
+                logs.push(<span><strong>Computational cost:</strong> {output.cost}</span>)
+                logs.push(<span><strong>Data transaction size:</strong> {output.size}</span>)
+                logs.push(<span><strong>Fee:</strong> {output.fee}</span>)
+                if (output.logs) output.logs.forEach(log => {
+                    logs.push(<span><strong>LOG:</strong> {log}</span>)
+                })
+                if (output.output) {
+                    logs.push(<span><strong>OUTPUT:</strong> {JSON.stringify(output.output, null, 2)}</span>)
+                }
             }
         }
         this.dialog.show('Response', <>
@@ -100,24 +125,16 @@ export default class SeeContract extends Component {
         return (<>
             <div className="card">
                 <div className="card-header border-none">
-                    <h5>Simulate Your Smartcontract</h5>
+                    <h5>Interact with the smart contract</h5>
                 </div>
                 <div className="card-body">
-                    <div>
-                        <label className="mt-2">Simulate accounts:</label>
-                        <div className="box-log">
-                            {this.state.accounts.map((account, i) => <div key={`account-${i}`}>
-                                <span><strong>{account.address}:</strong> {account.balance}</span>
-                            </div>)}
-                        </div>
-                    </div>
                     <div className="form-group">
                         <label>Account</label>
                         <select className="form-control digits"
                             name="account"
                             value={this.state.form.account}
                             onChange={this.handleChange}>
-                            {this.state.accounts.map(account => <option key={account.address}>{`${account.address}`}</option>)}
+                            {this.state.accounts.map(account => <option key={account}>{account}</option>)}
                         </select>
                     </div>
                     <div className="form-group">
@@ -128,6 +145,21 @@ export default class SeeContract extends Component {
                             name="amount"
                             value={this.state.form.amount}
                             onChange={this.handleChange} />
+                    </div>
+                    <hr className="mb-2" />
+                    <div className="form-group mb-4">
+                        <label>Contract Address</label>
+                        <div className="input-group">
+                            <input className="form-control"
+                                type="text"
+                                placeholder="BWS0000000000000000000000000000000000000000000"
+                                name="address"
+                                value={this.state.form.address}
+                                onChange={this.handleChange} />
+                            <div className="input-group-append">
+                                <button className="btn btn-primary" disabled={this.state.load} onClick={this.loadContract}>{this.state.load ? 'Loading...' : 'Load'}</button>
+                            </div>
+                        </div>
                     </div>
                     <hr className="mb-5" />
                     {this.state.functions.map((func, i) => <ExecContract

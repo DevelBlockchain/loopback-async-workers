@@ -22,8 +22,12 @@ export class ContractsVars extends Entity {
   registerId: string;
 
   @property({
+    type: 'number',
+  })
+  indexKey: number;
+
+  @property({
     type: 'string',
-    required: true,
   })
   key: string;
 

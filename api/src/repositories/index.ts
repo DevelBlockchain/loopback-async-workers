@@ -12,3 +12,4 @@ export * from './permissions.repository';
 export * from './roles.repository';
 export * from './partners.repository';
 export * from './contracts-vars-simulation.repository';
+export * from './simulations.repository';

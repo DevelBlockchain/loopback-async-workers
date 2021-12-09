@@ -28,8 +28,12 @@ export class ContractsVarsSimulation extends Entity {
   registerId: string;
 
   @property({
+    type: 'number',
+  })
+  indexKey: number;
+
+  @property({
     type: 'string',
-    required: true,
   })
   key: string;
 
@@ -44,18 +48,6 @@ export class ContractsVarsSimulation extends Entity {
     required: true,
   })
   type: string;
-
-  @property({
-    type: 'boolean',
-    required: true,
-  })
-  del: boolean;
-
-  @property({
-    type: "date",
-    default: '$now'
-  })
-  created: string;
 
   constructor(data?: Partial<ContractsVarsSimulation>) {
     super(data);

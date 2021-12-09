@@ -15,7 +15,7 @@ class CustomHighlightRules extends window.ace.acequire("ace/mode/text_highlight_
         var keywords = (
             "return|nop|define|function|exec|end|mov|print|cast|equ|inv|gt|gte|le|lee|and|" +
             "or|add|sub|mul|div|exp|fixed|sqrt|abs|checkpoint|jump|jumpif|jumpnif|bywise|push|pop|set|has|" +
-            "get|size|delete"
+            "get|size|delete|require"
         );
         var builtinConstants = (
             "true|false|void"
@@ -84,116 +84,10 @@ export default class Contracts extends React.Component {
         super(props);
         this.state = {
             loading: false,
-            load: false,
-            loadDep: false,
-            contract: {
-                functions: [],
-                address: '',
-                bytecode: '',
-                nonce: 0,
-            },
-            ctx: {},
-            simulateAccounts: [],
-            success: false,
-            successDep: false,
-            text: "",
-            logs: [],
             form: {
                 account: '',
             }
         }
-    }
-
-    componentDidMount() {
-        const customMode = new CustomSqlMode();
-        this.refs.aceEditor.editor.getSession().setMode(customMode);
-        let code = localStorage.getItem('code')
-        if (code) {
-            this.setState({
-                text: code
-            })
-        }
-        this.updateTable();
-    }
-
-    updateTable = async () => {
-        await this.setState({ loading: true });
-
-        let req = await BywiseAPI.get('/my-wallets');
-        if (req.error) return;
-        let wallets = req.data;
-        let accounts = wallets.map(wallet => `${wallet.name} - ${wallet.address}`);
-        let form = this.state.form;
-        form.account = accounts[0];
-        await this.setState({ loading: false, wallets, accounts, form });
-    }
-
-    handleChange = (event) => {
-        let form = this.state.form
-        let value = event.target.type === 'checkbox' ? event.target.checked : event.target.value
-        form[event.target.name] = value
-        this.setState({ form })
-    }
-
-    onChange = (newValue) => {
-        this.setState({ text: newValue, success: false, successDep: false })
-    }
-
-    compile = async () => {
-        await this.setState({ load: true });
-        localStorage.setItem('code', this.state.text)
-        await sleep(1000);
-        let logs = [];
-        let success = true;
-        let req = await BywiseAPI.post(`/contracts/compiler`, {
-            type: 'asm',
-            code: this.state.text
-        });
-        if (req.error) return;
-        if (req.data.error) {
-            success = false;
-            logs.push(<span className="text-danger">{req.data.error}</span>)
-        } else {
-            let contract = req.data.contract;
-            let ctx = req.data.ctx;
-            let simulateAccounts = req.data.simulateAccounts;
-            logs.push(<span className="text-success">Compilation success!</span>)
-            logs.push(<span><strong>Contract Address:</strong> {contract.address}</span>)
-            let output = req.data.output;
-            logs.push(<span><strong>Computational cost:</strong> {output.cost}</span>)
-            logs.push(<span><strong>Data transaction size:</strong> {output.size}</span>)
-            logs.push(<span><strong>Fee:</strong> {output.fee}</span>)
-            if (output.logs) output.logs.forEach(log => {
-                logs.push(<span><strong>LOG:</strong> {log}</span>)
-            })
-            if (output.output) {
-                logs.push(<span><strong>OUTPUT:</strong> {JSON.stringify(output.output, null, 2)}</span>)
-            }
-            await this.setState({ contract, ctx, simulateAccounts });
-        }
-        await this.setState({ load: false, success, logs });
-    }
-
-    deploy = async () => {
-        await this.setState({ loadDep: true });
-        await sleep(1000);
-        let address = this.state.form.account.split(' - ')[1];
-        let tx = {
-            from: address,
-            to: this.state.contract.address,
-            amount: "0",
-            type: 'contract',
-            data: JSON.stringify(this.state.contract),
-        };
-        let req = await BywiseAPI.post(`/users-transactions`, tx);
-        if (!req.error) {
-            console.log(req.data);
-            this.dialog.show('Transaction send!', <>
-                <span>TxId: <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
-            </>)
-            await this.setState({ successDep: true });
-        }
-        await this.setState({ loadDep: false });
     }
 
     render() {
@@ -203,61 +97,8 @@ export default class Contracts extends React.Component {
                 <div className="container-fluid pt-5">
                     <div className="row">
                         <div className="col-sm-12">
-                            <div className="card">
-                                <div className="card-header">
-                                    <h5>Code your smartcontract</h5>
-                                </div>
-                                <div className="card-body">
-                                    <AceEditor
-                                        ref="aceEditor"
-                                        mode="sql"
-                                        theme="monokai"
-                                        width="100%"
-                                        showPrintMargin={true}
-                                        showGutter={true}
-                                        highlightActiveLine={true}
-                                        onChange={this.onChange}
-                                        name="UNIQUE_ID_OF_DIV"
-                                        value={this.state.text}
-                                        editorProps={{ $blockScrolling: true }}
-                                    />
-                                    <button className={this.state.success ? "btn btn-success mt-2" : "btn btn-primary mt-2"} disabled={this.state.load || this.state.success} onClick={this.compile}>{this.state.load ? 'Loading...' : (this.state.success ? 'Success' : 'Compile')}</button>
-                                    <div>
-                                        <label className="mt-2">Log:</label>
-                                        <div className="box-log">
-                                            {this.state.logs.map((item, i) => <div key={`log-${i}`}>{item}</div>)}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <SeeContract />
                         </div>
-                        {this.state.success && <>
-                            <div className="col-sm-12">
-                                <SeeContract
-                                    ctx={this.state.ctx}
-                                    contract={this.state.contract}
-                                    simulateAccounts={this.state.simulateAccounts} />
-                            </div>
-                            <div className="col-sm-12">
-                                <div className="card">
-                                    <div className="card-header">
-                                        <h5>Deploy your smartcontract</h5>
-                                    </div>
-                                    <div className="card-body">
-                                        <div className="form-group mt-2">
-                                            <label>Account</label>
-                                            <select className="form-control digits"
-                                                name="account"
-                                                value={this.state.form.account}
-                                                onChange={this.handleChange}>
-                                                {this.state.accounts.map(account => <option key={account}>{account}</option>)}
-                                            </select>
-                                        </div>
-                                        <button className={this.state.successDep ? "btn btn-success mt-2" : "btn btn-primary mt-2"} disabled={this.state.loadDep} onClick={this.deploy}>{this.state.loadDep ? 'Loading...' : (this.state.successDep ? 'Success' : 'Deploy')}</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </>}
                     </div>
                 </div>
                 <DialogModal ref={ref => this.dialog = ref} />

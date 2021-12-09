@@ -282,10 +282,6 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     throw new Error("Method not implemented.");
   }
 
-  async saveEnvironment(ctx: SimulateSliceDTO, env: Environment): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
-
   async executeFunction(ctx: SimulateSliceDTO, env: Environment, name: string, inputs: Variable[]): Promise<Variable[]> {
     if (name === 'print') {
       console.log('Execute funtion on bywise inteface', inputs.map(v => v.value).join(' '))
@@ -301,27 +297,34 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       } else {
         throw new Error(`invalid input size - expected ${1} received ${inputs.length}`);
       }
+    } else if (name === 'tx.from') {
+      if (!ctx.tx) throw new Error("Transaction context not found");
+      return [new Variable(Types.address, ctx.tx.from)];
+    } else if (name === 'tx.amount') {
+      if (!ctx.tx) throw new Error("Transaction context not found");
+      return [new Variable(Types.number, ctx.tx.amount)];
+    } else if (name === 'tx.validator') {
+      if (!ctx.tx) throw new Error("Transaction context not found");
+      return [new Variable(Types.address, ctx.tx.validator)];
     }
     throw new Error("Method not implemented.");
   }
 
-  newArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, type: Type): Promise<void> => {
-    throw new Error("Method not implemented")
+  pushArray = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, value: Variable, index: number | undefined): Promise<void> => {
+    if (!ctx.tx) throw new Error("Transaction context not found");
+    await this.contractsVarsProvider.arrayPush(ctx.simulateId, ctx.tx.to, registerId, value.value, value.type, index);
   }
-  pushArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint, value: Variable): Promise<void> => {
-    throw new Error("Method not implemented")
+  popArray = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, index: number | undefined): Promise<Variable> => {
+    if (!ctx.tx) throw new Error("Transaction context not found");
+    return await this.contractsVarsProvider.arrayPop(ctx.simulateId, ctx.tx.to, registerId, index);
   }
-  popArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint): Promise<Variable> => {
-    throw new Error("Method not implemented")
+  getArrayLength = async (ctx: SimulateSliceDTO, env: Environment, registerId: string): Promise<number> => {
+    if (!ctx.tx) throw new Error("Transaction context not found");
+    return await this.contractsVarsProvider.getArrayLength(ctx.simulateId, ctx.tx.to, registerId);
   }
-  getArrayLength = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: Variable): Promise<bigint> => {
-    throw new Error("Method not implemented")
-  }
-  setArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint, value: Variable): Promise<void> => {
-    throw new Error("Method not implemented")
-  }
-  getArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint): Promise<Variable> => {
-    throw new Error("Method not implemented")
+  getArray = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, index: number): Promise<Variable | null> => {
+    if (!ctx.tx) throw new Error("Transaction context not found");
+    return await this.contractsVarsProvider.getArray(ctx.simulateId, ctx.tx.to, registerId, index);
   }
 
   setMap = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, key: string, value: Variable): Promise<void> => {

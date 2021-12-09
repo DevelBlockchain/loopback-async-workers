@@ -11,10 +11,6 @@ export class BywiseBlockchainDebug implements BywiseBlockchainInterface {
         this.contractsVarsProvider = contractsVarsProvider;
     }
 
-    async saveEnvironment(ctx: SimulateSliceDTO, env: Environment): Promise<void> {
-        throw new Error("Method not implemented.");
-    }
-
     async executeFunction(ctx: SimulateSliceDTO, env: Environment, name: string, inputs: Variable[]): Promise<Variable[]> {
         if (name === 'print') {
             console.log('Execute funtion on bywise inteface', inputs.map(v => v.value).join(' '))
@@ -23,22 +19,16 @@ export class BywiseBlockchainDebug implements BywiseBlockchainInterface {
         throw new Error("Method not implemented.");
     }
 
-    newArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, type: Type): Promise<void> => {
+    pushArray = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, value: Variable, index: number | undefined): Promise<void> => {
         throw new Error("Method not implemented")
     }
-    pushArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint, value: Variable): Promise<void> => {
+    popArray = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, index: number | undefined): Promise<Variable> => {
         throw new Error("Method not implemented")
     }
-    popArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint): Promise<Variable> => {
+    getArrayLength = async (ctx: SimulateSliceDTO, env: Environment, registerId: string): Promise<number> => {
         throw new Error("Method not implemented")
     }
-    getArrayLength = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: Variable): Promise<bigint> => {
-        throw new Error("Method not implemented")
-    }
-    setArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint, value: Variable): Promise<void> => {
-        throw new Error("Method not implemented")
-    }
-    getArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint): Promise<Variable> => {
+    getArray = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, index: number): Promise<Variable | null> => {
         throw new Error("Method not implemented")
     }
 

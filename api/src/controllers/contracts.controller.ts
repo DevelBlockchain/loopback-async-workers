@@ -66,12 +66,12 @@ export class ContractsController {
     })
     compileRequestDTO: CompileRequestDTO,
   ): Promise<any> {
+    let ctx: SimulateSliceDTO;
     try {
       let compiler = new Compiler(BywiseVirtualMachine.getDictionary());
       let isMainnet = ContractProvider.isMainNet();
       let abi = compiler.compilerASM(isMainnet, compileRequestDTO.code);
       let accounts: SimulateAccountDTO[] = [];
-      let ctx: SimulateSliceDTO;
       if (!compileRequestDTO.ctx) {
         ctx = new SimulateSliceDTO();
         ctx.simulate = true;
@@ -149,6 +149,7 @@ export class ContractsController {
     })
     simulateContractDTO: SimulateContractDTO,
   ): Promise<any> {
+    let ctx: SimulateSliceDTO | undefined = undefined;
     try {
       let tx = new TransactionsDTO();
       (await this.configProvider.getAll()).forEach(config => {
@@ -165,7 +166,6 @@ export class ContractsController {
       tx.fee = '1';
       tx.created = new Date().toISOString();
 
-      let ctx: SimulateSliceDTO;
       if (!simulateContractDTO.ctx) {
         ctx = new SimulateSliceDTO();
         ctx.simulate = true;
@@ -181,7 +181,9 @@ export class ContractsController {
       return compiledData;
     } catch (err: any) {
       console.error(err);
-      throw new HttpErrors.BadRequest(err.message);
+      return new TryCompileDTO({
+        error: err.message
+      });
     }
   }
 }

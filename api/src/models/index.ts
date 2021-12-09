@@ -12,3 +12,4 @@ export * from './roles.model';
 export * from './permissions.model';
 export * from './partners.model';
 export * from './contracts-vars-simulation.model';
+export * from './simulations.model';

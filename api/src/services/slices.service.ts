@@ -155,14 +155,10 @@ export class SlicesProvider {
       await this.walletsRepository.update(ctx.walletsModels[i]);
     }
     for (let i = 0; i < ctx.contractEnvModels.length; i++) {
-      console.log('save contract env', ctx.contractEnvModels[i])
       await this.contractsEnvRepository.update(ctx.contractEnvModels[i]);
-      console.log('affter', await this.contractsEnvRepository.findById(ctx.contractEnvModels[i].id))
     }
     for (let i = 0; i < ctx.contractVarsModels.length; i++) {
-      console.log('save contract vars', ctx.contractVarsModels[i]);
       await this.contractsVarsRepository.update(ctx.contractVarsModels[i]);
-      console.log('affter', await this.contractsVarsRepository.findById(ctx.contractEnvModels[i].id))
     }
     for (let i = 0; i < ctx.configs.length; i++) {
       await this.configsRepository.update(ctx.configs[i]);

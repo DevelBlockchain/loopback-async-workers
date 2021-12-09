@@ -27,6 +27,7 @@ import Users from './components/dashboard/users';
 import SecondFactor from './components/dashboard/second-factor';
 import Send from './components/dashboard/send/index';
 import Contracts from './components/dashboard/contracts';
+import IDE from './components/dashboard/ide';
 
 //firebase Auth
 function Root() {
@@ -50,6 +51,7 @@ function Root() {
                                         <Route exact path={`${process.env.PUBLIC_URL}/`} component={Wallet} />
                                         <Route exact path={`${process.env.PUBLIC_URL}/dashboard`} component={Wallet} />
                                         <Route exact path={`${process.env.PUBLIC_URL}/dashboard/contracts`} component={Contracts} />
+                                        <Route exact path={`${process.env.PUBLIC_URL}/dashboard/ide`} component={IDE} />
                                         <Route exact path={`${process.env.PUBLIC_URL}/dashboard/send`} component={Send} />
                                         <Route exact path={`${process.env.PUBLIC_URL}/dashboard/users`} component={Users} />
                                         <Route exact path={`${process.env.PUBLIC_URL}/dashboard/2fa`} component={SecondFactor} />

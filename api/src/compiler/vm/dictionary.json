@@ -514,6 +514,16 @@
   },
   {
     "bytecode": "0033",
+    "name": "pop",
+    "description": "pop array\nExemple: pop recipientVar arrayName index\nExemple: pop recipientVar arrayName void",
+    "complements": [
+      {
+        "size": 3
+      }
+    ]
+  },
+  {
+    "bytecode": "0034",
     "name": "delete",
     "description": "delete array\nExemple: delete arrayName index\nExemple: delete arrayName void",
     "complements": [
@@ -523,7 +533,7 @@
     ]
   },
   {
-    "bytecode": "0034",
+    "bytecode": "0035",
     "name": "set",
     "description": "set map value\nExemple: set mapName value key",
     "complements": [
@@ -533,7 +543,7 @@
     ]
   },
   {
-    "bytecode": "0035",
+    "bytecode": "0036",
     "name": "has",
     "description": "if has value from map\nExemple: push recipientBooleanVar mapName key",
     "complements": [
@@ -543,7 +553,7 @@
     ]
   },
   {
-    "bytecode": "0036",
+    "bytecode": "0037",
     "name": "get",
     "description": "get value from array or map\nExemple: get recipientVar arrayOrMapName indexOrKey",
     "complements": [
@@ -553,7 +563,7 @@
     ]
   },
   {
-    "bytecode": "0037",
+    "bytecode": "0038",
     "name": "size",
     "description": "get size of array or map\nExemple: size recipientVar arrayOrMapName",
     "complements": [
@@ -563,7 +573,7 @@
     ]
   },
   {
-    "bytecode": "0038",
+    "bytecode": "0039",
     "name": "require",
     "description": "Test some parameter\nExemple: require true \"Did not pass this test\"",
     "complements": [
