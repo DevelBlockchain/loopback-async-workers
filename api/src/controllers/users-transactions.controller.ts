@@ -19,6 +19,7 @@ import { NodesProvider, TransactionsProvider } from '../services';
 import { ConfigProvider } from '../services/configs.service';
 import { BywiseAPI } from '../utils/bywise-api';
 import { sha256, base16Decode, base16Encode } from '@waves/ts-lib-crypto';
+import { getRandomString } from '../utils/helper';
 
 const getHashFromTransaction = (tx: TransactionsDTO) => {
   let version = '1';

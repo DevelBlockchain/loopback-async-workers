@@ -1,3 +1,11 @@
+const randomstring = require('randomstring');
+
+export const getRandomString = () => {
+    return randomstring.generate({
+        length: 40,
+    });
+}
+
 export const numberToHex = (number: number) => {
     let hex = number.toString(16);
     if ((hex.length % 2) > 0) {

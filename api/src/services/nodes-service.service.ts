@@ -4,8 +4,7 @@ import { RoleTypes } from '../authorization/PermissionsTypes';
 import { Roles } from '../models';
 import { InfoJWT, NodeDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
-
-const randomstring = require('randomstring');
+import { getRandomString } from '../utils/helper';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class NodesProvider {
@@ -17,9 +16,7 @@ export class NodesProvider {
   ) { }
 
   static getRandomToken() {
-    return randomstring.generate({
-      length: 40,
-    });
+    return getRandomString();
   }
 
   createMyNode() {

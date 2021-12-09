@@ -1,13 +1,19 @@
 import {Entity, model, property} from '@loopback/repository';
 
 @model()
-export class ContractsVars extends Entity {
+export class ContractsVarsSimulation extends Entity {
   @property({
     id: true,
     type: 'string',
     defaultFn: 'uuid',
   })
   id: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  simulateId: string;
 
   @property({
     type: 'string',
@@ -39,13 +45,25 @@ export class ContractsVars extends Entity {
   })
   type: string;
 
-  constructor(data?: Partial<ContractsVars>) {
+  @property({
+    type: 'boolean',
+    required: true,
+  })
+  del: boolean;
+
+  @property({
+    type: "date",
+    default: '$now'
+  })
+  created: string;
+
+  constructor(data?: Partial<ContractsVarsSimulation>) {
     super(data);
   }
 }
 
-export interface ContractsVarsRelations {
+export interface ContractsVarsSimulationRelations {
   // describe navigational properties here
 }
 
-export type ContractsVarsWithRelations = ContractsVars & ContractsVarsRelations;
+export type ContractsVarsSimulationWithRelations = ContractsVarsSimulation & ContractsVarsSimulationRelations;

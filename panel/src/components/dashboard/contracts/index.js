@@ -15,7 +15,7 @@ class CustomHighlightRules extends window.ace.acequire("ace/mode/text_highlight_
         var keywords = (
             "return|nop|define|function|exec|end|mov|print|cast|equ|inv|gt|gte|le|lee|and|" +
             "or|add|sub|mul|div|exp|fixed|sqrt|abs|checkpoint|jump|jumpif|jumpnif|bywise|push|pop|set|has|" +
-            "get|size"
+            "get|size|delete"
         );
         var builtinConstants = (
             "true|false|void"
@@ -147,8 +147,7 @@ export default class Contracts extends React.Component {
         let success = true;
         let req = await BywiseAPI.post(`/contracts/compiler`, {
             type: 'asm',
-            code: this.state.text,
-            amount: '0'
+            code: this.state.text
         });
         if (req.error) return;
         if (req.data.error) {
@@ -167,9 +166,9 @@ export default class Contracts extends React.Component {
             if (output.logs) output.logs.forEach(log => {
                 logs.push(<span><strong>LOG:</strong> {log}</span>)
             })
-            if (output.output) output.output.forEach(out => {
-                logs.push(<span><strong>OUTPUT:</strong> {out}</span>)
-            })
+            if (output.output) {
+                logs.push(<span><strong>OUTPUT:</strong> {JSON.stringify(output.output, null, 2)}</span>)
+            }
             await this.setState({ contract, ctx, simulateAccounts });
         }
         await this.setState({ load: false, success, logs });

@@ -7,8 +7,9 @@ import { BlocksRepository, ConfigsRepository, SlicesRepository, TransactionsRepo
 import { ContractsEnvRepository } from '../repositories/contracts-env.repository';
 import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
 import { BlockDTO, SimulateSliceDTO, SliceDTO, TransactionsDTO, TransactionsStatus } from '../types/transactions.type';
-import { numberToHex } from '../utils/helper';
+import { getRandomString, numberToHex } from '../utils/helper';
 import { ContractProvider } from './contract.service';
+import { ContractsVarsProvider } from './contracts-vars.service';
 import { VirtualMachineProvider } from './virtual-machine.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
@@ -23,6 +24,7 @@ export class SlicesProvider {
     @repository(WalletsRepository) public walletsRepository: WalletsRepository,
     @service(ContractProvider) private contractProvider: ContractProvider,
     @service(VirtualMachineProvider) private virtualMachineProvider: VirtualMachineProvider,
+    @service(ContractsVarsProvider) private contractsVarsProvider: ContractsVarsProvider,
     @repository(ContractsEnvRepository) public contractsEnvRepository: ContractsEnvRepository,
     @repository(ContractsVarsRepository) public contractsVarsRepository: ContractsVarsRepository,
     @repository(ConfigsRepository) public configsRepository: ConfigsRepository,
@@ -165,6 +167,7 @@ export class SlicesProvider {
     for (let i = 0; i < ctx.configs.length; i++) {
       await this.configsRepository.update(ctx.configs[i]);
     }
+    await this.contractsVarsProvider.consolideVars(ctx.simulateId);
   }
 
   async simulateBlock(slices: string[], ctx: SimulateSliceDTO) {

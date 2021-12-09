@@ -3,7 +3,7 @@ import { repository } from '@loopback/repository';
 import BigNumber from "bignumber.js";
 import { ContractProvider, WalletProvider } from '.';
 import { BywiseBlockchainInterface } from '../compiler/bywise/bywise-blockchain';
-import { ContractABI, Environment, Types, Variable } from '../compiler/vm/data';
+import { ContractABI, Environment, Type, Types, Variable } from '../compiler/vm/data';
 import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
 import { Configs, Transactions, Wallets } from '../models';
 import { ContractsEnv } from '../models/contracts-env.model';
@@ -13,6 +13,7 @@ import { ContractsEnvRepository } from '../repositories/contracts-env.repository
 import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
 import { CommandDTO, SimulateSliceDTO, TransactionOutputDTO, TransactionsType, VariableDTO, WalletInfoDTO } from '../types/transactions.type';
 import { ConfigProvider } from './configs.service';
+import { ContractsVarsProvider } from './contracts-vars.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class VirtualMachineProvider implements BywiseBlockchainInterface {
@@ -21,6 +22,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     @repository(ContractsEnvRepository) public contractsEnvRepository: ContractsEnvRepository,
     @repository(ContractsVarsRepository) public contractsVarsRepository: ContractsVarsRepository,
     @repository(ConfigsRepository) public configsRepository: ConfigsRepository,
+    @service(ContractsVarsProvider) public contractsVarsProvider: ContractsVarsProvider,
   ) { }
 
   async getWallet(address: string, ctx: SimulateSliceDTO): Promise<Wallets> {
@@ -55,7 +57,6 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     for (let i = 0; i < ctx.contractEnvModels.length; i++) {
       let contractEnv = ctx.contractEnvModels[i];
       if (contractEnv.address === address) {
-        console.log('##### found env', contractEnv)
         return contractEnv;
       }
     }
@@ -126,11 +127,9 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     if (senderBalance.isLessThan(new BigNumber(0))) {
       throw new Error('insufficient funds')
     }
-    console.log('before', sender.balance, recipient.balance, amount)
     recipientBalance = recipientBalance.plus(amount);
     sender.balance = senderBalance.toString();
     recipient.balance = recipientBalance.toString();
-    console.log('after', sender.balance, recipient.balance, amount)
   }
 
   async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO): Promise<TransactionOutputDTO> {
@@ -146,7 +145,6 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       let contract = ContractABI.fromJSON(JSON.parse(tx.data));
       await this.getWallet(contract.address, ctx);
       let contractEnv = await this.getContractEnv(contract.address, ctx);
-      console.log('getContractEnv', contractEnv.env)
       if (contractEnv.env) {
         throw new Error(`Contract ${contract.address} already exists`);
       }
@@ -160,7 +158,6 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         contract,
         this
       );
-      console.log('new contract env', contractEnv.address, tx.hash)
       contractEnv.env = output.env;
       transactionOutput.cost = output.cost;
       transactionOutput.logs = output.logs;
@@ -306,5 +303,37 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       }
     }
     throw new Error("Method not implemented.");
+  }
+
+  newArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, type: Type): Promise<void> => {
+    throw new Error("Method not implemented")
+  }
+  pushArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint, value: Variable): Promise<void> => {
+    throw new Error("Method not implemented")
+  }
+  popArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint): Promise<Variable> => {
+    throw new Error("Method not implemented")
+  }
+  getArrayLength = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: Variable): Promise<bigint> => {
+    throw new Error("Method not implemented")
+  }
+  setArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint, value: Variable): Promise<void> => {
+    throw new Error("Method not implemented")
+  }
+  getArray = async (ctx: SimulateSliceDTO, env: Environment, name: string, index: bigint): Promise<Variable> => {
+    throw new Error("Method not implemented")
+  }
+
+  setMap = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, key: string, value: Variable): Promise<void> => {
+    if (!ctx.tx) throw new Error("Transaction context not found");
+    await this.contractsVarsProvider.setMap(ctx.simulateId, ctx.tx.to, registerId, key, value.value, value.type);
+  }
+  getMap = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, key: string): Promise<Variable | null> => {
+    if (!ctx.tx) throw new Error("Transaction context not found");
+    return await this.contractsVarsProvider.getMap(ctx.simulateId, ctx.tx.to, registerId, key);
+  }
+  delMap = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, key: string): Promise<void> => {
+    if (!ctx.tx) throw new Error("Transaction context not found");
+    await this.contractsVarsProvider.delMap(ctx.simulateId, ctx.tx.to, registerId, key);
   }
 }

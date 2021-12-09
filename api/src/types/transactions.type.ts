@@ -4,6 +4,7 @@ import { Variable } from '../compiler/vm/data';
 import { Configs, Transactions, Wallets } from '../models';
 import { ContractsEnv } from '../models/contracts-env.model';
 import { ContractsVars } from '../models/contracts-vars.model';
+import { getRandomString } from '../utils/helper';
 
 export enum TransactionsStatus {
   TX_MEMPOOL = 'mempool',
@@ -295,17 +296,23 @@ export class ValueBooleanDTO extends Model {
 }
 
 @model()
-export class SimulateSliceDTO extends Model {
-  @property({
-    type: 'string',
-  })
-  simulate: boolean;
+export class SimulateSliceDTO {
+
+  constructor() {
+    this.simulateId = getRandomString();
+  }
+
+  @property()
+  simulateId: string;
+
+  @property()
+  simulate: boolean = false;
 
   @property({
     type: 'object',
     itemType: Transactions
   })
-  tx?: Transactions;
+  tx?: Transactions = undefined;
 
   @property.array(SliceDTO)
   slicesModels: SliceDTO[] = [];
@@ -322,10 +329,7 @@ export class SimulateSliceDTO extends Model {
   @property.array(ContractsVars)
   contractVarsModels: ContractsVars[] = [];
 
-  @property({
-    type: 'object',
-    itemType: Configs
-  })
+  @property()
   configs: Configs[] = [];
 }
 

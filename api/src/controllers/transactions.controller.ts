@@ -20,6 +20,7 @@ import { TransactionsRepository } from '../repositories';
 import { NodesProvider, TransactionsProvider } from '../services';
 import { SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, ValueDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
+import { getRandomString } from '../utils/helper';
 
 export class TransactionsController {
   constructor(

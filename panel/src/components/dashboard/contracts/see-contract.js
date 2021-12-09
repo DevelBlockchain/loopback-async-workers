@@ -81,9 +81,9 @@ export default class SeeContract extends Component {
             if (output.logs) output.logs.forEach(log => {
                 logs.push(<span><strong>LOG:</strong> {log}</span>)
             })
-            if (output.output) output.output.forEach(out => {
-                logs.push(<span><strong>OUTPUT:</strong> {out}</span>)
-            });
+            if (output.output) {
+                logs.push(<span><strong>OUTPUT:</strong> {JSON.stringify(output.output, null, 2)}</span>)
+            }
             if (isPaid) {
                 this.setState({
                     ctx,

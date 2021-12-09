@@ -4,6 +4,7 @@ import { repository } from '@loopback/repository';
 import { BlocksRepository } from '../repositories';
 import { SlicesProvider, BlocksProvider } from '../services';
 import { SimulateSliceDTO, SliceDTO } from '../types';
+import { getRandomString } from '../utils/helper';
 
 @cronJob()
 export class CreateBlocks extends CronJob {

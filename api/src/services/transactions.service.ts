@@ -6,9 +6,10 @@ import { WalletProvider } from '.';
 import { Transactions } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { ContractProvider } from './contract.service';
-import { SimulateAccountDTO, SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, TransactionsStatus } from '../types/transactions.type';
+import { SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, TransactionsStatus } from '../types/transactions.type';
 import { VirtualMachineProvider } from './virtual-machine.service';
 import { ConfigProvider } from './configs.service';
+import { getRandomString } from '../utils/helper';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class TransactionsProvider {
@@ -21,7 +22,7 @@ export class TransactionsProvider {
     @service(ConfigProvider) public configProvider: ConfigProvider,
     @service(VirtualMachineProvider) private virtualMachineProvider: VirtualMachineProvider,
   ) {
-
+    
   }
 
   private static validadeTransaction(tx: TransactionsDTO) {

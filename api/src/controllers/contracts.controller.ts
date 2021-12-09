@@ -18,6 +18,7 @@ import { ConfigProvider } from '../services/configs.service';
 import { CompileRequestDTO, SimulateAccountDTO, SimulateContractDTO, SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, TransactionsType, TryCompileDTO, ValueDTO } from '../types';
 import { ethers } from "ethers";
 import { VirtualMachineProvider } from '../services/virtual-machine.service';
+import { getRandomString } from '../utils/helper';
 
 export class ContractsController {
   constructor(
@@ -104,6 +105,7 @@ export class ContractsController {
         tx.from = WalletProvider.ZERO_ADDRESS;
       }
       tx.data = JSON.stringify(abi.toJSON(true));
+      tx.to = abi.address;
       tx.version = '1';
       tx.amount = '0';
       tx.fee = '1';

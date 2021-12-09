@@ -195,7 +195,6 @@ export class Context {
 export class Environment {
     ctx = new Context(false);
     globalVariables = this.ctx.globalVariables;
-    modifiedGlobalVariables = new Map<string, Variable>();
     cost = 0;
     contract: ContractABI;
     functions = new Map<string, Function>();
@@ -269,7 +268,7 @@ export class Environment {
             checkpoints.push({ v: value, k: key })
         })
         return {
-            contract: this.contract.toJSON(),
+            contract: this.contract.toJSON(true),
             globalVariables,
             functions,
             checkpoints,
@@ -351,7 +350,7 @@ export class ContractABI {
                 nonce: this.nonce,
                 bytecode: this.bytecode,
                 address: this.address,
-                debug: this.debug,
+                debug: this.debug ? this.debug : undefined,
                 names,
                 publicFunctions: this.publicFunctions.map(v => v.toJSON()),
             }
@@ -389,7 +388,6 @@ export class ContractABI {
 
 export class ExecutedFunction {
     output: Variable[] = [];
-    modifiedGlobalVariables = new Map<string, Variable>();
     cost: number = 0;
     logs: string[] = [];
 }
