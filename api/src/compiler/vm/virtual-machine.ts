@@ -1087,9 +1087,7 @@ export default class BywiseVirtualMachine {
 
     private setValue(ctx: Context, registerId: string, value: Variable) {
         let v = this.getValue(ctx, registerId).variable;
-        if (value.type === Types.array || value.type === Types.map) {
-            throw new Error(`it is not possible to manipulate the ${value.type.name} in this way`);
-        } else if (v.type !== value.type) {
+        if (v.type !== value.type) {
             if (v.type.isNumber && value.type.isNumber) {
                 v.value = value.getNumber().toFixed(0, BigNumber.ROUND_FLOOR);
             } else {
