@@ -74,10 +74,9 @@ export class Transactions extends Entity {
   foreignKeys?: string[];
 
   @property({
-    type: 'string',
-    default: '',
+    type: 'object',
   })
-  data: string;
+  data: any;
 
   @property({
     type: 'date',

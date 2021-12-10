@@ -15,10 +15,9 @@ import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
 import { ContractsEnvRepository } from '../repositories';
 import { ContractProvider, TransactionsProvider, WalletProvider } from '../services';
 import { ConfigProvider } from '../services/configs.service';
-import { CompileRequestDTO, SimulateAccountDTO, SimulateContractDTO, SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, TransactionsType, TryCompileDTO, ValueDTO } from '../types';
+import { CompileRequestDTO, ObjectDTO, SimulateAccountDTO, SimulateContractDTO, SimulateSliceDTO, TransactionsDTO, TransactionsType, TryCompileDTO, ValueDTO } from '../types';
 import { ethers } from "ethers";
 import { VirtualMachineProvider } from '../services/virtual-machine.service';
-import { getRandomString } from '../utils/helper';
 
 export class ContractsController {
   constructor(
@@ -33,7 +32,7 @@ export class ContractsController {
     description: 'Contract ABI',
     content: {
       'application/json': {
-        schema: getModelSchemaRef(Environment),
+        schema: getModelSchemaRef(ObjectDTO),
       },
     },
   })
@@ -41,10 +40,10 @@ export class ContractsController {
     @param.path.string('address') address: string,
   ): Promise<Environment> {
     let contractEnv = await this.contractsEnvRepository.findOne({ where: { address } });
-    if (!contractEnv || !contractEnv.env || !JSON.parse(contractEnv.env).contract) {
+    if (!contractEnv || !contractEnv.env || !contractEnv.env.contract) {
       throw new HttpErrors.NotFound();
     }
-    return Environment.fromJSON(JSON.parse(contractEnv.env));
+    return Environment.fromJSON(contractEnv.env);
   }
 
   @post('/api/v1/contracts/compiler')
@@ -104,7 +103,7 @@ export class ContractsController {
       } else {
         tx.from = WalletProvider.ZERO_ADDRESS;
       }
-      tx.data = JSON.stringify(abi.toJSON(true));
+      tx.data = abi.toJSON(true);
       tx.to = abi.address;
       tx.version = '1';
       tx.amount = '0';

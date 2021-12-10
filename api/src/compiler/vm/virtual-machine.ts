@@ -53,7 +53,7 @@ export default class BywiseVirtualMachine {
                     await this.executeCommand(ctx, limiteCost, cmd);
                 }
             }
-            return { cost: this.env.cost, env: JSON.stringify(this.env.toJSON()), logs: this.env.logs };
+            return { cost: this.env.cost, env: this.env.toJSON(), logs: this.env.logs };
         } catch (err: any) {
             if (this.env.contract.debug) {
                 if (this.env.contract.names) {

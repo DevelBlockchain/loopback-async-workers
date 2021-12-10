@@ -397,6 +397,7 @@ export class ContractABI {
     }
 
     static fromJSON(json: any): ContractABI {
+        if(typeof json !== 'object') throw new Error('invalid ABI');
         let obj = new ContractABI();
         obj.nonce = json.nonce;
         obj.bytecode = json.bytecode;

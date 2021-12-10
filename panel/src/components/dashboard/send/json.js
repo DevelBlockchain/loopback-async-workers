@@ -30,7 +30,7 @@ export default class SendJSON extends Component {
             toast.error('invalid json');
         }
         if (json) {
-            await this.props.trySend(JSON.stringify(json));
+            await this.props.trySend(json);
         }
         await this.setState({ load: false });
     }

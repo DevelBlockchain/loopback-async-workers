@@ -14,37 +14,10 @@ import { PermissionsTypes } from '../authorization/PermissionsTypes';
 import { Transactions } from '../models';
 import { MyWalletsRepository, TransactionsRepository } from '../repositories';
 import { InfoJWT, SimulateSliceDTO, TransactionsDTO } from '../types';
-import { ethers } from "ethers";
 import { NodesProvider, TransactionsProvider } from '../services';
 import { ConfigProvider } from '../services/configs.service';
 import { BywiseAPI } from '../utils/bywise-api';
-import { sha256, base16Decode, base16Encode } from '@waves/ts-lib-crypto';
-import { getRandomString } from '../utils/helper';
-
-const getHashFromTransaction = (tx: TransactionsDTO) => {
-  let version = '1';
-  let bytes = '';
-  bytes += Buffer.from(version, 'utf-8').toString('hex');
-  bytes += Buffer.from(tx.from, 'utf-8').toString('hex');
-  bytes += Buffer.from(tx.to, 'utf-8').toString('hex');
-  bytes += Buffer.from(tx.amount, 'utf-8').toString('hex');
-  bytes += Buffer.from(tx.fee, 'utf-8').toString('hex');
-  bytes += Buffer.from(tx.type, 'utf-8').toString('hex');
-  bytes += Buffer.from(tx.data, 'utf-8').toString('hex');
-  if (tx.foreignKeys) {
-    tx.foreignKeys.forEach(key => {
-      bytes += key;
-    })
-  }
-  bytes += Buffer.from(tx.created, 'utf-8').toString('hex');
-  bytes = base16Encode(sha256(base16Decode(bytes))).substring(2).toLowerCase();
-  return bytes;
-}
-const signTransaction = async (seed: string, tx: TransactionsDTO) => {
-  tx.hash = getHashFromTransaction(tx);
-  let account = ethers.Wallet.fromMnemonic(seed);
-  return (await account.signMessage(Buffer.from(tx.hash, 'hex')));
-}
+import { signTransaction } from '../utils/helper';
 
 export class UsersTransactionsController {
   constructor(

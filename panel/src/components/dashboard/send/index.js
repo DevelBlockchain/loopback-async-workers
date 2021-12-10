@@ -62,7 +62,7 @@ export default class Send extends React.Component {
 
 
 
-    trySend = async (data = '') => {
+    trySend = async (data = {}) => {
         let address = this.state.form.account.split(' - ')[1];
         let type = '';
         TX_TYPES_NAMES.forEach((name, i) => {

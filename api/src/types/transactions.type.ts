@@ -89,10 +89,9 @@ export class TransactionsDTO extends Model {
   foreignKeys?: string[];
 
   @property({
-    type: 'string',
-    default: '',
+    type: 'object',
   })
-  data: string;
+  data: any;
 
   @property({
     type: 'date',
@@ -542,10 +541,9 @@ export class SimulateContractDTO extends Model {
   amount: string;
 
   @property({
-    type: 'string',
-    default: '',
+    type: 'object',
   })
-  data: string;
+  data: any;
 
   @property({
     type: 'object',
@@ -554,6 +552,14 @@ export class SimulateContractDTO extends Model {
   ctx?: SimulateSliceDTO;
 
   constructor(data?: Partial<SimulateContractDTO>) {
+    super(data);
+  }
+}
+
+@model()
+export class ObjectDTO extends Model {
+
+  constructor(data?: Partial<ObjectDTO>) {
     super(data);
   }
 }

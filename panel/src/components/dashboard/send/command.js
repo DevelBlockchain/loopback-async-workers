@@ -39,10 +39,10 @@ export default class SendCommand extends Component {
     trySend = async () => {
         await this.setState({ load: true });
         const state = this.state;
-        await this.props.trySend(JSON.stringify({
+        await this.props.trySend({
             name: state.form.name,
             input: state.inputs,
-        }));
+        });
         await this.setState({ load: false });
     }
 

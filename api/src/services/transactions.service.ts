@@ -1,7 +1,6 @@
 import { injectable, BindingScope, Provider, service } from '@loopback/core';
 import { repository } from '@loopback/repository';
 import { ethers } from "ethers";
-import { base16Decode, base16Encode, sha256, signBytes } from '@waves/ts-lib-crypto';
 import { WalletProvider } from '.';
 import { Transactions } from '../models';
 import { TransactionsRepository } from '../repositories';
@@ -9,7 +8,7 @@ import { ContractProvider } from './contract.service';
 import { SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, TransactionsStatus } from '../types/transactions.type';
 import { VirtualMachineProvider } from './virtual-machine.service';
 import { ConfigProvider } from './configs.service';
-import { getRandomString } from '../utils/helper';
+import { getHashFromTransaction } from '../utils/helper';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class TransactionsProvider {
@@ -53,26 +52,7 @@ export class TransactionsProvider {
     }
   }
 
-  static getHashFromTransaction(tx: TransactionsDTO): string {
-    let bytes = '';
-    bytes += Buffer.from(tx.version, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.from, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.to, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.amount, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.fee, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.type, 'utf-8').toString('hex');
-    bytes += Buffer.from(tx.data, 'utf-8').toString('hex');
-    if (tx.foreignKeys) {
-      tx.foreignKeys.forEach(key => {
-        bytes += key;
-      })
-    }
-    bytes += Buffer.from(tx.created, 'utf-8').toString('hex');
-    bytes = base16Encode(sha256(base16Decode(bytes))).substring(2).toLowerCase();
-    return bytes;
-  }
-
-  async createNewTransaction(to: string, amount: string, fee: string, type: string, data: string, foreignKeys?: string[]) {
+  async createNewTransaction(to: string, amount: string, fee: string, type: string, data: any, foreignKeys?: string[]) {
     let account = this.contractProvider.getAccount();
     let tx = new TransactionsDTO();
     tx.version = '1';
@@ -90,7 +70,7 @@ export class TransactionsProvider {
 
     TransactionsProvider.validadeTransaction(tx);
 
-    tx.hash = TransactionsProvider.getHashFromTransaction(tx);
+    tx.hash = getHashFromTransaction(tx);
     tx.sign = (await account.signMessage(Buffer.from(tx.hash, 'hex')));
     tx.validatorSign = tx.sign;
     return tx;
@@ -106,7 +86,7 @@ export class TransactionsProvider {
   async saveTransaction(tx: TransactionsDTO): Promise<Transactions> {
     TransactionsProvider.validadeTransaction(tx);
 
-    let hash = Buffer.from(TransactionsProvider.getHashFromTransaction(tx), 'hex');
+    let hash = Buffer.from(getHashFromTransaction(tx), 'hex');
     let recoveredAddress = ethers.utils.verifyMessage(hash, tx.sign);
     let decodeAddress = WalletProvider.decodeBWSAddress(tx.from);
     if (recoveredAddress !== decodeAddress.ethAddress) {

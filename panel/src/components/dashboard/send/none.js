@@ -18,7 +18,7 @@ export default class SendNone extends Component {
 
     trySend = async () => {
         await this.setState({ load: true });
-        await this.props.trySend('');
+        await this.props.trySend({});
         await this.setState({ load: false });
     }
 

@@ -21,7 +21,7 @@ export default class SendMensage extends Component {
 
     trySend = async () => {
         await this.setState({ load: true });
-        await this.props.trySend(this.state.form.text);
+        await this.props.trySend({ text: this.state.form.text });
         await this.setState({ load: false });
     }
 

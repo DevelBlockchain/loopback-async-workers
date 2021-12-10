@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@waves/ts-lib-crypto": "^1.4.4-beta.1",
+    "ethers": "^5.5.2"
+  }
+}

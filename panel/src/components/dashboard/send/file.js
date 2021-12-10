@@ -37,7 +37,7 @@ export default class SendFile extends Component {
 
     trySend = async () => {
         await this.setState({ load: true });
-        await this.props.trySend(JSON.stringify(this.state.file));
+        await this.props.trySend(this.state.file);
         await this.setState({ load: false });
     }
 

@@ -135,14 +135,14 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
   async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO): Promise<TransactionOutputDTO> {
     let transactionOutput = new TransactionOutputDTO();
     transactionOutput.cost = 0;
-    transactionOutput.size = tx.data.length;
+    transactionOutput.size = JSON.stringify(tx.data).length;
 
     ctx.tx = tx;
     await this.send(tx.from, tx.validator, tx.fee, ctx);
     await this.send(tx.from, tx.to, tx.amount, ctx);
 
     if (tx.type === TransactionsType.TX_CONTRACT) {
-      let contract = ContractABI.fromJSON(JSON.parse(tx.data));
+      let contract = ContractABI.fromJSON(tx.data);
       await this.getWallet(contract.address, ctx);
       let contractEnv = await this.getContractEnv(contract.address, ctx);
       if (contractEnv.env) {
@@ -166,9 +166,9 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       if (!contractEnv.env) {
         throw new Error(`Contract ${tx.to} not found`);
       }
-      let env = Environment.fromJSON(JSON.parse(contractEnv.env));
+      let env = Environment.fromJSON(contractEnv.env);
       let executeLimit = await this.getConfig('executeLimit', ctx);
-      let cmd = new CommandDTO(JSON.parse(tx.data));
+      let cmd = new CommandDTO(tx.data);
       let output = await BywiseVirtualMachine.execFunction(
         ctx,
         parseInt(executeLimit.value),
@@ -178,12 +178,12 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         cmd.input,
       );
 
-      contractEnv.env = JSON.stringify(env.toJSON());
+      contractEnv.env = env.toJSON();
       transactionOutput.output = output.output;
       transactionOutput.cost = output.cost;
       transactionOutput.logs = output.logs;
     } else if (tx.type === TransactionsType.TX_COMMAND) {
-      let cmd = new CommandDTO(JSON.parse(tx.data));
+      let cmd = new CommandDTO(tx.data);
       await this.setConfig(ctx, cmd);
     }
 

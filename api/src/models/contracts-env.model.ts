@@ -22,9 +22,9 @@ export class ContractsEnv extends Entity {
   address: string;
 
   @property({
-    type: 'string',
+    type: 'object',
   })
-  env: string;
+  env: any;
 
   constructor(data?: Partial<ContractsEnv>) {
     super(data);

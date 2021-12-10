@@ -185,7 +185,7 @@ export default class IDE extends React.Component {
             to: this.state.contract.address,
             amount: "0",
             type: 'contract',
-            data: JSON.stringify(this.state.contract),
+            data: this.state.contract,
         };
         let req = await BywiseAPI.post(`/users-transactions`, tx);
         if (!req.error) {

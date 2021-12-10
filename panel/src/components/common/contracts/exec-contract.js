@@ -63,10 +63,10 @@ export default class ExecContract extends Component {
     exeContract = async () => {
         await this.setState({ load: true });
         await sleep(1000);
-        await this.props.trySend(JSON.stringify({
+        await this.props.trySend({
             name: this.state.name,
             input: this.state.inputs.map(input => input.value)
-        }), this.state.isPaid)
+        }, this.state.isPaid)
         await this.setState({ load: false });
     }
 
