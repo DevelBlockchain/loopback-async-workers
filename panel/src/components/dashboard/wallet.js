@@ -70,7 +70,12 @@ export default class Wallet extends React.Component {
 
     saveRow = async () => {
         await this.setState({ loading: true });
-        this.dialog.show('New Wallet has created')
+        let req = await BywiseAPI.post(`/my-wallets`, {
+            name: this.state.form.name
+        });
+        if(!req.error) {
+            this.dialog.show('New Wallet has created')
+        }
         this.updateTable();
         this.setState({ modal: false, loading: false })
     }

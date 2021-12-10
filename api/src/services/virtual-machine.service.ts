@@ -177,7 +177,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
         cmd.name,
         cmd.input,
       );
-      
+
       contractEnv.env = JSON.stringify(env.toJSON());
       transactionOutput.output = output.output;
       transactionOutput.cost = output.cost;

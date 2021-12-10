@@ -29,7 +29,7 @@ export class CreateSlices extends CronJob {
         }
         await this.start();
       },
-      cronTime: '*/1 * * * * *',
+      cronTime: '*/10 * * * * *',
     });
   }
 

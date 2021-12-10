@@ -41,7 +41,7 @@ export class ContractsController {
     @param.path.string('address') address: string,
   ): Promise<Environment> {
     let contractEnv = await this.contractsEnvRepository.findOne({ where: { address } });
-    if (!contractEnv) {
+    if (!contractEnv || !contractEnv.env || !JSON.parse(contractEnv.env).contract) {
       throw new HttpErrors.NotFound();
     }
     return Environment.fromJSON(JSON.parse(contractEnv.env));

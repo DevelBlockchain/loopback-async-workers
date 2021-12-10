@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import BywiseAPI from '../../../api/api';
 import OverlayLoading from '../../common/overlay-loading';
 import DialogModal from '../../common/dialog-modal';
-
 import SeeContract from './see-contract';
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/theme-monokai";
@@ -192,7 +191,12 @@ export default class IDE extends React.Component {
         if (!req.error) {
             console.log(req.data);
             this.dialog.show('Transaction send!', <>
-                <span>TxId: <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
+                <div>
+                    <span>TxId: <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
+                </div>
+                <div>
+                    <span>Contract: <a target="_blank" rel="noopener noreferrer" href={`/panel/dashboard/contracts/${this.state.contract.address}`} >{this.state.contract.address}</a></span>
+                </div>
             </>)
             await this.setState({ successDep: true });
         }

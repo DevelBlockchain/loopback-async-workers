@@ -27,7 +27,7 @@ export class CreateBlocks extends CronJob {
         }
         await this.start();
       },
-      cronTime: '*/10 * * * * *',
+      cronTime: '*/1 * * * *',
     });
   }
 

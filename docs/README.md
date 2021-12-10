@@ -60,8 +60,8 @@ publicKey | 4AAQSkZJRgABAQAASABIAAD4AAQSkZJRgABAQAASABIAAD......
 {
   "name": "setConfig", // Command
   "input": [
-    "string", // Value type
     "fee", // Config's name
+    "string", // Value type
     "0" // Value
   ]
 }
@@ -82,3 +82,8 @@ Parameters | Description
 size | tx.data.length
 amount | amount in transaction
 cost | computational cost
+
+### Fee Usage
+```javascript
+amount.div(1000.0).plus(size.div(20.0).plus(cost.multipliedBy(20)).div(1000.0)).plus(0.001).toFixed(5)
+```

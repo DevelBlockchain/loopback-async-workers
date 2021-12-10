@@ -2,76 +2,7 @@ import React, { Fragment } from 'react';
 import BywiseAPI from '../../../api/api';
 import OverlayLoading from '../../common/overlay-loading';
 import DialogModal from '../../common/dialog-modal';
-
 import SeeContract from './see-contract';
-import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/theme-monokai";
-import "ace-builds/src-noconflict/mode-sql";
-
-class CustomHighlightRules extends window.ace.acequire("ace/mode/text_highlight_rules").TextHighlightRules {
-
-    constructor() {
-        super();
-        var keywords = (
-            "return|nop|define|function|exec|end|mov|print|cast|equ|inv|gt|gte|le|lee|and|" +
-            "or|add|sub|mul|div|exp|fixed|sqrt|abs|checkpoint|jump|jumpif|jumpnif|bywise|push|pop|set|has|" +
-            "get|size|delete|require"
-        );
-        var builtinConstants = (
-            "true|false|void"
-        );
-        var builtinFunctions = (
-            "local|global|private|return|public|constant|payable|notpayable|input"
-        );
-        var dataTypes = (
-            "number|string|boolean|binary|address|integer|array|map"
-        );
-        var keywordMapper = this.createKeywordMapper({
-            "support.function": builtinFunctions,
-            "keyword": keywords,
-            "constant.language": builtinConstants,
-            "storage.type": dataTypes
-        }, "identifier", true);
-        this.$rules = {
-            start: [
-                {
-                    token: "comment",
-                    regex: "#.*$"
-                }, {
-                    token: "string",
-                    regex: '".*?"'
-                }, {
-                    token: "constant.numeric",
-                    regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
-                }, {
-                    token: "constant.numeric",
-                    regex: "0x[a-fA-F0-9]+"
-                }, {
-                    token: "constant.numeric",
-                    regex: "BWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0,43}"
-                }, {
-                    token: keywordMapper,
-                    regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
-                }, {
-                    token: "comment",
-                    regex: '\\@\\w+\\b'
-                }, {
-                    token: "storage.type",
-                    regex: '\\@\\w+.*$'
-                }, {
-                    token: "text",
-                    regex: "\\s+"
-                }
-            ]
-        };
-    }
-}
-class CustomSqlMode extends window.ace.acequire("ace/mode/sql").Mode {
-    constructor() {
-        super();
-        this.HighlightRules = CustomHighlightRules;
-    }
-}
 const sleep = async function sleep(ms) {
     await new Promise((resolve) => {
         setTimeout(resolve, ms + 10);
@@ -84,16 +15,30 @@ export default class Contracts extends React.Component {
         super(props);
         this.state = {
             loading: false,
+            load: true,
             address: undefined,
         }
     }
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
         let address = this.props.match.params.address
-        if(address) {
-            this.setState({address});
+        if (address) {
+            await this.setState({ address, load: true });
+            this.reloadContract();
+        } else {
+            await this.setState({ load: false });
         }
-        console.log('address', address)
+    }
+
+    reloadContract = async () => {
+        let req = await BywiseAPI.get(`/contracts/${this.state.address}/abi`, {}, false);
+        if(req.error) {
+            await sleep(5000);
+            this.reloadContract();
+        } else {
+            this.setState({ load: false });
+        }
+
     }
 
     render() {
@@ -103,7 +48,26 @@ export default class Contracts extends React.Component {
                 <div className="container-fluid pt-5">
                     <div className="row">
                         <div className="col-sm-12">
-                            <SeeContract address={this.state.address} />
+                            {this.state.load && <div className="card">
+                                <div className="card-header border-none">
+                                    <h5>Awaiting confirmation of contract on blockchain</h5>
+                                </div>
+                                <div className="card-body text-center mt-3 mb-5">
+                                    <div className="loader">
+                                        <div className="line bg-primary">
+                                        </div>
+                                        <div className="line bg-primary">
+                                        </div>
+                                        <div className="line bg-primary">
+                                        </div>
+                                        <div className="line bg-primary">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>}
+                            {!this.state.load && <div>
+                                <SeeContract address={this.state.address} />
+                            </div>}
                         </div>
                     </div>
                 </div>

@@ -9,9 +9,10 @@ import SendMensage from './text';
 import SendFile from './file';
 import SendCommand from './command';
 import SendJSON from './json';
+import SendNone from './none';
 
-const TX_TYPES_NAMES = ['TEXT', 'JSON', 'FILE', 'COMMAND'];
-const TX_TYPES = ['string', 'json', 'file', 'command'];
+const TX_TYPES_NAMES = ['NONE', 'TEXT', 'JSON', 'FILE', 'COMMAND'];
+const TX_TYPES = ['none', 'string', 'json', 'file', 'command'];
 
 
 export default class Send extends React.Component {
@@ -28,7 +29,8 @@ export default class Send extends React.Component {
             form: {
                 account: '',
                 to: 'BWS0000000000000000000000000000000000000000000',
-                type: '',
+                amount: '0',
+                type: 'NONE',
             }
         }
     }
@@ -76,7 +78,7 @@ export default class Send extends React.Component {
         let tx = {
             from: address,
             to,
-            amount: "0",
+            amount: this.state.form.amount,
             type,
             data,
         };
@@ -119,15 +121,24 @@ export default class Send extends React.Component {
                                             onChange={this.handleChange} />
                                     </div>
                                     <div className="form-group">
+                                        <label>Amount</label>
+                                        <input className="form-control"
+                                            type="number"
+                                            placeholder="0"
+                                            name="amount"
+                                            value={this.state.form.amount}
+                                            onChange={this.handleChange} />
+                                    </div>
+                                    <div className="form-group">
                                         <label>Transaction Type</label>
                                         <select className="form-control digits"
                                             name="type"
                                             value={this.state.form.type}
                                             onChange={this.handleChange}>
-                                            <option></option>
                                             {TX_TYPES_NAMES.map(type => <option key={type}>{type}</option>)}
                                         </select>
                                     </div>
+                                    {this.state.form.type === 'NONE' && <SendNone trySend={this.trySend} />}
                                     {this.state.form.type === 'TEXT' && <SendMensage trySend={this.trySend} />}
                                     {this.state.form.type === 'JSON' && <SendJSON trySend={this.trySend} />}
                                     {this.state.form.type === 'FILE' && <SendFile trySend={this.trySend} />}

@@ -5,9 +5,15 @@ export class Configs extends Entity {
   @property({
     id: true,
     type: 'string',
-    defaultFn: 'uuid',
+    required: false,
+    // settings below are needed
+    generated: true,
+    useDefaultIdType: false,
+    postgresql: {
+      dataType: 'uuid',
+    },
   })
-  id?: string;
+  id: string;
 
   @property({
     type: 'string',
