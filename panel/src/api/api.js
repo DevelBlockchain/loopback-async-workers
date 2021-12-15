@@ -31,7 +31,7 @@ const makeRequest = async (url, requestInit, toastError = true) => {
         response.error = 'bywise-api error: ' + err.message;
     }
     if (response.error) {
-        if(toastError) {
+        if (toastError) {
             toast.error(response.error);
         }
         console.log(response);
@@ -80,10 +80,17 @@ const del = async (url, parameters = {}, toastError = true) => {
     }, toastError);
 }
 
+const getExplorer = async () => {
+    let req = await get(`/nodes/info`);
+    if (req.error) return null;
+    return req.data.explorer;
+}
+
 export default class BywiseAPI {
     static getURL = () => API
 
     static get = get;
     static post = post;
     static del = del;
+    static getExplorer = getExplorer;
 }

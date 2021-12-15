@@ -89,6 +89,7 @@ export class NodesController {
       timestamp: (new Date()).toISOString(),
       isFullNode: true,
       nodesLimit: this.nodesProvider.getNodeLimit(),
+      explorer: process.env.EXPLORER,
       nodes: this.nodesProvider.getNodes(),
       configs: await this.configProvider.getAll()
     });

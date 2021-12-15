@@ -190,9 +190,10 @@ export default class IDE extends React.Component {
         let req = await BywiseAPI.post(`/users-transactions`, tx);
         if (!req.error) {
             console.log(req.data);
+            let explorer = await BywiseAPI.getExplorer();
             this.dialog.show('Transaction send!', <>
                 <div>
-                    <span>TxId: <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
+                    <span>TxId: <a target="_blank" rel="noopener noreferrer" href={`${explorer}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
                 </div>
                 <div>
                     <span>Contract: <a target="_blank" rel="noopener noreferrer" href={`/panel/dashboard/contracts/${this.state.contract.address}`} >{this.state.contract.address}</a></span>

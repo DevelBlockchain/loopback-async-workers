@@ -97,6 +97,11 @@ export class InfoDTO extends Model {
   })
   nodesLimit: number;
 
+  @property({
+    type: 'string',
+  })
+  explorer: string;
+
   @property.array(NodeDTO)
   nodes: NodeDTO[];
 

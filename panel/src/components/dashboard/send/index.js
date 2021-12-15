@@ -84,8 +84,9 @@ export default class Send extends React.Component {
         };
         let req = await BywiseAPI.post(`/users-transactions`, tx);
         if (req.error) return;
+        let explorer = await BywiseAPI.getExplorer();
         this.dialog.show('Transaction send!', <>
-            <span>TxId: <a target="_blank" rel="noopener noreferrer" href={`${process.env.REACT_APP_EXPLORER_HOST}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
+            <span>TxId: <a target="_blank" rel="noopener noreferrer" href={`${explorer}/tx/${req.data.hash}`} >{req.data.hash}</a></span>
         </>)
     }
 
