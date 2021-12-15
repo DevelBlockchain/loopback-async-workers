@@ -50,7 +50,7 @@ export class BywiseAPI {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                ...(token ? { 'authorization': `Node ${token}` } : {})
+                ...(token ? { 'Authorization': `Node ${token}` } : {})
             },
         });
     }
@@ -60,7 +60,7 @@ export class BywiseAPI {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                ...(token ? { 'authorization': `Node ${token}` } : {})
+                ...(token ? { 'Authorization': `Node ${token}` } : {})
             },
             body: JSON.stringify(parameters)
         });

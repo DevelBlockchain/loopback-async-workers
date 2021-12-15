@@ -1,10 +1,59 @@
 import { service } from '@loopback/core';
 import { CronJob, cronJob } from '@loopback/cron';
 import { repository } from '@loopback/repository';
+import { Blocks, Slices, Transactions } from '../models';
 import { BlocksRepository } from '../repositories';
 import { SlicesProvider, BlocksProvider, NodesProvider, TransactionsProvider } from '../services';
 import { BlockDTO, NodeDTO, SliceDTO, TransactionsDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
+
+const blockToBlockDTO = (block: Blocks) => {
+  let blockDTO = new BlockDTO();
+  blockDTO.created = block.created;
+  blockDTO.from = block.from;
+  blockDTO.hash = block.hash;
+  blockDTO.height = block.height;
+  blockDTO.lastHash = block.lastHash;
+  blockDTO.merkleRoot = block.merkleRoot;
+  blockDTO.numberOfTransactions = block.numberOfTransactions;
+  blockDTO.sign = block.sign;
+  blockDTO.slices = block.slices;
+  blockDTO.version = block.version;
+  return blockDTO;
+}
+const sliceToSliceDTO = (slice: Slices) => {
+  let sliceDTO = new SliceDTO();
+  sliceDTO.created = slice.created;
+  sliceDTO.from = slice.from;
+  sliceDTO.hash = slice.hash;
+  sliceDTO.height = slice.height;
+  sliceDTO.isPublic = slice.isPublic;
+  sliceDTO.lastBlockHash = slice.lastBlockHash;
+  sliceDTO.merkleRoot = slice.merkleRoot;
+  sliceDTO.numberOfTransactions = slice.numberOfTransactions;
+  sliceDTO.sign = slice.sign;
+  sliceDTO.transactions = slice.transactions;
+  sliceDTO.version = slice.version;
+  return sliceDTO;
+}
+const txToTxDTO = (tx: Transactions) => {
+  let txDTO = new TransactionsDTO();
+  txDTO.amount = tx.amount;
+  txDTO.created = tx.created;
+  txDTO.data = tx.data;
+  txDTO.fee = tx.fee;
+  txDTO.foreignKeys = tx.foreignKeys;
+  txDTO.from = tx.from;
+  txDTO.hash = tx.hash;
+  txDTO.sign = tx.sign;
+  txDTO.tag = tx.tag;
+  txDTO.to = tx.to;
+  txDTO.type = tx.type;
+  txDTO.validator = tx.validator;
+  txDTO.validatorSign = tx.validatorSign;
+  txDTO.version = tx.version;
+  return txDTO;
+}
 
 @cronJob()
 export class SyncBlockchain extends CronJob {
@@ -48,9 +97,9 @@ export class SyncBlockchain extends CronJob {
         }
       });
       if (!lastBlock.error) {
-        let blocks: BlockDTO[] = lastBlock.data;
+        let blocks: Blocks[] = lastBlock.data;
         for (let j = 0; j < blocks.length; j++) {
-          await this.addBlock(node, blocks[j]);
+          await this.addBlock(node, blockToBlockDTO(blocks[j]));
         }
       }
     }
@@ -65,15 +114,15 @@ export class SyncBlockchain extends CronJob {
       if (req.error) {
         throw new Error(`cant sync slice ${sliceHash}`);
       }
-      let slice: SliceDTO = req.data;
+      let slice: SliceDTO = sliceToSliceDTO(req.data);
       slices.push(slice);
       req = await BywiseAPI.getTransactionFromSlice(node, sliceHash);
       if (req.error) {
         throw new Error(`cant sync slice ${sliceHash}`);
       }
-      let txs: TransactionsDTO[] = req.data;
+      let txs: Transactions[] = req.data;
       for (let j = 0; j < txs.length; j++) {
-        let tx = txs[j];
+        let tx = txToTxDTO(txs[j]);
         await this.transactionsProvider.saveTransaction(tx);
       }
       await this.slicesProvider.addSlice(lastHash, slice);

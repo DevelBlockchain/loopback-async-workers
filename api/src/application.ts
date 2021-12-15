@@ -49,7 +49,7 @@ export class BlockineNodeApplication extends BootMixin(
       transports: [
         new (winston.transports.DailyRotateFile)({
           filename: './logs/node-%DATE%.log',
-          datePattern: 'YYYY-MM-DD-HH',
+          datePattern: 'YYYY-MM-DD',
           zippedArchive: true,
           maxSize: '20m',
           maxFiles: '14d',
@@ -57,7 +57,7 @@ export class BlockineNodeApplication extends BootMixin(
         }),
         new (winston.transports.DailyRotateFile)({
           filename: './logs/node-error-%DATE%.log',
-          datePattern: 'YYYY-MM-DD-HH',
+          datePattern: 'YYYY-MM-DD',
           zippedArchive: true,
           maxSize: '20m',
           maxFiles: '14d',

@@ -2,19 +2,13 @@ import {
   Count,
   CountSchema,
   Filter,
-  FilterExcludingWhere,
   repository,
   Where,
 } from '@loopback/repository';
 import {
-  post,
   param,
   get,
   getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
   response,
   HttpErrors,
 } from '@loopback/rest';

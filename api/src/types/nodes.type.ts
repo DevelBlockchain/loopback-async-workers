@@ -56,7 +56,6 @@ export class NodeDTO extends Model {
 
   @property({
     type: 'string',
-    hidden: true,
   })
   token: string;
 

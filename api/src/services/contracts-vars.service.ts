@@ -1,8 +1,7 @@
 import { injectable, BindingScope } from '@loopback/core';
 import { repository } from '@loopback/repository';
-import { address } from '@waves/ts-lib-crypto';
 import { Type, Types, Variable } from '../compiler/vm/data';
-import { ContractsVars, ContractsVarsSimulation, Simulations } from '../models';
+import { ContractsVarsSimulation, Simulations } from '../models';
 import { ContractsVarsRepository, ContractsVarsSimulationRepository } from '../repositories';
 import { SimulationsRepository } from '../repositories/simulations.repository';
 
@@ -70,9 +69,7 @@ export class ContractsVarsProvider {
       let sql = `INSERT INTO contractsvarssimulation("id","simulateid","address","registerid","indexkey","key","value","type") `;
       sql += `SELECT uuid_generate_v4() as "id", '${simulateId}' as "simulateid", "address", "registerid", "indexkey", "key", "value", "type" `;
       sql += `FROM contractsvars WHERE address = '${address}' AND registerid = '${registerId}';`;
-      console.log('sql command', sql)
-      let rew = await this.contractsVarsSimulationRepository.execute(sql);
-      console.log('rew', rew)
+      await this.contractsVarsSimulationRepository.execute(sql);
       await this.simulationsRepository.create(new Simulations({
         simulateId,
         address,
