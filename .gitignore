@@ -56,6 +56,7 @@ api/.yarn-integrity
 
 # dotenv environment variables file
 .env
+.env2
 
 # Transpiled JavaScript files from Typescript
 api/dist

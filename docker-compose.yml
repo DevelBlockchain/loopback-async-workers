@@ -29,19 +29,6 @@ services:
     ports:
       - '${DB_PORT}:5432'
 
-  bywise-node2:
-    container_name: bywise-node2
-    build: './api'
-    env_file: .env2
-    volumes:
-      - ./api:/home/node/app
-    depends_on:
-      - bywise-db
-    networks:
-      - app-connect
-    ports:
-      - '2000:8080'
-
 volumes:
     bywise-db:
 
