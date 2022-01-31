@@ -34,20 +34,20 @@ export class TransactionsProvider {
     if (!WalletProvider.isValidAddress(tx.to)) {
       throw new Error('invalid transaction recipient address ' + tx.to);
     }
-    if (/ˆ[0-9](\.[0-9]+)?$/.test(tx.amount)) {
+    if (/^[0-9](\.[0-9]+)?$/.test(tx.amount)) {
       throw new Error('invalid transaction amount ' + tx.amount);
     }
-    if (/ˆ[0-9](\.[0-9]+)?$/.test(tx.fee)) {
+    if (/^[0-9](\.[0-9]+)?$/.test(tx.fee)) {
       throw new Error('invalid transaction fee ' + tx.fee);
     }
     if (tx.foreignKeys) {
       tx.foreignKeys.forEach(key => {
-        if (!/ˆ[A-Fa-f0-9]{64}$/.test(key)) {
+        if (!/^[A-Fa-f0-9]{64}$/.test(key)) {
           throw new Error('invalid transaction foreignKey ' + key);
         }
       })
     }
-    if (/ˆ[0-9a-f]{40}$/.test(tx.hash)) {
+    if (/^[0-9a-f]{40}$/.test(tx.hash)) {
       throw new Error('invalid transaction hash ' + tx.hash);
     }
   }
