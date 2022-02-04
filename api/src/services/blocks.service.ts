@@ -50,7 +50,7 @@ export class BlocksProvider {
     if (block.lastHash !== lastBlockParams.lastHash) {
       throw new Error(`invalid block lastHash ${block.lastHash} ${lastBlockParams.lastHash}`);
     }
-    if (/ˆ[0-9a-f]{40}$/.test(block.hash)) {
+    if (!/^[0-9a-f]{64}$/.test(block.hash)) {
       throw new Error('invalid block hash ' + block.hash);
     }
     let numberOfTransactions = 0;
@@ -103,7 +103,7 @@ export class BlocksProvider {
     bytes += Buffer.from(block.created, 'utf-8').toString('hex');
     bytes += block.merkleRoot;
     bytes += block.lastHash;
-    bytes = base16Encode(sha256(base16Decode(bytes))).substring(2).toLowerCase();
+    bytes = base16Encode(sha256(base16Decode(bytes))).toLowerCase();
     return bytes;
   }
 

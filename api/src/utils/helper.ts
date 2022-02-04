@@ -39,7 +39,7 @@ const getHashFromTransaction = (tx: TransactionsDTO) => {
         })
     }
     bytes += Buffer.from(tx.created, 'utf-8').toString('hex');
-    bytes = base16Encode(sha256(base16Decode(bytes))).substring(2).toLowerCase();
+    bytes = base16Encode(sha256(base16Decode(bytes))).toLowerCase();
     return bytes;
 }
 const signTransaction = async (seed: string, tx: TransactionsDTO) => {

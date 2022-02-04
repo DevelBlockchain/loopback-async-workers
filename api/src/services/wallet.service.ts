@@ -16,7 +16,7 @@ export class WalletProvider {
     finalAddress += isMainnet ? 'M' : 'T';
     finalAddress += isContract ? 'C' : 'U';
     finalAddress += address.substring(2);
-    if (tag && !/ˆ[0-9a-fA-F]{1, 40}$/.test(tag)) {
+    if (tag && !/^[0-9a-fA-F]{1,40}$/.test(tag)) {
       console.log('tag', tag)
       let checkSum = base16Encode(sha256(base16Decode(tag))).substring(0, 3);
       finalAddress += tag;

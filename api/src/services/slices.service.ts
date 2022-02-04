@@ -39,7 +39,7 @@ export class SlicesProvider {
     if (slice.lastBlockHash !== lastBlockHash) {
       throw new Error(`invalid slice lastBlockHash ${slice.lastBlockHash} ${lastBlockHash}`);
     }
-    if (/ˆ[0-9a-f]{40}$/.test(slice.lastBlockHash)) {
+    if (!/^[0-9a-f]{64}$/.test(slice.lastBlockHash)) {
       throw new Error('invalid slice lastBlockHash ' + slice.lastBlockHash);
     }
     if (slice.numberOfTransactions <= 0) {
@@ -98,7 +98,7 @@ export class SlicesProvider {
     bytes += Buffer.from(slice.created, 'utf-8').toString('hex');
     bytes += slice.merkleRoot;
     bytes += slice.lastBlockHash;
-    bytes = base16Encode(sha256(base16Decode(bytes))).substring(2).toLowerCase();
+    bytes = base16Encode(sha256(base16Decode(bytes))).toLowerCase();
     return bytes;
   }
 
