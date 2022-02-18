@@ -26,8 +26,8 @@ services:
     volumes:
       - bywise-db:/data/postgres
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - '${DB_PORT}:5432'
+#    ports:
+#      - '${DB_PORT}:5432'
 
 volumes:
     bywise-db:
