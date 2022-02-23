@@ -1,0 +1,24 @@
+{
+  "name": "loopback-async-workers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://felipemarts:9eed7d38380d86af1cc01cb9a8850e3f1e550e39@github.com/DevelBlockchain/loopback-async-workers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DevelBlockchain/loopback-async-workers/issues"
+  },
+  "homepage": "https://github.com/DevelBlockchain/loopback-async-workers#readme",
+  "dependencies": {
+    "@loopback/core": "^3.1.0",
+    "cron": "^1.8.2"
+  }
+}
