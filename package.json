@@ -1,7 +1,9 @@
 {
   "name": "loopback-async-workers",
-  "version": "1.0.2",
-  "description": "",
+  "version": "1.0.3",
+  "description": "This module contains a component to provide cron integration and asynchronous execution of scripts using loopback.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "files": [
     "lib/**/*"
   ],
@@ -16,8 +18,8 @@
     "type": "git",
     "url": "git+https://felipemarts:9eed7d38380d86af1cc01cb9a8850e3f1e550e39@github.com/DevelBlockchain/loopback-async-workers.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["loopback","cron","worker","workers","async","job","tasks"],
+  "author": "Devel Blockchain",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DevelBlockchain/loopback-async-workers/issues"
