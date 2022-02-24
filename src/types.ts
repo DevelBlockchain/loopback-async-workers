@@ -20,27 +20,63 @@ export function asWorkerJob<T = unknown>(binding: Binding<T>) {
 }
 
 /**
+ * Worker job settings interface
+ */
+export interface WorkerJobConfig {
+  name: string;
+  onTick: () => Promise<void>;
+  limitTime?: number;
+  cronTime?: string;
+  waitRun?: boolean;
+}
+
+/**
  * Worker job with an optional name
  */
 export class WorkerJob {
   name: string;
   onTick: () => Promise<void>;
-  cronTime: string | undefined;
-  private cron: CronJob;
-  constructor(config: { name: string, onTick: () => Promise<void>, cronTime: string | undefined }) {
+  limitTime: number;
+  cronTime?: string;
+  waitRun: boolean = true;
+  private cron?: CronJob;
+
+  constructor(config: WorkerJobConfig) {
     this.name = config.name;
-    this.onTick = config.onTick;
+    this.limitTime = config.limitTime !== undefined ? config.limitTime : 30000;
+    this.waitRun = config.waitRun !== undefined ? config.waitRun : true;
+    this.onTick = async () => {
+      const timeout = setTimeout(() => {
+        throw new Error(`timeout worker ${this.name}`);
+      }, this.limitTime);
+      if (this.cron && this.waitRun) this.cron.stop();
+
+      await config.onTick();
+      
+      if (this.cron && this.waitRun) this.cron.start();
+      clearTimeout(timeout);
+    };
     this.cronTime = config.cronTime;
     if (this.cronTime) {
       this.cron = new CronJob(this.cronTime, this.onTick);
     }
   }
 
+  async run() {
+    if (!this.cron) {
+      await this.onTick();
+    }
+  }
+
   start() {
-    this.cron.start();
+    if (this.cron) {
+      this.cron.start();
+    }
   }
 
   stop() {
-    this.cron.stop();
+    if (this.cron) {
+      this.cron.stop();
+    }
   }
 }
