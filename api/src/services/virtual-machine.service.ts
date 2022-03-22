@@ -1,7 +1,7 @@
 import { injectable, BindingScope, service } from '@loopback/core';
 import { repository } from '@loopback/repository';
 import BigNumber from "bignumber.js";
-import { ContractProvider, WalletProvider } from '.';
+import { ContractProvider } from '.';
 import { BywiseBlockchainInterface } from '../compiler/bywise/bywise-blockchain';
 import { ContractABI, Environment, Type, Types, Variable } from '../compiler/vm/data';
 import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
@@ -11,9 +11,9 @@ import { ContractsVars } from '../models/contracts-vars.model';
 import { ConfigsRepository, WalletsRepository } from '../repositories';
 import { ContractsEnvRepository } from '../repositories/contracts-env.repository';
 import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
-import { CommandDTO, SimulateSliceDTO, TransactionOutputDTO, TransactionsType, VariableDTO, WalletInfoDTO } from '../types/transactions.type';
-import { ConfigProvider } from './configs.service';
+import { CommandDTO, SimulateSliceDTO, TransactionOutputDTO } from '../types/transactions.type';
 import { ContractsVarsProvider } from './contracts-vars.service';
+import { TxType, BywiseHelper } from '@bywise/web3';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class VirtualMachineProvider implements BywiseBlockchainInterface {
@@ -132,16 +132,48 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     recipient.balance = recipientBalance.toString();
   }
 
+  private async sub(senderAddress: string, amount: BigNumber, ctx: SimulateSliceDTO) {
+    const sender = await this.getWallet(senderAddress, ctx);
+    const senderBalance = new BigNumber(sender.balance);
+    if (senderBalance.minus(amount).isLessThan(new BigNumber(0))) {
+      const remainder = amount.minus(senderBalance);
+      sender.balance = (new BigNumber(0)).toString();
+      return remainder;
+    } else {
+      sender.balance = senderBalance.minus(amount).toString();
+      return new BigNumber(0);
+    }
+  }
+
+  private async add(recipientAddress: string, amount: BigNumber, ctx: SimulateSliceDTO) {
+    const recipient = await this.getWallet(recipientAddress, ctx);
+    const recipientBalance = new BigNumber(recipient.balance);
+    recipient.balance = recipientBalance.plus(amount).toString();
+  }
+
   async executeTransaction(tx: Transactions, ctx: SimulateSliceDTO): Promise<TransactionOutputDTO> {
     let transactionOutput = new TransactionOutputDTO();
     transactionOutput.cost = 0;
     transactionOutput.size = JSON.stringify(tx.data).length;
 
     ctx.tx = tx;
-    await this.send(tx.from, tx.validator, tx.fee, ctx);
-    await this.send(tx.from, tx.to, tx.amount, ctx);
+    let debit = new BigNumber(tx.fee);
+    ctx.totalFee = new BigNumber(ctx.totalFee).plus(debit).toString();
+    for (let i = 0; i < tx.to.length; i++) {
+      const to = tx.to[i];
+      const amount = new BigNumber(tx.amount[i]);
+      debit = debit.plus(amount);
+      await this.add(to, amount, ctx);
+    }
+    for (let i = 0; i < tx.from.length; i++) {
+      const from = tx.from[i];
+      debit = await this.sub(from, debit, ctx);
+    }
+    if (debit.isGreaterThan(new BigNumber(0))) {
+      throw new Error('insufficient funds');
+    }
 
-    if (tx.type === TransactionsType.TX_CONTRACT) {
+    if (tx.type === TxType.TX_CONTRACT) {
       let contract = ContractABI.fromJSON(tx.data);
       await this.getWallet(contract.address, ctx);
       let contractEnv = await this.getContractEnv(contract.address, ctx);
@@ -161,8 +193,8 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       contractEnv.env = output.env;
       transactionOutput.cost = output.cost;
       transactionOutput.logs = output.logs;
-    } else if (tx.type === TransactionsType.TX_CONTRACT_EXE) {
-      let contractEnv = await this.getContractEnv(tx.to, ctx);
+    } else if (tx.type === TxType.TX_CONTRACT_EXE) {
+      let contractEnv = await this.getContractEnv(tx.to[0], ctx);
       if (!contractEnv.env) {
         throw new Error(`Contract ${tx.to} not found`);
       }
@@ -182,7 +214,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       transactionOutput.output = output.output;
       transactionOutput.cost = output.cost;
       transactionOutput.logs = output.logs;
-    } else if (tx.type === TransactionsType.TX_COMMAND) {
+    } else if (tx.type === TxType.TX_COMMAND) {
       let cmd = new CommandDTO(tx.data);
       await this.setConfig(ctx, cmd);
     }
@@ -195,7 +227,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     code += `let cost = new BigNumber('${transactionOutput.cost}');\n`;
     code += `${configFee.value}`;
     let fee = `${eval(code)}`;
-    
+
     if (fee !== tx.fee && !ctx.simulate) {
       throw new Error(`Invalid fee`);
     }
@@ -207,7 +239,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
 
   async checkAdminAddress(ctx: SimulateSliceDTO) {
     let adminAddress = await this.getConfig('adminAddress', ctx);
-    if (adminAddress.value !== WalletProvider.ZERO_ADDRESS && (!ctx.tx || adminAddress.value !== ctx.tx.from)) {
+    if (adminAddress.value !== BywiseHelper.ZERO_ADDRESS && (!ctx.tx || adminAddress.value !== ctx.tx.from[0])) {
       throw new Error(`setConfig forbidden`);
     }
   }
@@ -233,7 +265,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       await this.checkAdminAddress(ctx);
       let address = cmd.input[0];
       let amount = cmd.input[1];
-      if (WalletProvider.isValidAddress(address)) {
+      if (BywiseHelper.isValidAddress(address)) {
         let wallet = await this.getWallet(address, ctx);
         wallet.balance = amount;
         return;
@@ -244,7 +276,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       await this.checkAdminAddress(ctx);
       let address = cmd.input[0];
       let amount = cmd.input[1];
-      if (WalletProvider.isValidAddress(address)) {
+      if (BywiseHelper.isValidAddress(address)) {
         let wallet = await this.getWallet(address, ctx);
         wallet.balance = new BigNumber(wallet.balance).plus(new BigNumber(amount)).toString();
         return;
@@ -255,7 +287,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       await this.checkAdminAddress(ctx);
       let address = cmd.input[0];
       let amount = cmd.input[1];
-      if (WalletProvider.isValidAddress(address)) {
+      if (BywiseHelper.isValidAddress(address)) {
         let wallet = await this.getWallet(address, ctx);
         wallet.balance = new BigNumber(wallet.balance).minus(new BigNumber(amount)).toString();
         if (new BigNumber(wallet.balance).isLessThan(new BigNumber(0))) {
@@ -271,7 +303,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       if ((!ctx.tx)) {
         throw new Error(`setInfo forbidden`);
       }
-      let wallet = await this.getWallet(ctx.tx.from, ctx);
+      let wallet = await this.getWallet(ctx.tx.from[0], ctx);
       if (key === 'name') wallet.name = value;
       if (key === 'url') wallet.url = value;
       if (key === 'bio') wallet.bio = value;
@@ -288,7 +320,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       return [];
     } else if (name === 'balanceOf') {
       if (inputs.length === 1) {
-        if (WalletProvider.isValidAddress(inputs[0].value)) {
+        if (BywiseHelper.isValidAddress(inputs[0].value)) {
           let wallet = await this.getWallet(inputs[0].value, ctx);
           return [new Variable(Types.number, wallet.balance)];
         } else {
@@ -299,44 +331,41 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
       }
     } else if (name === 'tx.from') {
       if (!ctx.tx) throw new Error("Transaction context not found");
-      return [new Variable(Types.address, ctx.tx.from)];
+      return [new Variable(Types.address, ctx.tx.from[0])];
     } else if (name === 'tx.amount') {
       if (!ctx.tx) throw new Error("Transaction context not found");
-      return [new Variable(Types.number, ctx.tx.amount)];
-    } else if (name === 'tx.validator') {
-      if (!ctx.tx) throw new Error("Transaction context not found");
-      return [new Variable(Types.address, ctx.tx.validator)];
+      return [new Variable(Types.number, ctx.tx.amount[0])];
     }
     throw new Error("Method not implemented.");
   }
 
   pushArray = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, value: Variable, index: number | undefined): Promise<void> => {
     if (!ctx.tx) throw new Error("Transaction context not found");
-    await this.contractsVarsProvider.arrayPush(ctx.simulateId, ctx.tx.to, registerId, value.value, value.type, index);
+    await this.contractsVarsProvider.arrayPush(ctx.simulateId, ctx.tx.to[0], registerId, value.value, value.type, index);
   }
   popArray = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, index: number | undefined): Promise<Variable> => {
     if (!ctx.tx) throw new Error("Transaction context not found");
-    return await this.contractsVarsProvider.arrayPop(ctx.simulateId, ctx.tx.to, registerId, index);
+    return await this.contractsVarsProvider.arrayPop(ctx.simulateId, ctx.tx.to[0], registerId, index);
   }
   getArrayLength = async (ctx: SimulateSliceDTO, env: Environment, registerId: string): Promise<number> => {
     if (!ctx.tx) throw new Error("Transaction context not found");
-    return await this.contractsVarsProvider.getArrayLength(ctx.simulateId, ctx.tx.to, registerId);
+    return await this.contractsVarsProvider.getArrayLength(ctx.simulateId, ctx.tx.to[0], registerId);
   }
   getArray = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, index: number): Promise<Variable | null> => {
     if (!ctx.tx) throw new Error("Transaction context not found");
-    return await this.contractsVarsProvider.getArray(ctx.simulateId, ctx.tx.to, registerId, index);
+    return await this.contractsVarsProvider.getArray(ctx.simulateId, ctx.tx.to[0], registerId, index);
   }
 
   setMap = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, key: string, value: Variable): Promise<void> => {
     if (!ctx.tx) throw new Error("Transaction context not found");
-    await this.contractsVarsProvider.setMap(ctx.simulateId, ctx.tx.to, registerId, key, value.value, value.type);
+    await this.contractsVarsProvider.setMap(ctx.simulateId, ctx.tx.to[0], registerId, key, value.value, value.type);
   }
   getMap = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, key: string): Promise<Variable | null> => {
     if (!ctx.tx) throw new Error("Transaction context not found");
-    return await this.contractsVarsProvider.getMap(ctx.simulateId, ctx.tx.to, registerId, key);
+    return await this.contractsVarsProvider.getMap(ctx.simulateId, ctx.tx.to[0], registerId, key);
   }
   delMap = async (ctx: SimulateSliceDTO, env: Environment, registerId: string, key: string): Promise<void> => {
     if (!ctx.tx) throw new Error("Transaction context not found");
-    await this.contractsVarsProvider.delMap(ctx.simulateId, ctx.tx.to, registerId, key);
+    await this.contractsVarsProvider.delMap(ctx.simulateId, ctx.tx.to[0], registerId, key);
   }
 }

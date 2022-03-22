@@ -5,7 +5,6 @@ import { TransactionsRepository } from '../repositories';
 import { BlocksProvider, NodesProvider, SlicesProvider } from '../services';
 import { SimulateSliceDTO, TransactionsStatus } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
-import { getRandomString } from '../utils/helper';
 
 @cronJob()
 export class CreateSlices extends CronJob {

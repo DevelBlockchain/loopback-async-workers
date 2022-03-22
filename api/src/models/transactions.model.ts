@@ -1,5 +1,6 @@
 import { Entity, model, property } from '@loopback/repository';
-import { TransactionOutputDTO, TransactionsStatus, TransactionsType } from '../types';
+import { TransactionOutputDTO, TransactionsStatus } from '../types';
+import { TxType } from '@bywise/web3';
 
 @model()
 export class Transactions extends Entity {
@@ -24,21 +25,22 @@ export class Transactions extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
-  validator: string;
+  validator?: string;
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  from: string;
+  from: string[];
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  to: string;
+  to: string[];
 
   @property({
     type: 'string',
@@ -47,10 +49,11 @@ export class Transactions extends Entity {
   tag: string;
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  amount: string;
+  amount: string[];
 
   @property({
     type: 'string',
@@ -61,11 +64,11 @@ export class Transactions extends Entity {
   @property({
     type: 'string',
     jsonSchema: {
-      enum: Object.values(TransactionsType),
+      enum: Object.values(TxType),
     },
     required: true,
   })
-  type: string;
+  type: TxType;
 
   @property({
     type: 'array',
@@ -91,10 +94,11 @@ export class Transactions extends Entity {
   hash: string;
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  sign: string;
+  sign: string[];
 
   @property({
     type: 'string',

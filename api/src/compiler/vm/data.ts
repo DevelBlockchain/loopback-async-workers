@@ -1,5 +1,6 @@
 import BigNumber from "bignumber.js";
 import { SimulateSliceDTO, VariableDTO } from "../../types";
+import { BywiseHelper } from '@bywise/web3';
 
 export class Type {
     name: string;
@@ -21,7 +22,7 @@ export class Types {
     static string = new Type('string', '""', false);
     static number = new Type('number', '0', true);
     static integer = new Type('integer', '0', true);
-    static address = new Type('address', 'BWS000000000000000000000000000000000000000000000', false);
+    static address = new Type('address', BywiseHelper.ZERO_ADDRESS, false);
     static binary = new Type('binary', '0x', false);
     static boolean = new Type('boolean', 'false', false);
     static array = new Type('array', '[]', false);
@@ -397,7 +398,7 @@ export class ContractABI {
     }
 
     static fromJSON(json: any): ContractABI {
-        if(typeof json !== 'object') throw new Error('invalid ABI');
+        if (typeof json !== 'object') throw new Error('invalid ABI');
         let obj = new ContractABI();
         obj.nonce = json.nonce;
         obj.bytecode = json.bytecode;

@@ -13,11 +13,11 @@ import {
 import { PermissionsTypes } from '../authorization/PermissionsTypes';
 import { Transactions } from '../models';
 import { MyWalletsRepository, TransactionsRepository } from '../repositories';
-import { InfoJWT, SimulateSliceDTO, TransactionsDTO } from '../types';
+import { InfoJWT, SimulateSliceDTO, TxModelDTO, TxSimpleModelDTO } from '../types';
 import { NodesProvider, TransactionsProvider } from '../services';
 import { ConfigProvider } from '../services/configs.service';
 import { BywiseAPI } from '../utils/bywise-api';
-import { signTransaction } from '../utils/helper';
+import { Tx, Wallet } from '@bywise/web3';
 
 export class UsersTransactionsController {
   constructor(
@@ -43,36 +43,47 @@ export class UsersTransactionsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TransactionsDTO, {
-            exclude: ['created', 'fee', 'hash', 'tag', 'validator', 'validatorSign', 'version', 'sign']
-          }),
+          schema: getModelSchemaRef(TxSimpleModelDTO),
         },
       },
     })
-    tx: TransactionsDTO,
+    txSimpleModelDTO: TxSimpleModelDTO,
   ): Promise<Transactions> {
     let info = await this.getCurrentUser();
     try {
-      let wallet = await this.myWalletsRepository.findOne({
-        limit: 1,
-        where: {
-          usersId: info.id,
-          address: tx.from,
-        }
+      let tx = new Tx({
+        from: [txSimpleModelDTO.from],
+        to: [txSimpleModelDTO.to],
+        amount: [txSimpleModelDTO.amount],
+        foreignKeys: txSimpleModelDTO.foreignKeys,
+        type: txSimpleModelDTO.type,
+        data: txSimpleModelDTO.data,
       });
-      if (!wallet) throw new Error(`Account ${tx.from} not found`);
-      (await this.configProvider.getAll()).forEach(config => {
-        if (config.name == 'validator') {
-          tx.validator = config.value
-        }
-      })
+      let myWallets = [];
+      for await (const from of tx.from) {
+        let wallet = await this.myWalletsRepository.findOne({
+          limit: 1,
+          where: {
+            usersId: info.id,
+            address: from,
+          }
+        });
+        if (!wallet) throw new Error(`Account ${tx.from} not found`);
+        myWallets.push(wallet);
+      }
       tx.version = '1';
       tx.created = new Date().toISOString();
       let ctx = new SimulateSliceDTO();
       ctx.simulate = true;
       tx.fee = (await this.transactionsProvider.simulateTransaction(tx, ctx)).fee;
-      tx.sign = await signTransaction(wallet.seed, tx);
-
+      tx.hash = tx.toHash();
+      tx.sign = [];
+      for await (const myWallet of myWallets) {
+        let wallet = new Wallet({ seed: myWallet.seed });
+        let sign = await wallet.signHash(tx.hash);
+        tx.sign.push(sign);
+      }
+      console.log(tx)
       let newTx = await this.transactionsProvider.saveTransaction(tx);
       let nodes = this.nodesProvider.getNodes();
       for (let i = 0; i < nodes.length; i++) {

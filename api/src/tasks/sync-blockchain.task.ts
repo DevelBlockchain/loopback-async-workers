@@ -4,39 +4,36 @@ import { repository } from '@loopback/repository';
 import { Blocks, Slices, Transactions } from '../models';
 import { BlocksRepository } from '../repositories';
 import { SlicesProvider, BlocksProvider, NodesProvider, TransactionsProvider } from '../services';
-import { BlockDTO, NodeDTO, SliceDTO, TransactionsDTO } from '../types';
+import { NodeDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
+import { Slice, Block, Tx } from '@bywise/web3';
 
 const blockToBlockDTO = (block: Blocks) => {
-  let blockDTO = new BlockDTO();
+  let blockDTO = new Block();
   blockDTO.created = block.created;
   blockDTO.from = block.from;
   blockDTO.hash = block.hash;
   blockDTO.height = block.height;
   blockDTO.lastHash = block.lastHash;
-  blockDTO.merkleRoot = block.merkleRoot;
-  blockDTO.numberOfTransactions = block.numberOfTransactions;
   blockDTO.sign = block.sign;
   blockDTO.slices = block.slices;
   blockDTO.version = block.version;
   return blockDTO;
 }
 const sliceToSliceDTO = (slice: Slices) => {
-  let sliceDTO = new SliceDTO();
+  let sliceDTO = new Slice();
   sliceDTO.created = slice.created;
   sliceDTO.from = slice.from;
   sliceDTO.hash = slice.hash;
   sliceDTO.height = slice.height;
   sliceDTO.lastBlockHash = slice.lastBlockHash;
-  sliceDTO.merkleRoot = slice.merkleRoot;
-  sliceDTO.numberOfTransactions = slice.numberOfTransactions;
   sliceDTO.sign = slice.sign;
   sliceDTO.transactions = slice.transactions;
   sliceDTO.version = slice.version;
   return sliceDTO;
 }
 const txToTxDTO = (tx: Transactions) => {
-  let txDTO = new TransactionsDTO();
+  let txDTO = new Tx();
   txDTO.amount = tx.amount;
   txDTO.created = tx.created;
   txDTO.data = tx.data;
@@ -104,16 +101,16 @@ export class SyncBlockchain extends CronJob {
     }
   }
 
-  async addBlock(node: NodeDTO, block: BlockDTO) {
+  async addBlock(node: NodeDTO, block: Block) {
     let lastHash = (await this.blocksProvider.getLastHashAndHeight()).lastHash;
-    let slices: SliceDTO[] = [];
+    let slices: Slice[] = [];
     for (let i = 0; i < block.slices.length; i++) {
       let sliceHash = block.slices[i];
       let req = await BywiseAPI.getSlice(node, sliceHash);
       if (req.error) {
         throw new Error(`cant sync slice ${sliceHash}`);
       }
-      let slice: SliceDTO = sliceToSliceDTO(req.data);
+      let slice: Slice = sliceToSliceDTO(req.data);
       slices.push(slice);
       req = await BywiseAPI.getTransactionFromSlice(node, sliceHash);
       if (req.error) {

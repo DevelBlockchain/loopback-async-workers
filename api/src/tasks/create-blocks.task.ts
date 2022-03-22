@@ -3,8 +3,8 @@ import { CronJob, cronJob } from '@loopback/cron';
 import { repository } from '@loopback/repository';
 import { BlocksRepository } from '../repositories';
 import { SlicesProvider, BlocksProvider } from '../services';
-import { SimulateSliceDTO, SliceDTO } from '../types';
-import { getRandomString } from '../utils/helper';
+import { SimulateSliceDTO } from '../types';
+import { Slice } from '@bywise/web3';
 
 @cronJob()
 export class CreateBlocks extends CronJob {
@@ -35,9 +35,9 @@ export class CreateBlocks extends CronJob {
     let lastBlockParams = await this.blocksProvider.getLastHashAndHeight();
     let slices = await this.slicesProvider.getMempoolSlices();
 
-    let selectedSlices: SliceDTO[] = []
+    let selectedSlices: Slice[] = []
     if (slices.length > 0) {
-      slices = slices.sort((a, b) => b.numberOfTransactions - a.numberOfTransactions);
+      slices = slices.sort((a, b) => b.transactions.length - a.transactions.length);
       for (let i = 0; i < slices.length && selectedSlices.length === 0; i++) {
         let slice = slices[i];
         try {

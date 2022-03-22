@@ -1,21 +1,19 @@
-import { injectable, BindingScope, Provider, service } from '@loopback/core';
+import { injectable, BindingScope, service } from '@loopback/core';
 import { repository } from '@loopback/repository';
-import { base16Decode, base16Encode, sha256, signBytes } from '@waves/ts-lib-crypto';
-import { ethers } from 'ethers';
-import { WalletProvider } from '.';
 import { BlocksRepository, ConfigsRepository, SlicesRepository, TransactionsRepository, WalletsRepository } from '../repositories';
 import { ContractsEnvRepository } from '../repositories/contracts-env.repository';
 import { ContractsVarsRepository } from '../repositories/contracts-vars.repository';
-import { BlockDTO, SimulateSliceDTO, SliceDTO, TransactionsDTO, TransactionsStatus } from '../types/transactions.type';
-import { getRandomString, numberToHex } from '../utils/helper';
+import { SimulateSliceDTO, TransactionsStatus } from '../types/transactions.type';
 import { ContractProvider } from './contract.service';
 import { ContractsVarsProvider } from './contracts-vars.service';
 import { VirtualMachineProvider } from './virtual-machine.service';
+import { Slice, Block, Tx } from '@bywise/web3';
+import { Transactions } from '../models';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class SlicesProvider {
 
-  private static mempoolSlices: SliceDTO[] = [];
+  private static mempoolSlices: Slice[] = [];
 
   constructor(
     @repository(SlicesRepository) private slicesRepository: SlicesRepository,
@@ -32,21 +30,10 @@ export class SlicesProvider {
 
   }
 
-  async validadeSlice(lastBlockHash: string, slice: SliceDTO) {
-    if (slice.height < 0) {
-      throw new Error('invalid slice height ' + slice.height);
-    }
+  async validadeSlice(lastBlockHash: string, slice: Slice) {
+    slice.isValid()
     if (slice.lastBlockHash !== lastBlockHash) {
       throw new Error(`invalid slice lastBlockHash ${slice.lastBlockHash} ${lastBlockHash}`);
-    }
-    if (!/^[0-9a-f]{64}$/.test(slice.lastBlockHash)) {
-      throw new Error('invalid slice lastBlockHash ' + slice.lastBlockHash);
-    }
-    if (slice.numberOfTransactions <= 0) {
-      throw new Error('invalid numberOfTransactions ' + slice.numberOfTransactions);
-    }
-    if (slice.transactions.length !== slice.numberOfTransactions) {
-      throw new Error('invalid slice length ' + slice.transactions.length + ' ' + slice.numberOfTransactions);
     }
     for (let i = 0; i < slice.transactions.length; i++) {
       let txHash = slice.transactions[i];
@@ -58,53 +45,13 @@ export class SlicesProvider {
         throw new Error(`slice transaction ${txHash} already registered`);
       }
     }
-    if (slice.version !== '1') {
-      throw new Error('invalid slice version ' + slice.version);
-    }
-    if (!WalletProvider.isValidAddress(slice.from)) {
-      throw new Error('invalid slice from address ' + slice.from);
-    }
-    let hash = '';
-    if (slice.transactions.length > 0) {
-      slice.transactions.forEach(txHash => {
-        hash += txHash;
-      })
-      hash = base16Encode(sha256(base16Decode(hash))).substring(2).toLowerCase();
-    } else {
-      hash = '0000000000000000000000000000000000000000000000000000000000000000'
-    }
-    if (slice.merkleRoot !== hash) {
-      throw new Error(`invalid slice merkle root ${slice.merkleRoot} ${hash}`);
-    }
-    hash = SlicesProvider.getHashFromSlice(slice);
-    if (slice.hash !== hash) {
-      throw new Error(`invalid slice hash ${slice.hash} ${hash}`);
-    }
-    let recoveredAddress = ethers.utils.verifyMessage(Buffer.from(hash, 'hex'), slice.sign);
-    let decodeAddress = WalletProvider.decodeBWSAddress(slice.from);
-    if (recoveredAddress !== decodeAddress.ethAddress) {
-      throw new Error('invalid slice signature');
-    }
   }
 
-  private static getHashFromSlice(slice: SliceDTO): string {
-    let bytes = '';
-    bytes += numberToHex(slice.height);
-    bytes += numberToHex(slice.numberOfTransactions);
-    bytes += Buffer.from(slice.version, 'utf-8').toString('hex');
-    bytes += Buffer.from(slice.from, 'utf-8').toString('hex');
-    bytes += Buffer.from(slice.created, 'utf-8').toString('hex');
-    bytes += slice.merkleRoot;
-    bytes += slice.lastBlockHash;
-    bytes = base16Encode(sha256(base16Decode(bytes))).toLowerCase();
-    return bytes;
-  }
-
-  getMempoolSlices(): SliceDTO[] {
+  getMempoolSlices(): Slice[] {
     return SlicesProvider.mempoolSlices.map(slice => slice);
   }
 
-  getSlice(sliceHash: string): SliceDTO | null {
+  getSlice(sliceHash: string): Slice | null {
     for (let i = 0; i < SlicesProvider.mempoolSlices.length; i++) {
       if (SlicesProvider.mempoolSlices[i].hash === sliceHash) {
         return SlicesProvider.mempoolSlices[i];
@@ -113,7 +60,7 @@ export class SlicesProvider {
     return null;
   }
 
-  async addSlice(lastBlockHash: string, slice: SliceDTO): Promise<boolean> {
+  async addSlice(lastBlockHash: string, slice: Slice): Promise<boolean> {
     for (let i = 0; i < SlicesProvider.mempoolSlices.length; i++) {
       if (SlicesProvider.mempoolSlices[i].hash === slice.hash) {
         return false;
@@ -125,7 +72,7 @@ export class SlicesProvider {
     return true;
   }
 
-  async consolidateSlices(block: BlockDTO) {
+  async consolidateSlices(block: Block) {
     let ctx = new SimulateSliceDTO();
     await this.simulateBlock(block.slices, ctx);
     SlicesProvider.mempoolSlices = [];
@@ -206,27 +153,18 @@ export class SlicesProvider {
     ctx.transactionsModels.push(tx);
   }
 
-  async createNewSlice(lastBlockHash: string, transactions: TransactionsDTO[]) {
-    let account = this.contractProvider.getAccount();
-    let slice = new SliceDTO();
+  async createNewSlice(lastBlockHash: string, transactions: Transactions[]) {
+    let wallet = this.contractProvider.getWallet();
+    let slice = new Slice();
     slice.height = 0;
-    slice.numberOfTransactions = transactions.length;
     slice.transactions = transactions.map(tx => tx.hash);
     slice.version = '1';
     slice.lastBlockHash = lastBlockHash.toLowerCase();
-    slice.from = WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
+    slice.from = wallet.address;
+    slice.next = wallet.address;
     slice.created = (new Date()).toISOString();
-    if (transactions.length > 0) {
-      let hash = '';
-      transactions.forEach(tx => {
-        hash += tx.hash;
-      })
-      slice.merkleRoot = base16Encode(sha256(base16Decode(hash))).substring(2).toLowerCase();
-    } else {
-      slice.merkleRoot = '0000000000000000000000000000000000000000000000000000000000000000';
-    }
-    slice.hash = SlicesProvider.getHashFromSlice(slice);
-    slice.sign = (await account.signMessage(Buffer.from(slice.hash, 'hex')));
+    slice.hash = slice.toHash();
+    slice.sign = await wallet.signHash(slice.hash);
     return slice;
   }
 }

@@ -29,22 +29,10 @@ export class Slices extends Entity {
   transactions: string[];
 
   @property({
-    type: 'number',
-    required: true,
-  })
-  numberOfTransactions: number;
-
-  @property({
     type: 'string',
     required: true,
   })
   version: string;
-  
-  @property({
-    type: 'string',
-    required: true,
-  })
-  merkleRoot: string;
 
   @property({
     type: 'string',
@@ -63,6 +51,12 @@ export class Slices extends Entity {
     required: true,
   })
   from: string;
+  
+  @property({
+    type: 'string',
+    required: true,
+  })
+  next: string;
 
   @property({
     type: 'string',

@@ -18,8 +18,9 @@ import {
 import { Slices } from '../models';
 import { SlicesRepository } from '../repositories';
 import { BlocksProvider, NodesProvider, SlicesProvider } from '../services';
-import { SliceDTO } from '../types';
+import { SliceModelDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
+import { Slice } from '@bywise/web3';
 
 export class SlicesController {
   constructor(
@@ -37,11 +38,11 @@ export class SlicesController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(SliceDTO),
+          schema: getModelSchemaRef(SliceModelDTO),
         },
       },
     })
-    slice: SliceDTO,
+    slice: Slice,
   ): Promise<void> {
     let lastHash = (await this.blocksProvider.getLastHashAndHeight()).lastHash;
     let added = await this.slicesProvider.addSlice(lastHash, slice);

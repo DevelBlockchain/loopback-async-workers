@@ -8,9 +8,10 @@ import {
   response,
   HttpErrors,
 } from '@loopback/rest';
-import { ContractProvider, NodesProvider, WalletProvider } from '../services';
+import { ContractProvider, NodesProvider } from '../services';
 import { ConfigProvider } from "../services/configs.service";
 import { InfoDTO, NodeDTO } from '../types';
+import { BywiseHelper } from '@bywise/web3';
 
 export class NodesController {
   constructor(
@@ -89,7 +90,7 @@ export class NodesController {
   })
   async info(): Promise<InfoDTO> {
     let account = this.contractProvider.getAccount();
-    let address = WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
+    let address = BywiseHelper.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
     return new InfoDTO({
       address,
       host: process.env.MY_HOST,

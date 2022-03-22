@@ -49,6 +49,7 @@
     "!*/__tests__"
   ],
   "dependencies": {
+    "@bywise/web3": "^0.9.5",
     "@loopback/authentication": "^7.3.3",
     "@loopback/authentication-jwt": "^0.9.3",
     "@loopback/boot": "^3.2.1",

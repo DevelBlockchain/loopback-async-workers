@@ -18,9 +18,9 @@ import {
 import { Transactions } from '../models';
 import { TransactionsRepository } from '../repositories';
 import { NodesProvider, TransactionsProvider } from '../services';
-import { SimulateContractDTO, SimulateSliceDTO, TransactionOutputDTO, TransactionsDTO, TryCompileDTO, ValueDTO } from '../types';
+import { SimulateContractDTO, SimulateSliceDTO, TransactionOutputDTO, TxModelDTO, TryCompileDTO, ValueDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
-import { getRandomString } from '../utils/helper';
+import { Tx } from '@bywise/web3';
 
 export class TransactionsController {
   constructor(
@@ -53,7 +53,7 @@ export class TransactionsController {
     try {
       let ctx = new SimulateSliceDTO();
       ctx.simulate = true;
-      return await this.transactionsProvider.simulateTransaction(new TransactionsDTO(tx), ctx);
+      return await this.transactionsProvider.simulateTransaction(new Tx(tx), ctx);
     } catch (err: any) {
       throw new HttpErrors.BadRequest(err.message);
     }
@@ -67,11 +67,11 @@ export class TransactionsController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(TransactionsDTO),
+          schema: getModelSchemaRef(TxModelDTO),
         },
       },
     })
-    tx: TransactionsDTO,
+    tx: Tx,
   ): Promise<void> {
     try {
       await this.transactionsProvider.saveTransaction(tx);

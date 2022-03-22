@@ -6,15 +6,11 @@ import {
   get,
   response,
   ResponseObject,
-  post,
-  requestBody,
-  getModelSchemaRef,
 } from '@loopback/rest';
 import { TransactionsRepository } from '../repositories';
-import { ContractProvider, WalletProvider } from '../services';
+import { ContractProvider } from '../services';
 import { TransactionsProvider } from '../services/transactions.service';
 import { VirtualMachineProvider } from '../services/virtual-machine.service';
-import { TransactionsDTO, ValueDTO } from '../types';
 
 const PING_RESPONSE: ResponseObject = {
   description: 'Ping Response',

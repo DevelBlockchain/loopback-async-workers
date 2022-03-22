@@ -23,12 +23,6 @@ export class Blocks extends Entity {
   height: number;
 
   @property({
-    type: 'number',
-    required: true,
-  })
-  numberOfTransactions: number;
-
-  @property({
     type: 'array',
     itemType: 'string'
   })
@@ -39,12 +33,6 @@ export class Blocks extends Entity {
     required: true,
   })
   version: string;
-  
-  @property({
-    type: 'string',
-    required: true,
-  })
-  merkleRoot: string;
 
   @property({
     type: 'string',
@@ -57,6 +45,18 @@ export class Blocks extends Entity {
     required: true,
   })
   from: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  nextSlice: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  nextBlock: string;
 
   @property({
     type: "date",
@@ -77,9 +77,10 @@ export class Blocks extends Entity {
   sign: string;
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string'
   })
-  externalTxID?: string;
+  externalTxID?: string[];
 
   @hasMany(() => Slices)
   slicesArray: Slices[];

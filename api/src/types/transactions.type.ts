@@ -5,6 +5,8 @@ import { Configs, Transactions, Wallets } from '../models';
 import { ContractsEnv } from '../models/contracts-env.model';
 import { ContractsVars } from '../models/contracts-vars.model';
 import { getRandomString } from '../utils/helper';
+import { TxType, Slice, Tx, Block } from '@bywise/web3';
+import BigNumber from 'bignumber.js';
 
 export enum TransactionsStatus {
   TX_MEMPOOL = 'mempool',
@@ -12,36 +14,8 @@ export enum TransactionsStatus {
   TX_INVALIDATED = 'invalidated',
 }
 
-export enum TransactionsType {
-  TX_NONE = 'none',
-  TX_JSON = 'json',
-  TX_COMMAND = 'command',
-  TX_CONTRACT = 'contract',
-  TX_CONTRACT_EXE = 'contract-exe',
-  TX_FILE = 'file',
-  TX_STRING = 'string',
-  TX_EN_JSON = 'json-encrypt',
-  TX_EN_COMMAND = 'command-encrypt',
-  TX_EN_CONTRACT = 'contract-encrypt',
-  TX_EN_CONTRACT_EXE = 'contract-exe-encrypt',
-  TX_EN_FILE = 'file-encrypt',
-  TX_EN_STRING = 'string-encrypt',
-}
-
 @model()
-export class TransactionsDTO extends Model {
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  version: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  validator: string;
+export class TxSimpleModelDTO extends Model {
 
   @property({
     type: 'string',
@@ -59,13 +33,73 @@ export class TransactionsDTO extends Model {
     type: 'string',
     required: true,
   })
-  tag: string;
+  amount: string;
+
+  @property({
+    type: 'string',
+    jsonSchema: {
+      enum: Object.values(TxType),
+    },
+    required: true,
+  })
+  type: TxType;
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  foreignKeys?: string[];
+
+  @property({
+    type: 'object',
+  })
+  data: any;
+
+  constructor(data?: Partial<TxSimpleModelDTO>) {
+    super(data);
+  }
+}
+
+@model()
+export class TxModelDTO extends Model {
 
   @property({
     type: 'string',
     required: true,
   })
-  amount: string;
+  version: string;
+
+  @property({
+    type: 'string',
+  })
+  validator?: string;
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+    required: true,
+  })
+  from: string[];
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+    required: true,
+  })
+  to: string[];
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  tag: string;
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+    required: true,
+  })
+  amount: string[];
 
   @property({
     type: 'string',
@@ -76,11 +110,11 @@ export class TransactionsDTO extends Model {
   @property({
     type: 'string',
     jsonSchema: {
-      enum: Object.values(TransactionsType),
+      enum: Object.values(TxType),
     },
     required: true,
   })
-  type: string;
+  type: TxType;
 
   @property({
     type: 'array',
@@ -111,18 +145,19 @@ export class TransactionsDTO extends Model {
   validatorSign?: string;
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  sign: string;
+  sign: string[];
 
-  constructor(data?: Partial<TransactionsDTO>) {
+  constructor(data?: Partial<TxModelDTO>) {
     super(data);
   }
 }
 
 @model()
-export class SliceDTO extends Model {
+export class SliceModelDTO extends Model {
 
   @property({
     type: 'number',
@@ -132,27 +167,16 @@ export class SliceDTO extends Model {
 
   @property({
     type: 'array',
-    itemType: 'string'
-  })
-  transactions: string[];
-
-  @property({
-    type: 'number',
+    itemType: 'string',
     required: true,
   })
-  numberOfTransactions: number;
+  transactions: string[];
 
   @property({
     type: 'string',
     required: true,
   })
   version: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  merkleRoot: string;
 
   @property({
     type: 'string',
@@ -176,6 +200,12 @@ export class SliceDTO extends Model {
     type: 'string',
     required: true,
   })
+  next: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
   hash: string;
 
   @property({
@@ -184,25 +214,19 @@ export class SliceDTO extends Model {
   })
   sign: string;
 
-  constructor(data?: Partial<SliceDTO>) {
+  constructor(data?: Partial<SliceModelDTO>) {
     super(data);
   }
 }
 
 @model()
-export class BlockDTO extends Model {
+export class BlockModelDTO extends Model {
 
   @property({
     type: 'number',
     required: true,
   })
   height: number;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  numberOfTransactions: number;
 
   @property({
     type: 'array',
@@ -220,12 +244,6 @@ export class BlockDTO extends Model {
     type: 'string',
     required: true,
   })
-  merkleRoot: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
   lastHash: string;
 
   @property({
@@ -233,6 +251,18 @@ export class BlockDTO extends Model {
     required: true,
   })
   from: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  nextSlice: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  nextBlock: string;
 
   @property({
     type: "date",
@@ -257,7 +287,7 @@ export class BlockDTO extends Model {
   })
   externalTxID?: string;
 
-  constructor(data?: Partial<BlockDTO>) {
+  constructor(data?: Partial<BlockModelDTO>) {
     super(data);
   }
 }
@@ -307,8 +337,8 @@ export class SimulateSliceDTO {
   })
   tx?: Transactions = undefined;
 
-  @property.array(SliceDTO)
-  slicesModels: SliceDTO[] = [];
+  @property.array(SliceModelDTO)
+  slicesModels: Slice[] = [];
 
   @property.array(Transactions)
   transactionsModels: Transactions[] = [];
@@ -324,6 +354,9 @@ export class SimulateSliceDTO {
 
   @property()
   configs: Configs[] = [];
+  
+  @property()
+  totalFee: string = '0';
 }
 
 @model()
@@ -517,22 +550,25 @@ export class TryCompileDTO extends Model {
 export class SimulateContractDTO extends Model {
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  from: string;
+  from: string[];
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  to: string;
+  to: string[];
 
   @property({
-    type: 'string',
+    type: 'array',
+    itemType: 'string',
     required: true,
   })
-  amount: string;
+  amount: string[];
 
   @property({
     type: 'string',
@@ -548,10 +584,10 @@ export class SimulateContractDTO extends Model {
   @property({
     type: 'string',
     jsonSchema: {
-      enum: Object.values(TransactionsType),
+      enum: Object.values(TxType),
     },
   })
-  type?: string;
+  type: TxType;
 
   @property({
     type: 'object',

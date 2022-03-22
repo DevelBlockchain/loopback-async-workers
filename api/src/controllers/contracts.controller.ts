@@ -13,11 +13,12 @@ import Compiler from '../compiler/vm/compiler';
 import { Environment } from '../compiler/vm/data';
 import BywiseVirtualMachine from '../compiler/vm/virtual-machine';
 import { ContractsEnvRepository } from '../repositories';
-import { ContractProvider, TransactionsProvider, WalletProvider } from '../services';
+import { ContractProvider, TransactionsProvider } from '../services';
 import { ConfigProvider } from '../services/configs.service';
-import { CompileRequestDTO, ObjectDTO, SimulateAccountDTO, SimulateContractDTO, SimulateSliceDTO, TransactionsDTO, TransactionsType, TryCompileDTO, ValueDTO } from '../types';
+import { CompileRequestDTO, ObjectDTO, SimulateAccountDTO, SimulateContractDTO, SimulateSliceDTO, TxModelDTO, TryCompileDTO } from '../types';
 import { ethers } from "ethers";
 import { VirtualMachineProvider } from '../services/virtual-machine.service';
+import { BywiseHelper, TxType, Tx } from '@bywise/web3';
 
 export class ContractsController {
   constructor(
@@ -76,7 +77,7 @@ export class ContractsController {
         ctx.simulate = true;
         for (let i = 0; i < 5; i++) {
           let account = await ethers.Wallet.createRandom();
-          let address = WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
+          let address = BywiseHelper.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
           accounts.push(new SimulateAccountDTO({
             address: address,
             balance: '100',
@@ -90,25 +91,25 @@ export class ContractsController {
         ctx = compileRequestDTO.ctx;
       }
 
-      let tx = new TransactionsDTO();
+      let tx = new Tx();
       (await this.configProvider.getAll()).forEach(config => {
         if (config.name == 'validator') {
           tx.validator = config.value
         }
       })
       if (compileRequestDTO.from) {
-        tx.from = compileRequestDTO.from;
+        tx.from = [compileRequestDTO.from];
       } else if (ctx.walletsModels[0]) {
-        tx.from = ctx.walletsModels[0].address;
+        tx.from = [ctx.walletsModels[0].address];
       } else {
-        tx.from = WalletProvider.ZERO_ADDRESS;
+        tx.from = [BywiseHelper.ZERO_ADDRESS];
       }
       tx.data = abi.toJSON(true);
-      tx.to = abi.address;
+      tx.to = [abi.address];
       tx.version = '1';
-      tx.amount = '0';
+      tx.amount = ['0'];
       tx.fee = '1';
-      tx.type = TransactionsType.TX_CONTRACT;
+      tx.type = TxType.TX_CONTRACT;
       tx.created = new Date().toISOString();
       let output = await this.transactionsProvider.simulateTransaction(tx, ctx);
 
@@ -150,7 +151,7 @@ export class ContractsController {
   ): Promise<any> {
     let ctx: SimulateSliceDTO | undefined = undefined;
     try {
-      let tx = new TransactionsDTO();
+      let tx = new Tx();
       (await this.configProvider.getAll()).forEach(config => {
         if (config.name == 'validator') {
           tx.validator = config.value
@@ -160,7 +161,7 @@ export class ContractsController {
       tx.to = simulateContractDTO.to;
       tx.amount = simulateContractDTO.amount;
       tx.data = simulateContractDTO.data;
-      tx.type = TransactionsType.TX_CONTRACT_EXE;
+      tx.type = TxType.TX_CONTRACT_EXE;
       tx.version = '1';
       tx.fee = '1';
       tx.created = new Date().toISOString();

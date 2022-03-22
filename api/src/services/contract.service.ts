@@ -1,11 +1,12 @@
-import {BindingScope, inject, injectable} from '@loopback/core';
-import {LoggingBindings, WinstonLogger} from '@loopback/logging';
-import {ethers} from "ethers";
-import {Interface} from 'ethers/lib/utils';
+import { BindingScope, inject, injectable } from '@loopback/core';
+import { LoggingBindings, WinstonLogger } from '@loopback/logging';
+import { ethers } from "ethers";
+import { Interface } from 'ethers/lib/utils';
 import Web3 from 'web3';
-import {Contract} from 'web3-eth-contract';
-import {AbiItem} from 'web3-utils';
-import {TxDTO} from '../types';
+import { Contract } from 'web3-eth-contract';
+import { AbiItem } from 'web3-utils';
+import { TxDTO } from '../types';
+import { Wallet } from '@bywise/web3';
 
 const contractMAINNET = "0xe34A186Dbc9Ceb8fFEdB728A415b04ED2bF573EF";
 const contractTESTNET = "0x2A04f9D6A73A854464D8774D1B2b2038970608dE";
@@ -13,7 +14,7 @@ const contractABI: AbiItem[] = require(`../../assets/contractABI.json`);
 const gasPrice = process.env.GAS_PRICE ? process.env.GAS_PRICE : '10000000000';
 const gasLimit = process.env.GAS_LIMIT ? process.env.GAS_LIMIT : 8000000;
 
-@injectable({scope: BindingScope.TRANSIENT})
+@injectable({ scope: BindingScope.TRANSIENT })
 export class ContractProvider {
   static web3: Web3;
   static contract: Contract;
@@ -58,7 +59,7 @@ export class ContractProvider {
     let tx = await this.web3.eth.sendSignedTransaction(raw);
     let fee = (tx.gasUsed * parseInt(gasPrice)).toString();
     let txId = tx.transactionHash;
-    return {txId, fee: this.fromWei(fee)};
+    return { txId, fee: this.fromWei(fee) };
   }
 
   static isMainNet(): boolean {
@@ -96,6 +97,15 @@ export class ContractProvider {
     return ethers.Wallet.fromMnemonic(seed);
   }
 
+  getWallet(): Wallet {
+    let seed = process.env.SEED;
+    if (!seed) {
+      let newSeed = ethers.Wallet.createRandom().mnemonic.phrase;
+      throw new Error(`SEED not found - suggestion "${newSeed}"`);
+    }
+    return new Wallet({ seed });
+  }
+
   async balanceBNB(address: string): Promise<string> {
     let balance = await this.web3.eth.getBalance(address);
     balance = this.fromWei(balance);
@@ -117,7 +127,7 @@ export class ContractProvider {
   async newBlock(hash: string): Promise<TxDTO> {
     let account = await this.getAccount();
     try {
-      await this.contract.methods.newBlock(hash).call({from: account.address});
+      await this.contract.methods.newBlock(hash).call({ from: account.address });
     } catch (err: any) {
       throw new Error(err.message);
     }

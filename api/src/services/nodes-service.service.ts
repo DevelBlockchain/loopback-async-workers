@@ -1,5 +1,5 @@
-import { injectable, BindingScope, Provider, service } from '@loopback/core';
-import { ContractProvider, WalletProvider } from '.';
+import { injectable, BindingScope, service } from '@loopback/core';
+import { ContractProvider } from '.';
 import { RoleTypes } from '../authorization/PermissionsTypes';
 import { Roles } from '../models';
 import { InfoJWT, NodeDTO } from '../types';
@@ -21,9 +21,9 @@ export class NodesProvider {
 
   createMyNode() {
     let token = NodesProvider.getRandomToken();
-    let account = this.contractProvider.getAccount();
+    let account = this.contractProvider.getWallet();
     let myNode = new NodeDTO({
-      address: WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address),
+      address: account.address,
       isFullNode: true,
       host: process.env.MY_HOST,
       version: '1',

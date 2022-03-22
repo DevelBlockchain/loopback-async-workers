@@ -1,6 +1,7 @@
 import BigNumber from "bignumber.js";
 import { SimulateSliceDTO } from "../../types";
 import { BywiseBlockchainInterface } from "../bywise/bywise-blockchain";
+import { BywiseHelper } from '@bywise/web3';
 import Compiler from "./compiler";
 import { CommandComplement, CommandSyntax, Context, ContractABI, Environment, ExecutedFunction, Function, FunctionABI, Operator, Type, Types, Variable, VariableMeta } from "./data";
 import { ULA } from "./ula";
@@ -76,15 +77,13 @@ export default class BywiseVirtualMachine {
             for (let i = 0; i < this.env.contract.publicFunctions.length; i++) {
                 let func = this.env.contract.publicFunctions[i];
                 if (func.name === name) {
-                    if (!ctx.tx) {
-                        throw new Error(`Transaction context not found`);
-                    }
-                    if (ctx.tx.amount !== "0" && !func.isPayable) {
-                        throw new Error(`function ${name} is not payable`);
-                    }
-                    if (!func.isPaid && !ctx.simulate) {
-                        throw new Error(`function ${name} is not paid`);
-                    }
+                    if (!ctx.tx) throw new Error(`Transaction context not found`);
+                    let total = new BigNumber(0);
+                    ctx.tx.amount.forEach(amount => {
+                        total = total.plus(new BigNumber(amount));
+                    })
+                    if (total.isZero() && !func.isPayable) throw new Error(`function ${name} is not payable`);
+                    if (!func.isPaid && !ctx.simulate) throw new Error(`function ${name} is not paid`);
                     let inputs = [];
                     inputs.push(func.addr);
                     if (inputsValues.length > 0) {
@@ -550,7 +549,7 @@ export default class BywiseVirtualMachine {
                         case Types.string:
                             newValue = oldValue.toString();
                             newValue = newValue.replace(/\"/gm, '');
-                            if (!this.isAddress(newValue)) {
+                            if (!BywiseHelper.isValidAddress(newValue)) {
                                 newValue = undefined;
                             }
                             break;
@@ -568,7 +567,7 @@ export default class BywiseVirtualMachine {
                             newValue = oldValue.getNumber().isZero() ? 'false' : 'true';
                             break;
                         case Types.address:
-                            newValue = this.isZeroAddress(oldValue.toString()) ? 'false' : 'true';
+                            newValue = BywiseHelper.isZeroAddress(oldValue.toString()) ? 'false' : 'true';
                             break;
                         case Types.binary:
                         case Types.string:
@@ -1011,16 +1010,6 @@ export default class BywiseVirtualMachine {
         } else {
             throw new Error(`invalid register ${variableBC}`);
         }
-    }
-
-
-
-    private isAddress(address: string) {
-        return address === 'BWS000000000000000000000000000000000000000000000' || !/^BWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0, 43}$/.test(address);
-    }
-
-    private isZeroAddress(address: string) {
-        return address === 'BWS000000000000000000000000000000000000000000000';
     }
 
     private validateType(value: string): Type {

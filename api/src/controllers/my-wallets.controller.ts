@@ -17,8 +17,8 @@ import { PermissionsTypes } from '../authorization/PermissionsTypes';
 import { MyWallets } from '../models';
 import { MyWalletsRepository } from '../repositories';
 import { InfoJWT, ValueDTO } from '../types';
-import { ethers } from "ethers";
-import { ContractProvider, WalletProvider } from '../services';
+import { ContractProvider } from '../services';
+import { Wallet } from '@bywise/web3';
 
 export class MyWalletsController {
   constructor(
@@ -48,11 +48,14 @@ export class MyWalletsController {
   ): Promise<MyWallets> {
     let info = await this.getCurrentUser();
     myWallets.usersId = info.id;
+    let wallet;
     if (!myWallets.seed) {
-      myWallets.seed = ethers.Wallet.createRandom().mnemonic.phrase;
+      wallet = new Wallet({ isMainnet: ContractProvider.isMainNet() });
+    } else {
+      wallet = new Wallet({ isMainnet: ContractProvider.isMainNet(), seed: myWallets.seed });
     }
-    let account = await ethers.Wallet.fromMnemonic(myWallets.seed);
-    myWallets.address = WalletProvider.encodeBWSAddress(ContractProvider.isMainNet(), false, account.address);
+    myWallets.seed = wallet.seed;
+    myWallets.address = wallet.address;
     return this.myWalletsRepository.create(myWallets);
   }
 

@@ -1,9 +1,8 @@
-import { injectable, BindingScope, service } from '@loopback/core';
+import { injectable, BindingScope } from '@loopback/core';
 import { repository } from '@loopback/repository';
 import { Types, Variable } from '../compiler/vm/data';
 import { Configs } from '../models';
 import { ConfigsRepository } from '../repositories';
-import { WalletProvider } from './wallet.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class ConfigProvider {
