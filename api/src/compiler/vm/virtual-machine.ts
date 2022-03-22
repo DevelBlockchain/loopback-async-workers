@@ -82,7 +82,7 @@ export default class BywiseVirtualMachine {
                     ctx.tx.amount.forEach(amount => {
                         total = total.plus(new BigNumber(amount));
                     })
-                    if (total.isZero() && !func.isPayable) throw new Error(`function ${name} is not payable`);
+                    if (!total.isZero() && !func.isPayable) throw new Error(`function ${name} is not payable`);
                     if (!func.isPaid && !ctx.simulate) throw new Error(`function ${name} is not paid`);
                     let inputs = [];
                     inputs.push(func.addr);

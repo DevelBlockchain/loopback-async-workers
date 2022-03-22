@@ -1,5 +1,6 @@
 import { CommandSyntax, ContractABI, FunctionABI, ParameterABI } from "./data";
 import { base16Decode, base16Encode, base58Encode, sha256 } from '@waves/ts-lib-crypto';
+import { BywiseHelper } from '@bywise/web3';
 
 export default class Compiler {
 
@@ -111,13 +112,8 @@ export default class Compiler {
     public static getBywiseAddress(isMainnet: boolean, nonce: number, bytecode: string): string {
         let hexNonce = Compiler.numberToHex(nonce);
         let hex = hexNonce + bytecode;
-        let address = base16Encode(sha256(sha256(base16Decode(hex)))).toUpperCase().substring(0, 40);
-
-        let finalAddress = 'BWS1';
-        finalAddress += isMainnet ? 'M' : 'T';
-        finalAddress += 'C';
-        finalAddress += address;
-        return finalAddress;
+        let address = '0x' + base16Encode(sha256(sha256(base16Decode(hex)))).toUpperCase().substring(0, 40);
+        return BywiseHelper.encodeBWSAddress(isMainnet, true, address)
     }
 
     private compileCommand(lineNumber: number, line: string[], cmd: CommandSyntax, bytecodeArray: string[], debugArray: string[]) {

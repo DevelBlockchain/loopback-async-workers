@@ -63,9 +63,9 @@ export default class SeeContract extends Component {
         }
         let tx = {
             ctx: this.state.ctx,
-            from: from,
-            to: this.state.address,
-            amount: isPaid ? amount : '0',
+            from: [from],
+            to: [this.state.address],
+            amount: isPaid ? [amount] : ['0'],
             data,
         };
         let req = await BywiseAPI.post(`/contracts/simulate`, tx);
