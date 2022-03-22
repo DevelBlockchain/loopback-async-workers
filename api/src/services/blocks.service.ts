@@ -4,11 +4,13 @@ import { SlicesProvider } from '.';
 import { BlocksRepository } from '../repositories';
 import { ContractProvider } from './contract.service';
 import { Block, Slice } from '@bywise/web3';
+import { ConfigProvider } from './configs.service';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class BlocksProvider {
 
   constructor(
+    @service(ConfigProvider) private configProvider: ConfigProvider,
     @service(ContractProvider) private contractProvider: ContractProvider,
     @service(SlicesProvider) private slicesProvider: SlicesProvider,
     @repository(BlocksRepository) public blocksRepository: BlocksRepository,
@@ -63,6 +65,16 @@ export class BlocksProvider {
     block.hash = block.toHash();
     block.sign = await wallet.signHash(block.hash);
     block.externalTxID = [];
+    try {
+      let cfg = await this.configProvider.getByName('poi');
+      let interval = cfg.getNumber().toNumber();
+      if (block.height % interval === 0) {
+        let registry = await this.contractProvider.newBlock('0x' + block.hash, block.height);
+        block.externalTxID.push(registry);
+      }
+    } catch (err) {
+      console.log(err);
+    }
     return block;
   }
 }

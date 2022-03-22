@@ -28,5 +28,11 @@
         "name": "fee",
         "value": "0",
         "type": "string"
+    },
+    {
+        "id": "f1915543-5015-45c6-959d-e5d9417d2056",
+        "name": "poi",
+        "value": "60",
+        "type": "number"
     }
 ]
