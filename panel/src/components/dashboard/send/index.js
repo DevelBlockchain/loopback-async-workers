@@ -28,7 +28,7 @@ export default class Send extends React.Component {
             data: null,
             form: {
                 account: '',
-                to: 'BWS0000000000000000000000000000000000000000000',
+                to: 'BWS000000000000000000000000000000000000000000000',
                 amount: '0',
                 type: 'NONE',
             }
@@ -116,7 +116,7 @@ export default class Send extends React.Component {
                                         <label>To</label>
                                         <input className="form-control"
                                             type="text"
-                                            placeholder="BWS0000000000000000000000000000000000000000000"
+                                            placeholder="BWS000000000000000000000000000000000000000000000"
                                             name="to"
                                             value={this.state.form.to}
                                             onChange={this.handleChange} />

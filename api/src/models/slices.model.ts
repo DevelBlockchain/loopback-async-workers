@@ -23,12 +23,6 @@ export class Slices extends Entity {
   height: number;
 
   @property({
-    type: 'boolean',
-    required: true,
-  })
-  isPublic: boolean;
-
-  @property({
     type: 'array',
     itemType: 'string'
   })

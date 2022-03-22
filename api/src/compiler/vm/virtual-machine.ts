@@ -1016,11 +1016,11 @@ export default class BywiseVirtualMachine {
 
 
     private isAddress(address: string) {
-        return address === 'BWS0000000000000000000000000000000000000000000' || !/^BWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0, 43}$/.test(address);
+        return address === 'BWS000000000000000000000000000000000000000000000' || !/^BWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0, 43}$/.test(address);
     }
 
     private isZeroAddress(address: string) {
-        return address === 'BWS0000000000000000000000000000000000000000000';
+        return address === 'BWS000000000000000000000000000000000000000000000';
     }
 
     private validateType(value: string): Type {

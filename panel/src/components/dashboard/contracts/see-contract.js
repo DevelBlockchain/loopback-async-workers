@@ -158,7 +158,7 @@ export default class SeeContract extends Component {
                         <div className="input-group">
                             <input className="form-control"
                                 type="text"
-                                placeholder="BWS0000000000000000000000000000000000000000000"
+                                placeholder="BWS000000000000000000000000000000000000000000000"
                                 name="address"
                                 value={this.state.form.address}
                                 onChange={this.handleChange} />

@@ -131,12 +131,6 @@ export class SliceDTO extends Model {
   height: number;
 
   @property({
-    type: 'boolean',
-    required: true,
-  })
-  isPublic: boolean;
-
-  @property({
     type: 'array',
     itemType: 'string'
   })
@@ -539,6 +533,25 @@ export class SimulateContractDTO extends Model {
     required: true,
   })
   amount: string;
+
+  @property({
+    type: 'string',
+  })
+  tag?: string;
+
+  @property({
+    type: 'array',
+    itemType: 'string',
+  })
+  foreignKeys?: string[];
+
+  @property({
+    type: 'string',
+    jsonSchema: {
+      enum: Object.values(TransactionsType),
+    },
+  })
+  type?: string;
 
   @property({
     type: 'object',

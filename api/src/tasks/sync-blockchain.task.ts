@@ -27,7 +27,6 @@ const sliceToSliceDTO = (slice: Slices) => {
   sliceDTO.from = slice.from;
   sliceDTO.hash = slice.hash;
   sliceDTO.height = slice.height;
-  sliceDTO.isPublic = slice.isPublic;
   sliceDTO.lastBlockHash = slice.lastBlockHash;
   sliceDTO.merkleRoot = slice.merkleRoot;
   sliceDTO.numberOfTransactions = slice.numberOfTransactions;

@@ -59,6 +59,14 @@ export class NodesController {
   }
 
   @authenticate('basic')
+  @post('/api/v1/nodes/try-token')
+  @response(204, {
+    description: 'Token is valid',
+  })
+  async tryTokenp(): Promise<void> {
+  }
+
+  @authenticate('basic')
   @get('/api/v1/nodes/try-token')
   @response(204, {
     description: 'Token is valid',

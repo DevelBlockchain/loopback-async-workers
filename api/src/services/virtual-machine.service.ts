@@ -195,6 +195,7 @@ export class VirtualMachineProvider implements BywiseBlockchainInterface {
     code += `let cost = new BigNumber('${transactionOutput.cost}');\n`;
     code += `${configFee.value}`;
     let fee = `${eval(code)}`;
+    
     if (fee !== tx.fee && !ctx.simulate) {
       throw new Error(`Invalid fee`);
     }

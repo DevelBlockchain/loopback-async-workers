@@ -48,16 +48,14 @@ export class SlicesProvider {
     if (slice.transactions.length !== slice.numberOfTransactions) {
       throw new Error('invalid slice length ' + slice.transactions.length + ' ' + slice.numberOfTransactions);
     }
-    if (slice.isPublic) {
-      for (let i = 0; i < slice.transactions.length; i++) {
-        let txHash = slice.transactions[i];
-        let tx = await this.transactionsRepository.findOne({ where: { hash: txHash } });
-        if (!tx) {
-          throw new Error('slice transaction ' + txHash + ' not found');
-        }
-        if (tx.status !== TransactionsStatus.TX_MEMPOOL) {
-          throw new Error(`slice transaction ${txHash} already registered`);
-        }
+    for (let i = 0; i < slice.transactions.length; i++) {
+      let txHash = slice.transactions[i];
+      let tx = await this.transactionsRepository.findOne({ where: { hash: txHash } });
+      if (!tx) {
+        throw new Error('slice transaction ' + txHash + ' not found');
+      }
+      if (tx.status !== TransactionsStatus.TX_MEMPOOL) {
+        throw new Error(`slice transaction ${txHash} already registered`);
       }
     }
     if (slice.version !== '1') {
@@ -212,7 +210,6 @@ export class SlicesProvider {
     let account = this.contractProvider.getAccount();
     let slice = new SliceDTO();
     slice.height = 0;
-    slice.isPublic = true;
     slice.numberOfTransactions = transactions.length;
     slice.transactions = transactions.map(tx => tx.hash);
     slice.version = '1';

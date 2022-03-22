@@ -50,7 +50,7 @@ class CustomHighlightRules extends window.ace.acequire("ace/mode/text_highlight_
                     regex: "BWS[0-9]+[MT][CU][0-9a-fA-F]{40}[0-9a-fA-F]{0,43}"
                 }, {
                     token: "constant.numeric",
-                    regex: "BWS0000000000000000000000000000000000000000000"
+                    regex: "BWS000000000000000000000000000000000000000000000"
                 }, {
                     token: keywordMapper,
                     regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"

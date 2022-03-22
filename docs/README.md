@@ -85,5 +85,5 @@ cost | computational cost
 
 ### Fee Usage
 ```javascript
-amount.div(1000.0).plus(size.div(20.0).plus(cost.multipliedBy(20)).div(1000.0)).plus(0.001).toFixed(5)
+(new BigNumber(amount.div(1000.0).plus(size.div(20.0).plus(cost.multipliedBy(20)).div(1000.0)).plus(0.001).toFixed(5))).toString()
 ```

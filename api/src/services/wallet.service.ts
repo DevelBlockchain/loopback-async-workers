@@ -1,15 +1,9 @@
 import { injectable, BindingScope } from '@loopback/core';
-import { repository } from '@loopback/repository';
 import { sha256, base16Decode, base16Encode } from '@waves/ts-lib-crypto';
-import { WalletsRepository } from '../repositories';
 
 @injectable({ scope: BindingScope.TRANSIENT })
 export class WalletProvider {
-  static ZERO_ADDRESS = 'BWS0000000000000000000000000000000000000000000';
-
-  constructor(
-    @repository(WalletsRepository) public walletsRepository: WalletsRepository,
-  ) { }
+  static ZERO_ADDRESS = 'BWS000000000000000000000000000000000000000000000';
 
   static encodeBWSAddress = (isMainnet: boolean, isContract: boolean, address: string, tag?: string) => {
     let finalAddress = 'BWS1';

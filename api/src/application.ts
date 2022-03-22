@@ -79,7 +79,7 @@ export class BlockineNodeApplication extends BootMixin(
     // Set up the custom sequence
     this.sequence(MySequence);
 
-    // CronJobs
+    // CronJobs 
     this.component(CronComponent);
     Object.entries(tasks).forEach((task: [string, any]) => {
       this.add(createBindingFromClass(task[1]));
