@@ -1,11 +1,11 @@
 import { service } from '@loopback/core';
-import { CronJob, cronJob } from '@loopback/cron';
+import { workerJob, WorkerJob } from 'loopback-async-workers';
 import { NodesProvider } from '../services';
 import { InfoDTO } from '../types';
 import { BywiseAPI } from '../utils/bywise-api';
 
-@cronJob()
-export class P2PConnection extends CronJob {
+@workerJob()
+export class P2PConnection extends WorkerJob {
 
   constructor(
     @service(NodesProvider) private nodesProvider: NodesProvider,
@@ -72,8 +72,8 @@ export class P2PConnection extends CronJob {
   }
 }
 
-@cronJob()
-export class P2PCheckSignOfLife extends CronJob {
+@workerJob()
+export class P2PCheckSignOfLife extends WorkerJob {
 
   constructor(
     @service(NodesProvider) private nodesProvider: NodesProvider,

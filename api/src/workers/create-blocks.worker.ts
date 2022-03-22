@@ -1,13 +1,13 @@
 import { service } from '@loopback/core';
-import { CronJob, cronJob } from '@loopback/cron';
+import { workerJob, WorkerJob } from 'loopback-async-workers';
 import { repository } from '@loopback/repository';
 import { BlocksRepository } from '../repositories';
 import { SlicesProvider, BlocksProvider } from '../services';
 import { SimulateSliceDTO } from '../types';
 import { Slice } from '@bywise/web3';
 
-@cronJob()
-export class CreateBlocks extends CronJob {
+@workerJob()
+export class CreateBlocks extends WorkerJob {
 
   constructor(
     @service(SlicesProvider) private slicesProvider: SlicesProvider,

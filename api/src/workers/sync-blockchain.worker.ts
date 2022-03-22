@@ -1,5 +1,5 @@
 import { service } from '@loopback/core';
-import { CronJob, cronJob } from '@loopback/cron';
+import { workerJob, WorkerJob } from 'loopback-async-workers';
 import { repository } from '@loopback/repository';
 import { Blocks, Slices, Transactions } from '../models';
 import { BlocksRepository } from '../repositories';
@@ -51,8 +51,8 @@ const txToTxDTO = (tx: Transactions) => {
   return txDTO;
 }
 
-@cronJob()
-export class SyncBlockchain extends CronJob {
+@workerJob()
+export class SyncBlockchain extends WorkerJob {
 
   constructor(
     @service(NodesProvider) private nodesProvider: NodesProvider,

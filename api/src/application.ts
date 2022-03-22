@@ -10,7 +10,7 @@ import {
   JWTStrategy,
 } from './authorization';
 import { ApplicationConfig, createBindingFromClass } from '@loopback/core';
-import { CronComponent } from '@loopback/cron';
+import {WorkerComponent} from 'loopback-async-workers';
 import {
   LoggingBindings,
   LoggingComponent
@@ -25,7 +25,6 @@ import { ServiceMixin } from '@loopback/service-proxy';
 import path from 'path';
 import { MySequence } from './sequence';
 import {Populate} from './scripts';
-import * as tasks from './tasks';
 import { UsersRepository } from './repositories';
 
 require('dotenv').config()
@@ -79,11 +78,8 @@ export class BlockineNodeApplication extends BootMixin(
     // Set up the custom sequence
     this.sequence(MySequence);
 
-    // CronJobs 
-    this.component(CronComponent);
-    Object.entries(tasks).forEach((task: [string, any]) => {
-      this.add(createBindingFromClass(task[1]));
-    });
+    // Async Workers component
+    this.component(WorkerComponent);
 
     // Set up default home page
     this.static('/', path.join(__dirname, '../public'));
@@ -104,8 +100,8 @@ export class BlockineNodeApplication extends BootMixin(
     this.bootOptions = {
       controllers: {
         // Customize ControllerBooter Conventions here
-        dirs: ['controllers'],
-        extensions: ['.controller.js'],
+        dirs: ['controllers', 'workers'],
+        extensions: ['.controller.js', '.worker.js'],
         nested: true,
       },
     };
