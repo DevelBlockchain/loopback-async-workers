@@ -7,9 +7,14 @@ const asyncSleep = async function sleep(ms: number) {
 };
 
 test('Test not timeout', async () => {
+    let error = '';
+    const onError = (message:string) => {
+        error = message;
+    }
     let doneRun = false;
     let work = new WorkerJob({
         name: 'timeout-test',
+        onError: onError,
         onTick: async () => {
             await asyncSleep(50);
             doneRun = true;
@@ -17,24 +22,53 @@ test('Test not timeout', async () => {
         limitTime: 100,
     });
     await work.run();
-    await expect(doneRun).toBe(true);
+    expect(doneRun).toBe(true);
+    expect(error).toBe('');
 });
 
 test('Test timeout', async () => {
+    let error = '';
+    const onError = (message:string) => {
+        error = message;
+    }
     let work = new WorkerJob({
         name: 'timeout-test',
+        onError: onError,
         onTick: async () => {
             await asyncSleep(200);
         },
         limitTime: 100,
     });
-    await expect(work.run).rejects.toThrow();
+    await work.run();
+    expect(error).toBe('timeout worker timeout-test');
+});
+
+test('Test onTick throw', async () => {
+    let error = '';
+    const onError = (message:string) => {
+        error = message;
+    }
+    let work = new WorkerJob({
+        name: 'timeout-test',
+        onError: onError,
+        onTick: async () => {
+            throw new Error('random error')
+        },
+        limitTime: 100,
+    });
+    await work.run();
+    expect(error).toBe('random error');
 });
 
 test('Test cron', async () => {
+    let error = '';
+    const onError = (message:string) => {
+        error = message;
+    }
     let count = 0;
     let work = new WorkerJob({
         name: 'cron-test',
+        onError: onError,
         onTick: async () => {
             count++;
         },
@@ -43,14 +77,20 @@ test('Test cron', async () => {
     work.start();
     await asyncSleep(3500);
     work.stop();
-    await expect(count).toBeGreaterThanOrEqual(3);
-    await expect(count).toBeLessThanOrEqual(4);
+    expect(count).toBeGreaterThanOrEqual(3);
+    expect(count).toBeLessThanOrEqual(4);
+    expect(error).toBe('');
 });
 
 test('Test cron wait', async () => {
+    let error = '';
+    const onError = (message:string) => {
+        error = message;
+    }
     let count = 0;
     let work = new WorkerJob({
         name: 'cron-test',
+        onError: onError,
         onTick: async () => {
             count++;
             await asyncSleep(1500);
@@ -61,14 +101,20 @@ test('Test cron wait', async () => {
     work.start();
     await asyncSleep(3500);
     work.stop();
-    await expect(count).toBeGreaterThanOrEqual(1);
-    await expect(count).toBeLessThanOrEqual(2);
+    expect(count).toBeGreaterThanOrEqual(1);
+    expect(count).toBeLessThanOrEqual(2);
+    expect(error).toBe('');
 });
 
 test('Test cron non wait', async () => {
     let count = 0;
+    let error = '';
+    const onError = (message:string) => {
+        error = message;
+    }
     let work = new WorkerJob({
         name: 'cron-test',
+        onError: onError,
         onTick: async () => {
             count++;
             await asyncSleep(1500);
@@ -79,6 +125,7 @@ test('Test cron non wait', async () => {
     work.start();
     await asyncSleep(3500);
     work.stop();
-    await expect(count).toBeGreaterThanOrEqual(3);
-    await expect(count).toBeLessThanOrEqual(4);
+    expect(count).toBeGreaterThanOrEqual(3);
+    expect(count).toBeLessThanOrEqual(4);
+    expect(error).toBe('');
 });

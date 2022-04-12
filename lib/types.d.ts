@@ -15,6 +15,7 @@ export declare function asWorkerJob<T = unknown>(binding: Binding<T>): Binding<T
 export interface WorkerJobConfig {
     name: string;
     onTick: () => Promise<void>;
+    onError: (message: string) => void;
     limitTime?: number;
     cronTime?: string;
     waitRun?: boolean;

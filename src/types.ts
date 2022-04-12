@@ -25,6 +25,7 @@ export function asWorkerJob<T = unknown>(binding: Binding<T>) {
 export interface WorkerJobConfig {
   name: string;
   onTick: () => Promise<void>;
+  onError: (message: string) => void;
   limitTime?: number;
   cronTime?: string;
   waitRun?: boolean;
@@ -48,7 +49,7 @@ export class WorkerJob {
     this.onTick = async () => {
       try {
         const timeout = setTimeout(() => {
-          throw new Error(`timeout worker ${this.name}`);
+          config.onError(`timeout worker ${this.name}`);
         }, this.limitTime);
         if (this.cron && this.waitRun) this.cron.stop();
 
@@ -57,7 +58,8 @@ export class WorkerJob {
         if (this.cron && this.waitRun) this.cron.start();
         clearTimeout(timeout);
       } catch (err: any) {
-        console.error(err.message);
+        console.error('ERROR [loopback-async-workers]', err);
+        config.onError(err.message);
       }
     };
     this.cronTime = config.cronTime;
