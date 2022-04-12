@@ -1,6 +1,6 @@
 {
   "name": "loopback-async-workers",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "This module contains a component to provide cron integration and asynchronous execution of scripts using loopback.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

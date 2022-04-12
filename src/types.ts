@@ -49,7 +49,7 @@ export class WorkerJob {
     this.onTick = async () => {
       try {
         const timeout = setTimeout(() => {
-          config.onError(`timeout worker ${this.name}`);
+          config.onError(`WORKER-JOB [ ${this.name} ] - timeout`);
         }, this.limitTime);
         if (this.cron && this.waitRun) this.cron.stop();
 
@@ -59,7 +59,7 @@ export class WorkerJob {
         clearTimeout(timeout);
       } catch (err: any) {
         console.error('ERROR [loopback-async-workers]', err);
-        config.onError(err.message);
+        config.onError(`WORKER-JOB [ ${this.name} ] - ${err.message}`);
       }
     };
     this.cronTime = config.cronTime;

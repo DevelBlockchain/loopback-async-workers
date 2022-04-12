@@ -40,7 +40,7 @@ test('Test timeout', async () => {
         limitTime: 100,
     });
     await work.run();
-    expect(error).toBe('timeout worker timeout-test');
+    expect(error).toBe('WORKER-JOB [ timeout-test ] - timeout');
 });
 
 test('Test onTick throw', async () => {
@@ -57,7 +57,7 @@ test('Test onTick throw', async () => {
         limitTime: 100,
     });
     await work.run();
-    expect(error).toBe('random error');
+    expect(error).toBe('WORKER-JOB [ timeout-test ] - random error');
 });
 
 test('Test cron', async () => {
