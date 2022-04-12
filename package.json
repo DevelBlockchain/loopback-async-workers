@@ -1,6 +1,6 @@
 {
   "name": "loopback-async-workers",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "This module contains a component to provide cron integration and asynchronous execution of scripts using loopback.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "build": "tsc",
+    "start:dev": "ts-node src/run.ts",
     "start": "ts-node src/__tests__/worker.test.ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",

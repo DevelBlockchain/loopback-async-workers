@@ -46,15 +46,19 @@ export class WorkerJob {
     this.limitTime = config.limitTime !== undefined ? config.limitTime : 30000;
     this.waitRun = config.waitRun !== undefined ? config.waitRun : true;
     this.onTick = async () => {
-      const timeout = setTimeout(() => {
-        throw new Error(`timeout worker ${this.name}`);
-      }, this.limitTime);
-      if (this.cron && this.waitRun) this.cron.stop();
+      try {
+        const timeout = setTimeout(() => {
+          throw new Error(`timeout worker ${this.name}`);
+        }, this.limitTime);
+        if (this.cron && this.waitRun) this.cron.stop();
 
-      await config.onTick();
-      
-      if (this.cron && this.waitRun) this.cron.start();
-      clearTimeout(timeout);
+        await config.onTick();
+
+        if (this.cron && this.waitRun) this.cron.start();
+        clearTimeout(timeout);
+      } catch (err: any) {
+        console.error(err.message);
+      }
     };
     this.cronTime = config.cronTime;
     if (this.cronTime) {
