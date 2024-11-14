@@ -58,7 +58,6 @@ export class WorkerJob {
         if (this.cron && this.waitRun) this.cron.start();
         clearTimeout(timeout);
       } catch (err: any) {
-        console.error('ERROR [loopback-async-workers]', err);
         config.onError(`WORKER-JOB [ ${this.name} ] - ${err.message}`);
       }
     };
